@@ -4,6 +4,7 @@ def slope(s_row:int, s_column:int, right:int, down:int):
   hill = []
   for line in file:
     line = line.strip("\n")
+   
     row = []
     for character in line:
       row.append(character)
@@ -18,7 +19,7 @@ def slope(s_row:int, s_column:int, right:int, down:int):
     
     if column >= len(hill[0]):
       column -= len(hill[0])
-    
+  
     position = hill[row][column]
     if position == "#":
       trees += 1
