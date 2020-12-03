@@ -1,6 +1,6 @@
-file = open("2020/03_data.txt", "r")
 
-def slope(s_row:int, s_column:int, right:int, down:int, file):
+def slope(s_row:int, s_column:int, right:int, down:int):
+  file = open("2020/03_data.txt", "r")
   hill = []
   for line in file:
     row = []
@@ -21,14 +21,19 @@ def slope(s_row:int, s_column:int, right:int, down:int, file):
     position = hill[row][column]
     if position == "#":
       trees += 1
-    
-    print("row", str(row), "/", str(len(hill)-1))
-    print("column", str(column), "/", str(len(hill[0])-1))
-    print(position)
-    print("trees:", str(trees))
-    print("~" * 40)
-    
+  file.close()
   return trees
 
+# part 1 #
+# print(slope(0, 0, 3, 1, file))
 
-print(slope(0, 0, 3, 1, file))
+
+# part 2 #
+slope1 = slope(0, 0, 1, 1)
+slope2 = slope(0, 0, 3, 1)
+slope3 = slope(0, 0, 5, 1)
+slope4 = slope(0, 0, 7, 1)
+slope5 = slope(0, 0, 1, 2)
+
+total_trees = slope1 * slope2 * slope3 * slope4 * slope5
+print(total_trees)
