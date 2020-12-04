@@ -22,29 +22,28 @@ print(scanner(file))
 # part 2 #
 def scannerRefined(batchData):
     passportList = batchData.split('\n\n')
+    total = 0
+    for line in passportList:
+        if checkPassport(line):
+            total += 1
+    return total
 
-    passport = []
-    for entry in passportList:
-        subsection = []
-        section = re.split(' |\n', entry)
-        for i in section:
-            j = i.split(":")
-            subsection.append(j)
-        passport.append(subsection)
-
-    v = 0
-    for i in passport:
-        for j in i:
-            if j[0] == "byr":
-                if len(j[1]) == 4 and 1920 <= int(j[1]) <= 2002:
-                    v += 1
-            elif j[0] == 'iyr':
-                if len(j[1]) == 4 and 2010 <= int(j[1]) <= 2020:
-                    v += 1
-            elif j[0] == 'eyr':
-                if len(j[1]) == 4 and 2020 <= int(j[1]) <= 2030:
-                    v += 1
-            elif j[0] == 'hgt':
+def checkPassport( passport):
+    if not re.search('byr:(19[2-9][0-9]|200[0-2])( |\n|$)', passport):
+        return False
+    if not re.search('iyr:(201[0-9]|2020)( |\n|$)', passport):
+        return False
+    if not re.search('eyr:(202[0-9]|2030)( |\n|$)', passport):
+        return False
+    if not re.search('hgt:(((1[5-8][0-9]|19[0-3])cm)|((59|6[0-9]|7[0-6])in))( |\n|$)', passport):
+        return False
+    if not re.search('hcl:#[0-9a-f]{6}( |\n|$)', passport):
+        return False
+    if not re.search('ecl:(amb|blu|brn|gry|grn|hzl|oth)( |\n|$)', passport):
+        return False
+    if not re.search('pid:[0-9]{9}( |\n|$)', passport):
+        return False
+    return True
 
 
-scannerRefined(file)
+print("Part 2:", scannerRefined(file))
