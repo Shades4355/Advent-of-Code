@@ -1,9 +1,8 @@
 
 file = "2020/05_data.txt"
 
+
 # part 1 #
-
-
 def seatSearch(file: str):
     "A Binary Search function"
 
@@ -75,9 +74,6 @@ def binarySearchColumn(highLow: str, high: int, low: int):
     return guess, high, low
 
 
-print(seatSearch(file))
-
-
 # part 2 #
 def findSeat(file: str):
     map = [['.'] * 128] * 8
@@ -111,4 +107,6 @@ def findSeat(file: str):
         map[seatSearchC][seatSearchR] = 'X'
 
 
-findSeat(file)
+if __name__ == '__main__':
+    print("Part 1:", seatSearch(file))
+    print("Part 2", findSeat(file))

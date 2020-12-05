@@ -75,9 +75,6 @@ def binarySearchColumn(highLow: str, high: int, low: int):
     return guess, high, low
 
 
-# print(seatSearch(file))
-
-
 # part 2 #
 def findSeat(file: str):
     map = [['.'] * 128] * 8
@@ -108,7 +105,7 @@ def findSeat(file: str):
             seatSearchC, h_column, l_column = binarySearchColumn(
                 seat[n], h_column, l_column)
 
-        map[seatSearchC][seatSearchR] = 'X'
+        map[seatSearchC][seatSearchR] = 'X'  # only marking ~half the seats
     print(map)
 
     total = 0
@@ -118,4 +115,6 @@ def findSeat(file: str):
     print("total seats:", z)
 
 
-findSeat(file)
+if __name__ == '__main__':
+    print("Part 1:", seatSearch(file))
+    print("Part 2", findSeat(file))
