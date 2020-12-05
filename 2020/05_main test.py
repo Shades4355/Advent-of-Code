@@ -7,7 +7,7 @@ def seatSearch(file: str):
 
     highestSeatID = 0
     with open(file) as inputFile:
-        data = inputFile.read().split('\n')
+        data = ['BFFFBBFRRR']
 
     for seat in data:
         n = 0
@@ -22,16 +22,18 @@ def seatSearch(file: str):
         for n in range(len(seat)-3):
             seatSearchR, h_row, l_row = binarySearchROW(
                 seat[n], h_row, l_row)
+            print("seat search r:", seatSearchR)
 
         # for each L/R in seat[-3] through seat[-1] (inclusive)
         # narrow down the possible seats
         for n in range(-3, 0, 1):
             seatSearchC, h_column, l_column = binarySearchColumn(
                 seat[n], h_column, l_column)
+            print("seat search C:", seatSearchC)
 
         # seat ID = row * 8 + column
         seatID = seatSearchR * 8 + seatSearchC
-
+        print('~' * 40)
         # find highest seat ID
         if seatID > highestSeatID:
             highestSeatID = seatID
@@ -74,3 +76,11 @@ def binarySearchColumn(highLow: str, high: int, low: int):
 
 
 print(seatSearch(file))
+
+
+# wrong answers: 893, 990
+
+# manual check:
+# highest possible row = 127
+# highest possible column = 7
+# highest possible seatID = 1023
