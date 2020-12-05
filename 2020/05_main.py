@@ -69,7 +69,7 @@ def binarySearchColumn(rightLeft: str, high: int, low: int):
 
 
 def findSeat(file: str):
-    map = [['.'] * 128 for i in range(8)]
+    map = [['.'] * 8 for i in range(128)]
 
     with open(file) as inputFile:
         data = inputFile.read().split('\n')
@@ -82,10 +82,10 @@ def findSeat(file: str):
         # binary search
         seatSearchR, seatSearchC = siftThroughSeats(seat)
 
-        if map[seatSearchC][seatSearchR] == '.':
-            map[seatSearchC][seatSearchR] = 'X'
+        if map[seatSearchR][seatSearchC] == '.':
+            map[seatSearchR][seatSearchC] = 'X'
         else:
-            return "Error, map[seatSearchC][seatSearchR] = {} at seat #{}".format(map[seatSearchC][seatSearchR], z)
+            return "Error, map[seatSearchR][seatSearchC] = {} at seat #{}".format(map[seatSearchR][seatSearchC], z)
     row, column = locateSeat(map)
 
     return row * 8 + column
@@ -129,7 +129,7 @@ def locateSeat(list: list):
             else:
                 x = 0
             if x == 2:
-                return j - 1, i
+                return i, j - 1
     return None, None
 
 
