@@ -15,7 +15,7 @@ def seatSearch(file: str):
         h_row = 127
 
         l_column = 0
-        h_column = 8
+        h_column = 7
 
         # for each F/B in seat[0] through seat[-3] (exclusive)
         # narrow down the possible seat rows
@@ -75,12 +75,47 @@ def binarySearchColumn(highLow: str, high: int, low: int):
     return guess, high, low
 
 
-print(seatSearch(file))
+# print(seatSearch(file))
 
 
-# wrong answers: 893, 990
+# part 2 #
+def findSeat(file: str):
+    map = [['.'] * 128] * 8
 
-# manual check:
-# highest possible row = 127
-# highest possible column = 7
-# highest possible seatID = 1023
+    with open(file) as inputFile:
+        data = inputFile.read().split('\n')
+
+    z = 0
+
+    for seat in data:
+        z += 1
+        n = 0
+        l_row = 0
+        h_row = 127
+
+        l_column = 0
+        h_column = 7
+
+        # for each F/B in seat[0] through seat[-3] (exclusive)
+        # narrow down the possible seat rows
+        for n in range(len(seat)-3):
+            seatSearchR, h_row, l_row = binarySearchROW(
+                seat[n], h_row, l_row)
+
+        # for each L/R in seat[-3] through seat[-1] (inclusive)
+        # narrow down the possible seats
+        for n in range(-3, 0, 1):
+            seatSearchC, h_column, l_column = binarySearchColumn(
+                seat[n], h_column, l_column)
+
+        map[seatSearchC][seatSearchR] = 'X'
+    print(map)
+
+    total = 0
+    for n in range(len(map)):
+        total += map[n].count("X")
+    print("count of X:", total)
+    print("total seats:", z)
+
+
+findSeat(file)

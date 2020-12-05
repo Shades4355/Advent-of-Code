@@ -1,6 +1,8 @@
 
 file = "2020/05_data.txt"
 
+# part 1 #
+
 
 def seatSearch(file: str):
     "A Binary Search function"
@@ -15,7 +17,7 @@ def seatSearch(file: str):
         h_row = 127
 
         l_column = 0
-        h_column = 8
+        h_column = 7
 
         # for each F/B in seat[0] through seat[-3] (exclusive)
         # narrow down the possible seat rows
@@ -74,3 +76,39 @@ def binarySearchColumn(highLow: str, high: int, low: int):
 
 
 print(seatSearch(file))
+
+
+# part 2 #
+def findSeat(file: str):
+    map = [['.'] * 128] * 8
+
+    with open(file) as inputFile:
+        data = inputFile.read().split('\n')
+
+    z = 0
+
+    for seat in data:
+        z += 1
+        n = 0
+        l_row = 0
+        h_row = 127
+
+        l_column = 0
+        h_column = 7
+
+        # for each F/B in seat[0] through seat[-3] (exclusive)
+        # narrow down the possible seat rows
+        for n in range(len(seat)-3):
+            seatSearchR, h_row, l_row = binarySearchROW(
+                seat[n], h_row, l_row)
+
+        # for each L/R in seat[-3] through seat[-1] (inclusive)
+        # narrow down the possible seats
+        for n in range(-3, 0, 1):
+            seatSearchC, h_column, l_column = binarySearchColumn(
+                seat[n], h_column, l_column)
+
+        map[seatSearchC][seatSearchR] = 'X'
+
+
+findSeat(file)
