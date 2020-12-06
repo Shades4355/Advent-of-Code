@@ -1,9 +1,10 @@
+import collections
 with open("2020/06_data.txt", "r") as fileInput:
     data = fileInput.read()
 
 
 # part 1 #
-def countYeses(data: str):
+def countAnyYeses(data: str):
     passengersList = data.split('\n\n')
     total = 0
 
@@ -23,4 +24,30 @@ def countYeses(data: str):
     return total
 
 
-print("Part 1:", countYeses(data))  # 6351
+# Part 2 #
+
+def countAllYeses(data):
+    passengersList = data.split('\n\n')
+    total = 0
+
+    for i in range(len(passengersList)):
+        group = passengersList[i].split('\n')
+        groupAnswers = []
+
+        for answers in group:
+            answer = [char for char in answers]
+
+            for char in answer:
+                groupAnswers.append(char)
+
+        countedAnswers = collections.Counter(groupAnswers)
+
+        for key in countedAnswers:
+            if countedAnswers[key] - len(group) >= 0:
+                total += 1
+
+    return total
+
+
+print("Part 1:", countAnyYeses(data))  # 6351
+print("Part 2:", countAllYeses(data))  # 3143
