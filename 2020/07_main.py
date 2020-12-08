@@ -102,6 +102,4 @@ def bagCalculater(bag: str, all_bags: dict):
 
 if __name__ == "__main__":
     print("Part 1", bagPuzzle1(data))  # 222
-    print("Part 2", bagPuzzle2(data))
-
-    # too low: 11,604
+    print("Part 2", bagPuzzle2(data))  # 13264
