@@ -36,7 +36,7 @@ def seatShuffle(floorplan: list):
                 # If a seat is empty (L) and there are no occupied seats
                 # adjacent to it, the seat becomes occupied.
                 if floorplan[i][j] == "L":
-                    if not occupiedSeat(floorplan, i, j - 1) and not occupiedSeat(floorplan, i, j + 1) and not occupiedSeat(floorplan, i - 1, j) and not occupiedSeat(floorplan, i + 1, j) and not occupiedSeat(floorplan, i - 1, j - 1) and not occupiedSeat(floorplan, i - 1, j + 1) and not occupiedSeat(floorplan, i + 1, j + 1) and not occupiedSeat(floorplan, i + 1, j - 1):
+                    if seatCheck(floorplan, i, j) == 0:
                         sitting.append((i, j))
                         change.append(True)
 
@@ -44,25 +44,7 @@ def seatShuffle(floorplan: list):
                 # adjacent to it are also occupied, the seat becomes empty.
                 # Otherwise, the seat's state does not change.
                 elif floorplan[i][j] == "#":
-                    occupied_seats = 0
-                    if occupiedSeat(floorplan, i, j - 1):
-                        occupied_seats += 1
-                    if occupiedSeat(floorplan, i, j + 1):
-                        occupied_seats += 1
-                    if occupiedSeat(floorplan, i + 1, j - 1):
-                        occupied_seats += 1
-                    if occupiedSeat(floorplan, i + 1, j + 1):
-                        occupied_seats += 1
-                    if occupiedSeat(floorplan, i + 1, j):
-                        occupied_seats += 1
-                    if occupiedSeat(floorplan, i - 1, j):
-                        occupied_seats += 1
-                    if occupiedSeat(floorplan, i - 1, j - 1):
-                        occupied_seats += 1
-                    if occupiedSeat(floorplan, i - 1, j + 1):
-                        occupied_seats += 1
-
-                    if occupied_seats >= 4:
+                    if seatCheck(floorplan, i, j) >= 4:
                         vacating.append((i, j))
                         change.append(True)
 
@@ -83,19 +65,29 @@ def seatShuffle(floorplan: list):
     return seats
 
 
-def occupiedSeat(list, i, j):
-    if i == -1:
-        return False
-    if j == -1:
-        return False
-    try:
-        if list[i][j] == "#":
-            return True
-        else:
-            return False
-    except:
-        return False
+def occupiedSeat(seatList: list, i: int, j: int):
+    if 0 <= i < len(seatList) and 0 <= j < len(seatList[i]):
+        return seatList[i][j] == "#"
+    return False
+
+
+def seatCheck(seatList: list, i: int, j: int):
+    occupied_seats = 0
+    for k in range(i - 1, i + 2):
+        for l in range(j - 1, j + 2):
+            if not k == i or not l == j:
+                if occupiedSeat(seatList, k, l):
+                    occupied_seats += 1
+    return occupied_seats
+
+# Part 2 #
+
+
+def seatSeeing(floorplan: list):
+    pass
 
 
 if __name__ == "__main__":
-    print("Part 1:", seatShuffle(floorplan))  # 37
+    print("Part 1, test:", seatShuffle(test_floorplan))  # 37
+    print("Part 1:", seatShuffle(floorplan))
+    print("Part 2, test:")
