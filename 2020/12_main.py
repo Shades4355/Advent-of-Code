@@ -21,8 +21,8 @@ for i in test_data:
 # Part 1 #
 def manhattanDistance(directions):
     heading = ["N", "E", "S", "W"]
-    y = 1
-    current_heading = heading[y]
+    heading_variable = 1
+    current_heading = heading[heading_variable]
     north_south = 0
     east_west = 0
 
@@ -41,17 +41,17 @@ def manhattanDistance(directions):
             east_west -= distance
 
         elif direction == "R":
-            x = distance // 90
-            y += x
-            if y >= len(heading):
-                y -= len(heading)
-            current_heading = heading[y]
+            change_in_direction = distance // 90
+            heading_variable += change_in_direction
+            if heading_variable >= len(heading):
+                heading_variable -= len(heading)
+            current_heading = heading[heading_variable]
         elif direction == "L":
-            x = distance // 90
-            y -= x
-            if y < 0:
-                y += len(heading)
-            current_heading = heading[y]
+            change_in_direction = distance // 90
+            heading_variable -= change_in_direction
+            if heading_variable < 0:
+                heading_variable += len(heading)
+            current_heading = heading[heading_variable]
 
     return abs(north_south) + abs(east_west)
 
