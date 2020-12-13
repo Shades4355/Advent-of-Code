@@ -116,10 +116,6 @@ def seatSeeing(floorplan: list):
         for i, j in vacating:
             floorplan[i][j] = "L"
 
-        for k in floorplan:
-            print("".join(k))
-        breakpoint()
-
         if not True in change:
             break
 
@@ -153,7 +149,7 @@ def checkHorizontal(seatList: list, i: int, j: int):
             break
 
     # check left (j minus)
-    for k in range(0, j - 1):
+    for k in range(j-1, -1, -1):
         if k == -1:  # at wall
             break
         if seatList[i][k] == "#":
@@ -168,7 +164,7 @@ def checkHorizontal(seatList: list, i: int, j: int):
 def checkVertical(seatList: list, i: int, j: int):
     occupied_seats = 0
 
-    # check front (i plus)
+    # check back (i plus)
     for k in range(i + 1, len(seatList) + 1):
         if k >= len(seatList):  # at wall
             break
@@ -178,14 +174,14 @@ def checkVertical(seatList: list, i: int, j: int):
         if seatList[k][j] == "L":
             break
 
-    # check back (i minus)
-    for k in range(0, i - 1):
-        if k == -1:  # at wall
+    # check front (i minus)
+    for l in range(i - 1, -1, -1):
+        if l == -1:  # at wall
             break
-        if seatList[k][j] == "#":
+        if seatList[l][j] == "#":
             occupied_seats += 1
             break
-        if seatList[k][j] == "L":
+        if seatList[l][j] == "L":
             break
 
     return occupied_seats
@@ -194,6 +190,7 @@ def checkVertical(seatList: list, i: int, j: int):
 def checkDiagonal(seatList: list, i: int, j: int):
     occupied_seats = 0
 
+    # front and right
     for k in range(1, len(seatList) // 2):
         if i + k >= len(seatList) or j + k >= len(seatList[i]):  # at wall
             break
@@ -203,7 +200,8 @@ def checkDiagonal(seatList: list, i: int, j: int):
         if seatList[i + k][j + k] == "L":
             break
 
-    for k in range(-1, -len(seatList) // 2):
+    # back and left
+    for k in range(-1, -len(seatList) // 2, -1):
         if i + k <= -1 or j + k <= -1:  # at wall
             break
         if seatList[i + k][j + k] == "#":
@@ -212,7 +210,10 @@ def checkDiagonal(seatList: list, i: int, j: int):
         if seatList[i + k][j + k] == "L":
             break
 
+    # front and left
     for k in range(1, len(seatList) // 2):
+        if k == 0:
+            break
         if i + k >= len(seatList) or j - k == -1:  # at wall
             break
         if seatList[i + k][j - k] == "#":
@@ -221,7 +222,10 @@ def checkDiagonal(seatList: list, i: int, j: int):
         if seatList[i + k][j - k] == "L":
             break
 
+    # back and right
     for k in range(1, len(seatList) // 2):
+        if k == 0:
+            break
         if i - k <= -1 or j + k >= len(seatList[i]):  # at wall
             break
         if seatList[i - k][j + k] == "#":
@@ -236,4 +240,5 @@ def checkDiagonal(seatList: list, i: int, j: int):
 if __name__ == "__main__":
     # print("Part 1, test:", seatShuffle(test_floorplan))  # 37
     # print("Part 1:", seatShuffle(floorplan))
-    print("Part 2, test:", seatSeeing(test_floorplan))  # 26
+    # print("Part 2, test:", seatSeeing(test_floorplan))  # 26
+    print("Part 2:", seatSeeing(floorplan))
