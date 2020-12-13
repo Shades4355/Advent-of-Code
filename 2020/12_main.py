@@ -19,7 +19,7 @@ for i in test_data:
 
 
 # Part 1 #
-def manhattanDistance(directions):
+def manhattanDistance(directions: list):
     heading = ["N", "E", "S", "W"]
     heading_variable = 1
     current_heading = heading[heading_variable]
@@ -55,8 +55,126 @@ def manhattanDistance(directions):
 
     return abs(north_south) + abs(east_west)
 
+# Part 2 #
+
+
+def waypointShift(directions: list, s1: int, s2: int):
+    heading = ["N", "E", "S", "W"]
+    heading_variable = 0
+    current_heading = heading[heading_variable]
+
+    heading_1 = s1
+    heading_2 = s2
+    ship = [0, 0]
+    waypoint = [[heading[heading_variable], heading_1],
+                [heading[heading_variable + 1], heading_2]]
+    waypoint1 = waypoint[0]
+    waypoint2 = waypoint[1]
+
+    manhattan_distance = 0
+
+    for direction, distance in directions:
+        if direction == "F":
+            # move towards waypoint (distance) times
+            pass
+        elif direction == "R":
+            # rotate waypoint clockwise around the ship (distance) degrees
+            change_in_direction = distance // 90
+
+            for _ in range(change_in_direction):
+
+                heading_variable += 1
+
+                if heading_variable >= len(heading):
+                    heading_variable -= len(heading)
+                if waypoint1[0] == "N" or waypoint1[0] == "S":
+                    waypoint1 = [heading[heading_variable], waypoint1[1]]
+                elif waypoint1[0] == "E" or waypoint1[0] == "W":
+                    waypoint1 = [heading[heading_variable], -waypoint1[1]]
+
+                if heading_variable + 1 >= len(heading):
+                    heading_variable -= len(heading) - 1
+                if waypoint2[0] == "N" or waypoint2[0] == "S":
+                    waypoint2 = [heading[heading_variable + 1], waypoint2[1]]
+                elif waypoint2[0] == "E" or waypoint2[0] == "W":
+                    waypoint2 = [heading[heading_variable + 1], -waypoint2[1]]
+
+        elif direction == "L":
+            # rotate waypoint counter-clockwise around the
+            # ship (distance) degrees
+            change_in_direction = distance // 90
+
+            for _ in range(change_in_direction):
+
+                heading_variable -= 1
+
+                if heading_variable < 0:
+                    heading_variable += len(heading)
+                if waypoint1[0] == "E" or waypoint1[0] == "W":
+                    waypoint1 = [heading[heading_variable], waypoint1[1]]
+                elif waypoint1[0] == "N" or waypoint1[0] == "S":
+                    waypoint1 = [heading[heading_variable], -waypoint1[1]]
+
+                if heading_variable + 1 >= len(heading):
+                    heading_variable -= len(heading) - 1
+                if waypoint2[0] == "E" or waypoint2[0] == "W":
+                    waypoint2 = [heading[heading_variable + 1], waypoint2[1]]
+                elif waypoint2[0] == "N" or waypoint2[0] == "S":
+                    waypoint2 = [heading[heading_variable + 1], -waypoint2[1]]
+
+        if direction == "N":
+            # move waypoint North
+            if waypoint1[0] == "N" or waypoint1[0] == "S":
+                waypoint1[1] += distance
+            elif waypoint2[0] == "N" or waypoint2[0] == "S":
+                waypoint2[1] += distance
+        elif direction == "S":
+            # move waypoint South
+            if waypoint1[0] == "N" or waypoint1[0] == "S":
+                waypoint1[1] -= distance
+            elif waypoint2[0] == "N" or waypoint2[0] == "S":
+                waypoint2[1] -= distance
+        elif direction == "E":
+            # move waypoint East
+            if waypoint1[0] == "E" or waypoint1[0] == "W":
+                waypoint1[1] += distance
+            elif waypoint2[0] == "E" or waypoint2[0] == "W":
+                waypoint2[1] += distance
+        elif direction == "W":
+            # move waypoint West
+            if waypoint1[0] == "E" or waypoint1[0] == "W":
+                waypoint1[1] -= distance
+            elif waypoint2[0] == "E" or waypoint2[0] == "W":
+                waypoint2[1] -= distance
+
+        elif direction == "F":
+            # move the ship forawrd distance times
+            # moving waypoint1[1], waypoint2[1] units each time
+            for _ in range(distance):
+                if waypoint1[0] == "N" or waypoint1[0] == "S":
+                    ship[0] += waypoint1[1]
+                elif waypoint1[0] == "E" or waypoint1[0] == "W":
+                    ship[1] += waypoint1[1]
+
+                if waypoint2[0] == "N" or waypoint2[0] == "S":
+                    ship[0] += waypoint2[1]
+                elif waypoint2[0] == "E" or waypoint2[0] == "W":
+                    ship[1] += waypoint2[1]
+            pass
+
+    waypoint_off_ships_bow = abs(waypoint1[1]) + abs(waypoint2[1])
+    manhattan_distance = abs(ship[0]) + abs(ship[1])
+    starting_location = abs(s1) + abs(s2)
+
+    return manhattan_distance + starting_location
+
 
 if __name__ == "__main__":
     # print("Part 1, test:", manhattanDistance(processed_test_data)) # 25
-    print("Part 1:", manhattanDistance(processed_data))
+    # print("Part 1:", manhattanDistance(processed_data))
+    # print("Part 2, test:", waypointShift(processed_test_data, 1, 10))
+    print("Part 2:", waypointShift(processed_data, 1, 10))
     pass
+
+
+# too high: 71168, 71146
