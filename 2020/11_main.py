@@ -84,10 +84,156 @@ def seatCheck(seatList: list, i: int, j: int):
 
 
 def seatSeeing(floorplan: list):
-    pass
+    seats = 0
+
+    while True:
+        change = list()
+        sitting = list()
+        vacating = list()
+
+        for i in range(len(floorplan)):
+            for j in range(len(floorplan[i])):
+                # If a seat is empty (L) and there are no occupied seats
+                # adjacent to it, the seat becomes occupied.
+                if floorplan[i][j] == "L":
+                    if advanvedSeatCheck(floorplan, i, j) == 0:
+                        sitting.append((i, j))
+                        change.append(True)
+
+                # If a seat is occupied (#) and four or more seats
+                # adjacent to it are also occupied, the seat becomes empty.
+                # Otherwise, the seat's state does not change.
+                elif floorplan[i][j] == "#":
+                    if advanvedSeatCheck(floorplan, i, j) >= 5:
+                        vacating.append((i, j))
+                        change.append(True)
+
+                # Floor (.) never changes; seats don't move, and nobody sits on the floor.
+
+        for i, j in sitting:
+            floorplan[i][j] = "#"
+
+        for i, j in vacating:
+            floorplan[i][j] = "L"
+
+        for k in floorplan:
+            print("".join(k))
+        breakpoint()
+
+        if not True in change:
+            break
+
+    for k in floorplan:
+        seats += k.count("#")
+
+    return seats
+
+
+def advanvedSeatCheck(seatList: list, i: int, j: int):
+    occupied_seats = 0
+
+    occupied_seats += checkHorizontal(seatList, i, j)
+    occupied_seats += checkVertical(seatList, i, j)
+    occupied_seats += checkDiagonal(seatList, i, j)
+
+    return occupied_seats
+
+
+def checkHorizontal(seatList: list, i: int, j: int):
+    occupied_seats = 0
+
+    # check right (j plus)
+    for k in range(j + 1, len(seatList[i]) + 1):
+        if k >= len(seatList[i]):  # at wall
+            break
+        if seatList[i][k] == "#":
+            occupied_seats += 1
+            break
+        if seatList[i][k] == "L":
+            break
+
+    # check left (j minus)
+    for k in range(0, j - 1):
+        if k == -1:  # at wall
+            break
+        if seatList[i][k] == "#":
+            occupied_seats += 1
+            break
+        if seatList[i][k] == "L":
+            break
+
+    return occupied_seats
+
+
+def checkVertical(seatList: list, i: int, j: int):
+    occupied_seats = 0
+
+    # check front (i plus)
+    for k in range(i + 1, len(seatList) + 1):
+        if k >= len(seatList):  # at wall
+            break
+        if seatList[k][j] == "#":
+            occupied_seats += 1
+            break
+        if seatList[k][j] == "L":
+            break
+
+    # check back (i minus)
+    for k in range(0, i - 1):
+        if k == -1:  # at wall
+            break
+        if seatList[k][j] == "#":
+            occupied_seats += 1
+            break
+        if seatList[k][j] == "L":
+            break
+
+    return occupied_seats
+
+
+def checkDiagonal(seatList: list, i: int, j: int):
+    occupied_seats = 0
+
+    for k in range(1, len(seatList) // 2):
+        if i + k >= len(seatList) or j + k >= len(seatList[i]):  # at wall
+            break
+        if seatList[i + k][j + k] == "#":
+            occupied_seats += 1
+            break
+        if seatList[i + k][j + k] == "L":
+            break
+
+    for k in range(-1, -len(seatList) // 2):
+        if i + k <= -1 or j + k <= -1:  # at wall
+            break
+        if seatList[i + k][j + k] == "#":
+            occupied_seats += 1
+            break
+        if seatList[i + k][j + k] == "L":
+            break
+
+    for k in range(1, len(seatList) // 2):
+        if i + k >= len(seatList) or j - k == -1:  # at wall
+            break
+        if seatList[i + k][j - k] == "#":
+            occupied_seats += 1
+            break
+        if seatList[i + k][j - k] == "L":
+            break
+
+    for k in range(1, len(seatList) // 2):
+        if i - k <= -1 or j + k >= len(seatList[i]):  # at wall
+            break
+        if seatList[i - k][j + k] == "#":
+            occupied_seats += 1
+            break
+        if seatList[i - k][j + k] == "L":
+            break
+
+    return occupied_seats
 
 
 if __name__ == "__main__":
-    print("Part 1, test:", seatShuffle(test_floorplan))  # 37
-    print("Part 1:", seatShuffle(floorplan))
-    print("Part 2, test:")
+    # print("Part 1, test:", seatShuffle(test_floorplan))  # 37
+    # print("Part 1:", seatShuffle(floorplan))
+    print("Part 2, test:", seatSeeing(test_floorplan))  # 26
