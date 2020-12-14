@@ -21,7 +21,6 @@ def bussFinder(departure_time: int, all_busses: list):
     for bus in all_busses:
         if not bus == "x":
             active_busses.append(int(bus))
-
     for bus in active_busses:
         bus_time = 0  # time the bus actually arrives
         bus_id = bus
@@ -32,10 +31,9 @@ def bussFinder(departure_time: int, all_busses: list):
     shortest_time = departure_time
     shortest_bus = 0
     for bus, time in bus_arrivals:
-
         # find bus with smallest difference from departure_time
         time_difference = time - departure_time
-        if time_difference < shortest_time:
+        if time_difference <= shortest_time:
             shortest_time = time_difference
             shortest_bus = bus
 
@@ -44,7 +42,5 @@ def bussFinder(departure_time: int, all_busses: list):
 
 if __name__ == "__main__":
     # print("Part 1, test:", bussFinder(test_leave_time, processed_test_busses))  # 295
-    print("Part 1:", bussFinder(test_leave_time, processed_busses))
+    print("Part 1:", bussFinder(leave_time, processed_busses))
     pass
-
-# wrong: 92
