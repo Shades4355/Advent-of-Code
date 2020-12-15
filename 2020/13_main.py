@@ -1,4 +1,4 @@
-with open("2020/13_test_data.txt") as input_test_file:
+with open("2020/13_custom_test_data.txt") as input_test_file:
     test_data = input_test_file.read().split('\n')
 test_leave_time = int(test_data[0])
 test_busses = test_data[1]
@@ -39,8 +39,56 @@ def bussFinder(departure_time: int, all_busses: list):
 
     return shortest_time * shortest_bus
 
+# Part 2 #
+
+
+class Bus(object):
+    def __init__(self, name, id, minutes_offset):
+        self.name = name
+        self.id = int(id)
+        self.minutes_offset = int(minutes_offset)
+
+
+def timestampHunter(busses: list):
+    bus_list = list()
+    earliest_time = 0
+
+    for num, bus in enumerate(busses):
+        if not bus == "x":
+            bus_list.append(Bus(name="Bus {}".format(bus),
+                                id=bus, minutes_offset=num))
+
+    earliest_time = findTime(bus_list, bus_list[0].id, 0, 0)
+
+    return earliest_time
+
+
+def findTime(busses: list, step: int, n: int, start: int):
+    # ax + bxy + cxyz + [...]
+    bus_1 = busses[n]
+    bus_2 = busses[n + 1]
+
+    answer = 0
+    m = 0
+    while True:
+        m += 1
+        time = start + (step * m)
+        print("m, n:", m, n)
+        print("step:", step)
+        print("time:", time)
+        print("~" * 20)
+        if (time + bus_2.minutes_offset) % bus_2.id == 0:
+            if n + 2 < len(busses):  # there are busses left
+                # recursive call
+                new_step = time
+                answer += findTime(busses, new_step, n + 1, time)
+                return answer
+            else:  # no busses left
+                return time
+
 
 if __name__ == "__main__":
     # print("Part 1, test:", bussFinder(test_leave_time, processed_test_busses))  # 295
-    print("Part 1:", bussFinder(leave_time, processed_busses))
+    # print("Part 1:", bussFinder(leave_time, processed_busses))
+    print("Part 2:", timestampHunter(processed_test_busses))  # 1068781
     pass
