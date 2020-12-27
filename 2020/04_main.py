@@ -28,7 +28,7 @@ def scannerRefined(batchData):
             total += 1
     return total
 
-def checkPassport( passport):
+def checkPassport(passport):
     if not re.search('byr:(19[2-9][0-9]|200[0-2])( |\n|$)', passport):
         return False
     if not re.search('iyr:(201[0-9]|2020)( |\n|$)', passport):
