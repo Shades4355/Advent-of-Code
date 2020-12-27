@@ -65,7 +65,7 @@ def manhattanDistance(directions: list):
 
     return abs(north_south) + abs(east_west)
 
-# Part 2 #  # WIP #
+# Part 2 #
 
 
 def waypointShift(directions: list, s1: int, s2: int):
