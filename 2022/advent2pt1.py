@@ -101,7 +101,7 @@ def find_score(rounds: list, current_score=0) -> list:
     return [total_score, num_of_rounds]
 
 
-def validate_answer(total_score, total_turns) -> None:
+def validate_answer(total_score: int, total_turns: int) -> None:
     '''Validates results from Rock-Paper-Scissors competition\n
     Returns "Answer too high!" if the input score is higher than that of a perfect game\n
     Returns "Answer too low!" if the input score is lower than a lose every round'''
