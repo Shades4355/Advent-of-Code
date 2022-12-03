@@ -1,8 +1,9 @@
 from advent2pt1 import open_file
 from advent3pt1 import priority
 
-# Every set of three lines in your list corresponds to a single group
 def groups_of_three(elves: list) -> list:
+    '''Group elves into lists of 3 elves\n
+    Returns a list of groups of 3 elves'''
     grouped_elves = []
     n = 0
 
@@ -27,8 +28,10 @@ def find_badge_items(group_of_elves: list) -> str:
     return badge_list
 
 
-# find priority of all items
 def add_priorities(badge_list: list) -> int:
+    '''Find total priority of all listed items\n
+    Returns an integer'''
+
     total = 0
     for badge in badge_list:
         total += priority(badge)
@@ -36,6 +39,8 @@ def add_priorities(badge_list: list) -> int:
 
 
 def start() -> None:
+    '''Program start'''
+
     elves = open_file("advent3pt1.txt")
     group_of_elves = groups_of_three(elves)
     badge_list = find_badge_items(group_of_elves)

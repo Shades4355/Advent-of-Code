@@ -51,7 +51,6 @@ def priority(item: str) -> int:
         return ord(item)  - 38
 
 
-# add values of found items
 def add_priorities(organized_bags: list) -> int:
     '''Takes in a list of organized bags\n
     Returns a total value of duplicate items'''
@@ -65,6 +64,8 @@ def add_priorities(organized_bags: list) -> int:
 
 
 def start():
+    '''Program run command'''
+    
     backpacks = open_file("advent3pt1.txt")
     pile_of_bags = organized_piles(backpacks)
     total = add_priorities(pile_of_bags)
