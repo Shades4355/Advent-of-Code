@@ -9,7 +9,7 @@ def organized_piles(backpacks: list) -> list:
 
     organized_piles = []
     for backpack in backpacks:
-        organized_piles.append(compartments(backpack))
+        organized_piles.append(compartments(backpack.strip()))
     return organized_piles
 
 
@@ -52,17 +52,28 @@ def priority(item: str) -> int:
 
 
 # add values of found items
+def add_priorities(organized_bags: list) -> int:
+    '''Takes in a list of organized bags\n
+    Returns a total value of duplicate items'''
+
+    total = 0
+    for comp_one, comp_two in organized_bags:
+        item = find_duplicates(comp_one, comp_two)
+        total += priority(item)
+
+    return total
+
+
+def start():
+    backpacks = open_file("advent3pt1.txt")
+    pile_of_bags = organized_piles(backpacks)
+    total = add_priorities(pile_of_bags)
+
+    print("Total:", total)
+
 
 #########
 # start #
 #########
 if __name__ == "__main__":
-    backpacks = open_file("advent3pt1.txt")
-    total = 0
-
-    for backpack in backpacks:
-        organized_pile = organized_piles(backpack)
-        for comp_one, comp_two in organized_pile:
-            item = find_duplicates(comp_one, comp_two)
-            total += priority(item)
-    print("total:", total)
+    start()
