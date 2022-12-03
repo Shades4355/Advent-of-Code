@@ -1,14 +1,18 @@
 
 
-def open_file(file: str, x: int) -> list:
+def open_file(file: str, x: int = 0) -> list:
     '''Open a file in the 2022 folder \n
-    Returns a list of first and X+1 values'''
+    If X is greater than 0, returns a list of first and X+1 values\n
+    Otherwise, returns a list containing one item per line of text'''
     file = open(f"2022/{file}", "r")
     lines = []
     n = 0
 
     for line in file:
-        lines.append((line[0], line[x]))
+        if x > 0:
+            lines.append((line[0], line[x]))
+        else:
+            lines.append(line)
     file.close()
 
     return lines
