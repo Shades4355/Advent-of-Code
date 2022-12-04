@@ -9,19 +9,19 @@ def elven_pairs(all_elves: list) -> list:
     
     for line in all_elves:
         index = line.index(",")
-        paired_elves.append([line[0:index], line[index+1:len(line)].strip()])
+        paired_elves.append([line[0:index], line[index + 1:len(line)].strip()])
     return paired_elves
                 
 
 # compare cleaning spaces
 def compare(elf_one: list, elf_two: list) -> bool:
     '''Compare to ranges\n
-    Return True if one range is fully in another'''
+    Return True if either range is fully in the other'''
     index_one = elf_one.index("-")
-    range_one = [elf_one[0:index_one], elf_one[index_one:len(elf_one)]]
+    range_one = [elf_one[0:index_one], elf_one[index_one + 1:len(elf_one)]]
     index_two = elf_two.index("-")
-    range_two = [elf_two[0:index_two], elf_two[index_two:len(elf_one)]]
-
+    range_two = [elf_two[0:index_two], elf_two[index_two + 1:len(elf_one)]]
+    
     if range_two[0] <= range_one[0] and range_one[1] <= range_two[1]:
         return True
     elif range_one[0] <= range_two[0] and range_two[1] <= range_one[1]:
