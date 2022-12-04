@@ -13,7 +13,7 @@ def elven_pairs(all_elves: list) -> list:
     return paired_elves
                 
 
-def compare(elf_one: str, elf_two: str) -> bool:
+def compare(elf_one: list, elf_two: list) -> bool:
     '''Compare two ranges\n
     Return True if either range is fully in the other'''
 
