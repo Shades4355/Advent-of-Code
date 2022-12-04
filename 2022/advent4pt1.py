@@ -20,11 +20,11 @@ def compare(elf_one: str, elf_two: str) -> bool:
     index_one = elf_one.index("-")
     range_one = [elf_one[0:index_one], elf_one[index_one + 1:len(elf_one)]]
     index_two = elf_two.index("-")
-    range_two = [elf_two[0:index_two], elf_two[index_two + 1:len(elf_one)]]
+    range_two = [elf_two[0:index_two], elf_two[index_two + 1:len(elf_two)]]
     
-    if range_two[0] <= range_one[0] and range_one[1] <= range_two[1]:
+    if int(range_two[0]) <= int(range_one[0]) and int(range_one[1]) <= int(range_two[1]):
         return True
-    elif range_one[0] <= range_two[0] and range_two[1] <= range_one[1]:
+    elif int(range_one[0]) <= int(range_two[0]) and int(range_two[1]) <= int(range_one[1]):
         return True
     return False
 
@@ -51,5 +51,3 @@ def start():
 
 if __name__ == "__main__":
     start()
-
-    # 529 = Too high
