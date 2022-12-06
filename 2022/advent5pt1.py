@@ -6,7 +6,7 @@ def parse_file(file: list) -> dict:
 
     dictionary = {
         "moves": [],
-        "boxes": []
+        "boxes": {}
         }
     for line in file:
         if line.startswith("move"):
@@ -34,22 +34,26 @@ def parse_file(file: list) -> dict:
             pos = {key: [start_pos, end_pos]}
             dictionary["moves"].append(pos)
         elif line.startswith("["):
-            ### take top input and outputs 9 arrays
+            ### take top input and outputs 9 dictionaries
             words = line.split(" ")
-            row_num = 0
-            array_of_boxes = [[], [], [], [], [], [], [], [], []]
+            row_num = 1
             for word in words:
                 try:
                     end_num_index = word.index("]")
-                    letter = word[1:end_num_index].strip()
-                    array_of_boxes[row_num].append(letter) # TODO: fix this to end up with [letter][row_number]
+                    letter = word[1:end_num_index]
+                    try:
+                        dictionary["boxes"][str(row_num)].insert(0, letter) # TODO: fix this to end up with [letter][row_number]
+                    except:
+                        dictionary["boxes"][str(row_num)] = []
+                        dictionary["boxes"][str(row_num)].insert(0, letter)
                     row_num += 1
                 except:
                     row_num += 1
                     continue
-            print(array_of_boxes)
-            dictionary["boxes"].append(array_of_boxes)
 
+    if not validate_num(sorted(dictionary["boxes"]), 9):
+        print("Error: Too Many Stacks Of Boxes!")
+        exit()
     return dictionary
 
 
@@ -85,10 +89,15 @@ def move_boxes(dictionary: dict) -> list:
     return box_stack
 
 
+def validate_num(to_be_checked: list, max: int) -> bool:
+    if len(to_be_checked) > max:
+        return False
+    return True
+
 def start() -> None:
     file = open_file("advent5.txt")
     dictionary = parse_file(file)
-    moved_boxes = move_boxes(dictionary)
+    # moved_boxes = move_boxes(dictionary)
 
 
 #########
