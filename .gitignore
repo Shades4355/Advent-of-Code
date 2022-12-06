@@ -142,5 +142,5 @@ cython_debug/
 
 # Mics
 .DS_Store
-ignore.py
+ignore.*
 ignore/
