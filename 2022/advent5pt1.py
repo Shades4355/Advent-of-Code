@@ -44,9 +44,7 @@ def parse_file(file: list) -> dict:
             for word in words:
                 row_num += 1
 
-                if word == "" or word == " ":
-                    continue
-                else:
+                if word != "" and word != " ":
                     letter = word
                     try:
                         dictionary["boxes"][str(row_num)].insert(0, letter)
@@ -66,52 +64,63 @@ def parse_file(file: list) -> dict:
 
 
 def move_boxes(dictionary: dict) -> list:
+    '''Move boxes from one stack to another'''
+
     inst_dict = dictionary["moves"]
     box_stack = dictionary["boxes"]
 
     for instructions in inst_dict:
-        for key, pair in instructions.items():
+        for how_many, pair in instructions.items():
             # move boxes from one stack to another
             boxes = []
             start_pos, end_pos = pair
 
-            for i in range(key):
-                try:
-                    box = box_stack[str(start_pos)].pop(-1)
-                except:
-                    continue
+            for i in range(how_many):
+                box = box_stack[str(start_pos)].pop(-1)
+                boxes.insert(0, box)
 
-                if box != "":
-                    boxes.append(box)
-
-            rev_boxes = reversed(boxes)
-            for box in rev_boxes:
+            for box in boxes:
                 box_stack[str(end_pos)].append(box)
-            
+
     return box_stack
 
 
-def read_answer(box_piles: object):
-    answer = []
+def read_answer(box_piles: object) -> str:
+    '''Read the top box in each stack, in order'''
 
-    for row, stack in box_piles.items():
-        box = stack[-1]
+    answer = []
+    
+    for i in range(1, len(box_piles.items()) + 1):
+        box = box_piles[str(i)][-1]
         answer.append(box)
+    
     return "".join(answer)
 
+
 def validate_num(to_be_checked: list, max: int) -> bool:
+    '''Validates if the length of a list is less than or equal to a max value\n
+    Returns False if length is greater than the max value'''
+
     if len(to_be_checked) > max:
         return False
     return True
 
+
 def start() -> None:
     file = open_file("advent5.txt")
     dictionary = parse_file(file)
+
+    # TODO: delete
+    with open("2022/ignore/day5pt1_box_start.txt", "w") as f:
+        for i in range(1, len(dictionary["boxes"].items()) + 1):
+            print(f"{i}:", dictionary["boxes"][str(i)], file=f)
+
     moved_boxes = move_boxes(dictionary)
-    
-    with open("2022/ignore/day5pt1_test.txt", "w") as f:
-        for row in moved_boxes.items():
-            print(row, file=f)
+
+    # TODO: delete
+    with open("2022/ignore/day5pt1_box_end.txt", "w") as f:
+        for i in range(1, len(moved_boxes.items()) + 1):
+            print(f"{i}:", moved_boxes[str(i)], file=f)
 
     answer = read_answer(moved_boxes)
 
@@ -125,3 +134,6 @@ if __name__ == "__main__":
     start()
 
     # not right: PWHWFGPZS
+    #            FHSWJPSWM
+    #            PWPWHGFZS
+    #            
