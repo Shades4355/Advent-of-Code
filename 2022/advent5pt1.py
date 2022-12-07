@@ -2,7 +2,7 @@ from advent2pt1 import open_file
 
 
 def parse_file(file: list) -> dict:
-    '''Parses file into a dictionary'''
+    '''Parses list into a dictionary'''
 
     dictionary = {
         "moves": [],
@@ -70,16 +70,12 @@ def move_boxes(dictionary: dict) -> list:
     box_stack = dictionary["boxes"]
 
     for instructions in inst_dict:
-        for how_many, pair in instructions.items():
+        for how_many, pair in instructions.items():   
             # move boxes from one stack to another
-            boxes = []
             start_pos, end_pos = pair
 
             for i in range(how_many):
-                box = box_stack[str(start_pos)].pop(-1)
-                boxes.insert(0, box)
-
-            for box in boxes:
+                box = box_stack[str(start_pos)].pop()
                 box_stack[str(end_pos)].append(box)
 
     return box_stack
@@ -89,7 +85,6 @@ def read_answer(box_piles: object) -> str:
     '''Read the top box in each stack, in order'''
 
     answer = []
-    
     for i in range(1, len(box_piles.items()) + 1):
         box = box_piles[str(i)][-1]
         answer.append(box)
@@ -109,19 +104,7 @@ def validate_num(to_be_checked: list, max: int) -> bool:
 def start() -> None:
     file = open_file("advent5.txt")
     dictionary = parse_file(file)
-
-    # TODO: delete
-    with open("2022/ignore/day5pt1_box_start.txt", "w") as f:
-        for i in range(1, len(dictionary["boxes"].items()) + 1):
-            print(f"{i}:", dictionary["boxes"][str(i)], file=f)
-
-    moved_boxes = move_boxes(dictionary)
-
-    # TODO: delete
-    with open("2022/ignore/day5pt1_box_end.txt", "w") as f:
-        for i in range(1, len(moved_boxes.items()) + 1):
-            print(f"{i}:", moved_boxes[str(i)], file=f)
-
+    moved_boxes = move_boxes(dictionary.copy())
     answer = read_answer(moved_boxes)
 
     print(answer)
@@ -130,10 +113,6 @@ def start() -> None:
 #########
 # start #
 #########
+
 if __name__ == "__main__":
     start()
-
-    # not right: PWHWFGPZS
-    #            FHSWJPSWM
-    #            PWPWHGFZS
-    #            
