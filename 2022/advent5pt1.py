@@ -34,60 +34,70 @@ def parse_file(file: list) -> dict:
             pos = {key: [start_pos, end_pos]}
             dictionary["moves"].append(pos)
         elif line.startswith("["):
-            ### take top input and outputs 9 dictionaries
-            words = line.split(" ")
-            row_num = 1
+            ### take top input and adds them to the dictionary
+            words = []
+            for i in range(1, 35, 4):
+                letter = line[i]
+                words.append(letter)
+            
+            row_num = 0
             for word in words:
-                try:
-                    end_num_index = word.index("]")
-                    letter = word[1:end_num_index]
+                row_num += 1
+
+                if word == "" or word == " ":
+                    continue
+                else:
+                    letter = word
                     try:
-                        dictionary["boxes"][str(row_num)].insert(0, letter) # TODO: fix this to end up with [letter][row_number]
+                        dictionary["boxes"][str(row_num)].insert(0, letter)
                     except:
                         dictionary["boxes"][str(row_num)] = []
                         dictionary["boxes"][str(row_num)].insert(0, letter)
-                    row_num += 1
-                except:
-                    row_num += 1
-                    continue
 
+                if row_num > 9:
+                    print('Error: "row_num" out of range!')
+                    exit()
+    
     if not validate_num(sorted(dictionary["boxes"]), 9):
         print("Error: Too Many Stacks Of Boxes!")
         exit()
+    
     return dictionary
 
 
 def move_boxes(dictionary: dict) -> list:
     inst_dict = dictionary["moves"]
     box_stack = dictionary["boxes"]
-    # for box_pile in box_stack:
-    #     print(box_pile)
+
     for instructions in inst_dict:
         for key, pair in instructions.items():
             # move boxes from one stack to another
             boxes = []
             start_pos, end_pos = pair
+
             for i in range(key):
-                n = i
-                loop = True
-                box = ""
-                while loop:
-                    try:
-                        box = box_stack[start_pos][n].pop(0) # TODO: fix
-                        print("Box:", box) # TODO: delete
-                    except IndexError:
-                        loop = False
-                    except:
-                        n += 1
-                    else:
-                        loop = False
+                try:
+                    box = box_stack[str(start_pos)].pop(-1)
+                except:
+                    continue
+
                 if box != "":
                     boxes.append(box)
-                print("Boxes:", boxes) # TODO: delete
-                
-    
+
+            rev_boxes = reversed(boxes)
+            for box in rev_boxes:
+                box_stack[str(end_pos)].append(box)
+            
     return box_stack
 
+
+def read_answer(box_piles: object):
+    answer = []
+
+    for row, stack in box_piles.items():
+        box = box_piles[row][-1]
+        answer.append(box)
+    return "".join(answer)
 
 def validate_num(to_be_checked: list, max: int) -> bool:
     if len(to_be_checked) > max:
@@ -97,7 +107,10 @@ def validate_num(to_be_checked: list, max: int) -> bool:
 def start() -> None:
     file = open_file("advent5.txt")
     dictionary = parse_file(file)
-    # moved_boxes = move_boxes(dictionary)
+    moved_boxes = move_boxes(dictionary)
+    answer = read_answer(moved_boxes)
+
+    print(answer)
 
 
 #########
@@ -105,3 +118,5 @@ def start() -> None:
 #########
 if __name__ == "__main__":
     start()
+
+    # not right: PWHWFGPZS
