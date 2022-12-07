@@ -26,7 +26,7 @@ def find_index(data_stream: list, data_chunk: str) -> int:
     '''Finds the index of (the last character in a string) in a list\n
     Returns an Integer'''
 
-    return "".join(data_stream).find(data_chunk) + 4
+    return "".join(data_stream).find(data_chunk) + len(data_chunk)
 
 
 def start():
@@ -43,4 +43,3 @@ def start():
 
 if __name__ == "__main__":
     start()
-    
