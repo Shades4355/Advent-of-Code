@@ -95,7 +95,7 @@ def read_answer(box_piles: object):
     answer = []
 
     for row, stack in box_piles.items():
-        box = box_piles[row][-1]
+        box = stack[-1]
         answer.append(box)
     return "".join(answer)
 
@@ -108,6 +108,11 @@ def start() -> None:
     file = open_file("advent5.txt")
     dictionary = parse_file(file)
     moved_boxes = move_boxes(dictionary)
+    
+    with open("2022/ignore/day5pt1_test.txt", "w") as f:
+        for row in moved_boxes.items():
+            print(row, file=f)
+
     answer = read_answer(moved_boxes)
 
     print(answer)
