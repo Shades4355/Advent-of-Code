@@ -14,16 +14,19 @@ def read_data(data_list: list) -> str:
 
     for i in range(0, len(data_list), 1):
         data_chunk = [data_list[i], data_list[i + 1], data_list[i + 2], data_list[i + 3]]
-        print(f"{i}:", data_chunk) # TODO: delete
+
         if len(data_chunk) == len(set(data_chunk)):
             return "".join(data_chunk)
+    
+    print("Error: no Marker found!")
+    exit()
 
 
 def find_index(data_stream: list, data_chunk: str) -> int:
-    '''Finds the index of a string in a list\n
+    '''Finds the index of (the last character in a string) in a list\n
     Returns an Integer'''
 
-    return "".join(data_stream).find(data_chunk)
+    return "".join(data_stream).find(data_chunk) + 4
 
 
 def start():
@@ -40,6 +43,4 @@ def start():
 
 if __name__ == "__main__":
     start()
-
-    # 1540 = Too Low
-    # 1541 = Too Low
+    
