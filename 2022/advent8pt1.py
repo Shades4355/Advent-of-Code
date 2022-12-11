@@ -59,6 +59,9 @@ def count_visible_trees(forest: list):
     Returns an Integer'''
 
     total = 0
+    total += len(forest) * 2 # add trees along the top and bottom
+    total += len(forest[0]) * 2 # add trees along the right and left
+    total -= 4 # account for corners being counted twice
 
     for i in range(1, len(forest) - 1):
         for j in range(1, len(forest[i]) - 1):
@@ -71,9 +74,9 @@ def count_visible_trees(forest: list):
 
 def start():
     forest = open_file("advent8.txt")
-    answer = count_visible_trees(forest)
+    tree_count = count_visible_trees(forest)
 
-    print(answer)
+    print(tree_count)
 
 
 #########
@@ -84,3 +87,4 @@ if __name__ == "__main__":
     start()
 
     # 593 = Too Low
+    # 896 = Wrong
