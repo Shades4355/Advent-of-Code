@@ -1,8 +1,8 @@
 
 def open_file(file: str) -> list:
     '''Open a file in the 2022 folder \n
-    If X is greater than 0, returns a list of first and X+1 values\n
-    Otherwise, returns a list containing one item per line of text'''
+    Returns a list containing one item per line of text'''
+
     file = open(f"2022/{file}", "r")
     lines = []
 
@@ -19,43 +19,61 @@ def open_file(file: str) -> list:
 
 ### how many trees are *visible* from outside the grid?
 
+
 def is_visible(tree: list, forest: list) -> bool:
+    '''tests if a tree is visible\n
+    Returns a boolean value: True if visible, False otherwise'''
+
     tree_row, tree_col = tree
-    tree = forest[tree_row, tree_col]
+    tree = forest[tree_row][tree_col]
     
     # if not visible, return False
-
     # if visible from adjacentcy, contue checking
+
+    # check left
+    for i in range(0, len(forest[tree_row][0:tree_col])):
+        if tree < forest[tree_row][i]:
+            return False
+
+    # check right    
+    for i in range(len(forest[tree_row][0:tree_col]) + 1, len(forest[tree_row])):
+        if tree < forest[tree_row][i]:
+            return False
+    
+    # check up
+    for i in range(0, len(forest[0:tree_row])):
+        if tree < forest[i][tree_col]:
+            return False
+
+    #check down
+    for i in range(len(forest[0:len(forest[tree_row + 1:])]), len(forest[tree_row])):
+        if tree < forest[i][tree_col]:
+            return False
+
     # if visible from edge, return True
     return True
 
 
-def find_tree(forest: list, current_tree: list=[0,0]):
-    tree = [0, 0]
+def count_visible_trees(forest: list):
+    '''Count the number of visible trees\n
+    Returns an Integer'''
 
-    if current_tree[0] <= 0:
-        tree = [1, 1]
-    elif current_tree[1] >= len(forest[current_tree[0]]) - 2:
-        adv_row = current_tree[0] + 1
-        col_start = 1
-        tree[adv_row, col_start] # TODO: fix. Registering as a tuple
-    else:
-        tree = [
-            current_tree[0], 
-            current_tree[1] + 1
-            ]
+    total = 0
 
-    return tree
+    for i in range(1, len(forest) - 1):
+        for j in range(1, len(forest[i]) - 1):
+            tree = [i, j]
+            if is_visible(tree, forest):
+                total += 1
+
+    return total
 
 
 def start():
     forest = open_file("advent8.txt")
-    
-    tree = find_tree(forest, [1, 98])
-    print(tree)
+    answer = count_visible_trees(forest)
 
-
-    
+    print(answer)
 
 
 #########
@@ -64,3 +82,5 @@ def start():
 
 if __name__ == "__main__":
     start()
+
+    # 593 = Too Low
