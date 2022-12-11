@@ -19,17 +19,44 @@ def open_file(file: str) -> list:
 
 ### how many trees are *visible* from outside the grid?
 
-def is_visible(tree: int, forest: list) -> bool:
+def is_visible(tree: list, forest: list) -> bool:
+    tree_row, tree_col = tree
+    tree = forest[tree_row, tree_col]
+    
     # if not visible, return False
+
     # if visible from adjacentcy, contue checking
     # if visible from edge, return True
     return True
 
 
+def find_tree(forest: list, current_tree: list=[0,0]):
+    tree = [0, 0]
+
+    if current_tree[0] <= 0:
+        tree = [1, 1]
+    elif current_tree[1] >= len(forest[current_tree[0]]) - 2:
+        adv_row = current_tree[0] + 1
+        col_start = 1
+        tree[adv_row, col_start] # TODO: fix. Registering as a tuple
+    else:
+        tree = [
+            current_tree[0], 
+            current_tree[1] + 1
+            ]
+
+    return tree
+
+
 def start():
     forest = open_file("advent8.txt")
     
-    print(forest)
+    tree = find_tree(forest, [1, 98])
+    print(tree)
+
+
+    
+
 
 #########
 # start #
