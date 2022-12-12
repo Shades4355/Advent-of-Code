@@ -1,4 +1,5 @@
 
+
 def open_file(file: str) -> list:
     '''Open a file in the 2022 folder \n
     Strips each line, then returns a list containing one item per line of text'''
@@ -12,25 +13,37 @@ def open_file(file: str) -> list:
 
     return lines
 
+
 def is_visible(tree: list, forest: list) -> bool:
     '''tests if a tree is visible\n
     Returns a boolean value: False if not visible, True otherwise'''
     
     tree_row, tree_col = tree
     tree = forest[tree_row][tree_col]
+    tree_bool = [True, True, True, True]
     
-    # check vertically
-    for i in range(0, len(forest)):
-        if tree < forest[i][tree_col]:
-            return False
+    # check left
+    for i in range(0, len(forest[tree_row][0:tree_col])):
+        if tree <= forest[tree_row][i]:
+            tree_bool[0] = False
 
-    # Check horizontally
-    for i in range(0, len(forest[tree_row])):
-        if tree < forest[tree_row][i]:
-            return False
+    # check right    
+    for i in range(len(forest[tree_row][0:tree_col]) + 1, len(forest[tree_row])):
+        if tree <= forest[tree_row][i]:
+            tree_bool[1] = False
+
+    # check up
+    for i in range(0, len(forest[0:tree_row])):
+        if tree <= forest[i][tree_col]:
+            tree_bool[2] = False
+
+    #check down
+    for i in range(len(forest[0:len(forest[tree_row:])]) + 1, len(forest[tree_row])):
+        if tree <= forest[i][tree_col]:
+            tree_bool[3] = False
 
     # if visible from edge, return True
-    return True
+    return any(tree_bool)
 
 
 def count_visible_trees(forest: list):
