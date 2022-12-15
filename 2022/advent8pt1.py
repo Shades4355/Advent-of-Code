@@ -19,30 +19,43 @@ def is_visible(tree: list, forest: list) -> bool:
     Returns a boolean value: False if not visible, True otherwise'''
     
     tree_row, tree_col = tree
-    tree = forest[tree_row][tree_col]
+    tree_height = forest[tree_row][tree_col]
     tree_bool = [True, True, True, True]
     
     # check left
     for i in range(0, len(forest[tree_row][0:tree_col])):
-        if tree <= forest[tree_row][i]:
+        if tree_height <= forest[tree_row][i]:
             tree_bool[0] = False
+            break
 
-    # check right    
-    for i in range(len(forest[tree_row][0:tree_col]) + 1, len(forest[tree_row])):
-        if tree <= forest[tree_row][i]:
-            tree_bool[1] = False
+    if tree_bool[0] == True:
+        return True
+    else:
+        # check right    
+        for i in range(len(forest[tree_row][0:tree_col]) + 1, len(forest[tree_row])):
+            if tree_height <= forest[tree_row][i]:
+                tree_bool[1] = False
+                break
 
-    # check up
-    for i in range(0, len(forest[0:tree_row])):
-        if tree <= forest[i][tree_col]:
-            tree_bool[2] = False
+    if tree_bool[1] == True:
+        return True
+    else:
+        # check up
+        for i in range(0, len(forest[0:tree_row])):
+            if tree_height <= forest[i][tree_col]:
+                tree_bool[2] = False
+                break
 
-    #check down
-    for i in range(len(forest[0:len(forest[tree_row:])]) + 1, len(forest[tree_row])):
-        if tree <= forest[i][tree_col]:
-            tree_bool[3] = False
+    if tree_bool[2] == True:
+        return True
+    else:
+        #check down
+        for i in range(len(forest[0:len(forest[tree_row:])]) + 1, len(forest[tree_row])):
+            if tree_height <= forest[i][tree_col]:
+                tree_bool[3] = False
+                break
 
-    # if visible from edge, return True
+    # if visible from any edge, return True
     return any(tree_bool)
 
 
