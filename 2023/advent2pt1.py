@@ -12,6 +12,7 @@ def get_input():
 
 
 def get_dic(games:list):
+    '''Converts a list into a dictionary'''
     dic = {}
     round_played = []
 
@@ -39,8 +40,40 @@ def get_dic(games:list):
     return dic
 
 
+def test_game(game_dic:dict):
+    '''Tests if a game is valid'''
+    # {round_num: {color: number}}
+    for round in game_dic:
+        for color in game_dic[round]:
+            num = int(game_dic[round][color])
+            if color == "red" and num > 12:
+                return False
+            elif color == "green" and num > 13:
+                return False
+            elif color == "blue" and num > 14:
+                return False
+
+    return True
+
+
+def add_ids(game_id_list:list):
+    total = 0
+
+    for id in game_id_list:
+        total += int(id)
+
+    return total
+
+
 def start():
     game_dic = get_dic(get_input())
+    # {game_id: {round_num: {color: number}}}
+    valid_games = []
+    for game_id in game_dic:
+        if test_game(game_dic[game_id]):
+            valid_games.append(game_id)
+
+    print(add_ids(valid_games))
     
 
 #########
