@@ -60,6 +60,9 @@ def check_word(current: int, cal_list:list, number:str):
     num_array = []
     location = 0
 
+    print("Current: ", current) # TODO: delete
+    print("Number: ", number) # TODO: delete
+
     for letter in number:
         num_array.append(letter)
 
@@ -68,6 +71,7 @@ def check_word(current: int, cal_list:list, number:str):
             return False
         location += 1
     return True
+
 
 def start():
     cal_list = []
