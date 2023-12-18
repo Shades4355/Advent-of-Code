@@ -65,9 +65,9 @@ def find_number(two_d_list:list):
     max_rows = len(two_d_list)
     rows = 0
     max_cols = find_max_column(two_d_list)
-    cols = 0
 
     while rows < max_rows:
+        cols = 0
         print("row:", rows) # TODO: delete
         while cols < max_cols:
             str_num = ""
