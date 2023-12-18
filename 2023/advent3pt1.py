@@ -68,20 +68,21 @@ def find_number(two_d_list:list):
 
     while rows < max_rows:
         cols = 0
-        print("row:", rows) # TODO: delete
         while cols < max_cols:
             str_num = ""
             if test_num(two_d_list[rows][cols]):
                 loop = True
                 i = 1
                 while loop:
-                    if test_num(two_d_list[rows][cols+i]):
-                        i += 1
-                    else:
+                    try:
+                        if test_num(two_d_list[rows][cols+i]):
+                            i += 1
+                        else:
+                            loop = False
+                    except:
                         loop = False
                 for j in range(0, i):
                     str_num += f"{two_d_list[rows][cols+j]}"
-                print("string number:", str_num) # TODO: delete
 
                 if test_adjacency(two_d_list, cols, cols+i, rows):
                     if test_num(str_num):
