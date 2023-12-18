@@ -111,6 +111,3 @@ def start():
 #########
 if __name__ == "__main__":
     start()
-
-
-# 3594 is too low
