@@ -2,7 +2,6 @@ from advent3pt1 import get_input, two_d_ify, find_max_column, test_num
 
 
 def find_gear(two_d_list:list):
-    total = 0
     max_rows = len(two_d_list)
     row = 0
     max_cols = find_max_column(two_d_list)
@@ -46,7 +45,12 @@ def find_num(two_d_list, row, col):
             right_looping = False
             end -= 1
 
+    # TODO: delete
+    print("begin:", begin)
+    print("end:", end)
+
     num_length = end - begin
+    print("num length:", num_length) # TODO: delete
     return [col + begin, num_length]
 
 
@@ -68,6 +72,7 @@ def test_gear(two_d_list:list, row:int, col:int):
         r += 1
 
     if check == 2:
+        print("True") # TODO: delete
         return True
     return False
 
@@ -86,8 +91,10 @@ def find_gear_ratio(two_d_list, row, col):
                     c = num_start + num_length
                     for i in range(0, num_length):
                         str_num += f"{two_d_list[row+r][num_start + i]}"
+                    print("number:", str_num) # TODO: delete
                     if test_num(str_num):
                         total *= int(str_num)
+                    str_num = ""
             except:
                 continue
             c += 1
