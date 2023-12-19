@@ -19,14 +19,16 @@ def find_gear(two_d_list:list):
     return gear_ratios
 
 
-def find_num(two_d_list, row, col):
+def find_num(two_d_list:list, row:int, col:int):
     left_looping = True
     begin = -1
     end = 0
 
     while left_looping:
         try:
+            print("left, try") # TODO: delete
             if test_num(two_d_list([row][col + begin])):
+                print("test num") # TODO: delete
                 begin -= 1
             else:
                 left_looping = False
@@ -46,11 +48,11 @@ def find_num(two_d_list, row, col):
             end -= 1
 
     # TODO: delete
-    print("begin:", begin)
-    print("end:", end)
+    # print("begin:", begin)
+    # print("end:", end)
 
     num_length = end - begin
-    print("num length:", num_length) # TODO: delete
+    # print("num length:", num_length) # TODO: delete
     return [col + begin, num_length]
 
 
@@ -77,7 +79,7 @@ def test_gear(two_d_list:list, row:int, col:int):
     return False
 
 
-def find_gear_ratio(two_d_list, row, col):
+def find_gear_ratio(two_d_list:list, row:int, col:int):
     total = 1    
     r = -1
     str_num = ""
@@ -104,7 +106,6 @@ def find_gear_ratio(two_d_list, row, col):
 
 
 def start():
-    total = 0
     engine_2d_list = []
 
     engine_2d_list = two_d_ify(get_input("advent3input.txt"))
