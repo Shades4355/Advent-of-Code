@@ -22,7 +22,7 @@ def find_gear(two_d_list:list):
 def find_num(two_d_list:list, row:int, col:int):
     left_looping = True
     begin = -1
-    end = 0
+    end = 1
 
     while left_looping:
         try:
@@ -32,6 +32,7 @@ def find_num(two_d_list:list, row:int, col:int):
                 begin -= 1
             else:
                 left_looping = False
+                begin += 1
         except:
             left_looping = False
             begin += 1
@@ -43,15 +44,16 @@ def find_num(two_d_list:list, row:int, col:int):
                 end += 1
             else:
                 right_looping = False
+                end -= 1
         except:
             right_looping = False
             end -= 1
 
     # TODO: delete
-    # print("begin:", begin)
-    # print("end:", end)
+    print("begin:", begin)
+    print("end:", end)
 
-    num_length = end - begin
+    num_length = end - begin + 1
     # print("num length:", num_length) # TODO: delete
     return [col + begin, num_length]
 
