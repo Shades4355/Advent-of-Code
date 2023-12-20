@@ -23,38 +23,33 @@ def find_num(two_d_list:list, row:int, col:int):
     left_looping = True
     begin = -1
     end = 1
+    max_col = find_max_column(two_d_list)
 
     while left_looping:
-        try:
-            print("left, try") # TODO: delete
-            if test_num(two_d_list([row][col + begin])):
-                print("test num") # TODO: delete
+        if (col + begin) >= 0:
+            if test_num(two_d_list[row][col + begin]):
                 begin -= 1
             else:
                 left_looping = False
                 begin += 1
-        except:
+        else:
             left_looping = False
             begin += 1
 
     right_looping = True
     while right_looping:
-        try:
-            if test_num(two_d_list([row][col + end])):
+        if (col + end) < max_col:
+            if test_num(two_d_list[row][col + end]):
                 end += 1
             else:
                 right_looping = False
                 end -= 1
-        except:
+        else:
             right_looping = False
             end -= 1
 
-    # TODO: delete
-    print("begin:", begin)
-    print("end:", end)
-
     num_length = end - begin + 1
-    # print("num length:", num_length) # TODO: delete
+
     return [col + begin, num_length]
 
 
@@ -121,3 +116,5 @@ def start():
 #########
 if __name__ == "__main__":
     start()
+
+# 65320597 = too low
