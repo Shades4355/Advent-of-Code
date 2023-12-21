@@ -33,11 +33,14 @@ class TestAdvent3pt2(unittest.TestCase):
         self.assertFalse(test_num("*"))
 
     def test_find_gear_ratio(self):
-        answer = 467 * 35
         engine_list = two_d_ify(get_input("day3pt2testInput.txt"))
-        valid_gear = [1, 3]
+        valid_gear_1 = [1, 3]
+        answer_1 = 16345 # 467 * 35
+        valid_gear_2 = [8, 5]
+        answer_2 = 451490 # 755 * 598
 
-        self.assertEqual(find_gear_ratio(engine_list, valid_gear[0], valid_gear[1]), answer)
+        self.assertEqual(find_gear_ratio(engine_list, valid_gear_1[0], valid_gear_1[1]), answer_1)
+        self.assertEqual(find_gear_ratio(engine_list, valid_gear_2[0], valid_gear_2[1]), answer_2)
 
 
 #########
