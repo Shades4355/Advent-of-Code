@@ -1,6 +1,6 @@
 import unittest
 from advent3pt1 import get_input, two_d_ify, test_num
-from advent3pt2 import two_d_ify, find_gear
+from advent3pt2 import two_d_ify, find_gear, test_gear
 
 
 class TestAdvent3pt2(unittest.TestCase):
@@ -13,6 +13,14 @@ class TestAdvent3pt2(unittest.TestCase):
         two_d_list = [["4", "6", "7", ".", ".", "1", "1", "4", ".", "."], [".", ".", ".", "*", ".", ".", ".", ".", ".", "."], [".", ".", "3", "5", ".", ".", "6", "3", "3", "."], [".", ".", ".", ".", ".", ".", "#", ".", ".", "."], ["6", "1", "7", "*", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", "+", ".", "5", "8", "."], [".", ".", "5", "9", "2", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "7", "5", "5", "."], [".", ".", ".", "$", ".", "*", ".", ".", ".", "."], [".", "6", "6", "4", ".", "5", "9", "8", ".", "."]]
 
         self.assertEqual(two_d_ify(get_input("day3pt2testInput.txt")), two_d_list)
+
+    def test_test_gear(self):
+        engine_list = two_d_ify(get_input("day3pt2testInput.txt"))
+        gear = test_gear(engine_list, 1, 3)
+        not_gear = test_gear(engine_list, 4, 3)
+        
+        self.assertTrue(gear)
+        self.assertFalse(not_gear)
 
     def test_find_gear(self):
         solution = 467835
