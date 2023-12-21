@@ -100,18 +100,19 @@ def find_gear_ratio(two_d_list:list, row:int, col:int):
     return total
 
 
-def start():
+def start(file:str):
     engine_2d_list = []
+    engine_2d_list = two_d_ify(get_input(file))
+    answer = find_gear(engine_2d_list)
 
-    engine_2d_list = two_d_ify(get_input("advent3input.txt"))
+    return answer
 
-    print(find_gear(engine_2d_list))
 
 
 #########
 # start #
 #########
 if __name__ == "__main__":
-    start()
+    print(start("advent3input.txt"))
 
 # 65320597 = too low
