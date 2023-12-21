@@ -40,8 +40,6 @@ def find_gear_ratio(two_d_list:list, row:int, col:int):
                     else:
                         raise Exception("test_num failed unexpectedly")
                     str_num = ""
-            else:
-                continue
             c += 1
         r += 1
 
