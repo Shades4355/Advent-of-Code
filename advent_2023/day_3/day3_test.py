@@ -16,7 +16,6 @@ class TestAdvent3pt2(unittest.TestCase):
 
     def test_find_gear(self):
         solution = 467835
-
         engine_list = two_d_ify(get_input("day3pt2testInput.txt"))
 
         self.assertEqual(find_gear(engine_list), solution)
