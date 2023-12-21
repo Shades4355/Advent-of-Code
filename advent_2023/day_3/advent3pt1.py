@@ -1,4 +1,5 @@
 def get_input(location:str):
+    '''parses a txt file into a 1D list'''
     array = []
     file = open(location, "r")
 
@@ -9,6 +10,7 @@ def get_input(location:str):
 
 
 def find_max_column(list:list):
+    '''Takes in a 2D list, and outputs an Int for the longest column'''
     max_col = 0
 
     for i in range(0, len(list)):
@@ -19,6 +21,7 @@ def find_max_column(list:list):
 
 
 def two_d_ify(engine_list:list):
+    '''Takes in a 1D list and converts it to a 2D list'''
     max_row = len(engine_list)
     max_col = find_max_column(engine_list)
 

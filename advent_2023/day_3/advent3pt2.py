@@ -71,7 +71,6 @@ def test_gear(two_d_list:list, row:int, col:int):
         r += 1
 
     if check == 2:
-        print("True") # TODO: delete
         return True
     return False
 
@@ -90,7 +89,6 @@ def find_gear_ratio(two_d_list:list, row:int, col:int):
                     c = num_start + num_length
                     for i in range(0, num_length):
                         str_num += f"{two_d_list[row+r][num_start + i]}"
-                    print("number:", str_num) # TODO: delete
                     if test_num(str_num):
                         total *= int(str_num)
                     str_num = ""
@@ -106,7 +104,6 @@ def start():
     engine_2d_list = []
 
     engine_2d_list = two_d_ify(get_input("advent3input.txt"))
-    
 
     print(find_gear(engine_2d_list))
 
