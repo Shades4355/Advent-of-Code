@@ -6,6 +6,8 @@ def get_input(location:str):
     for line in file:
         array.append(line.strip())
     
+    file.close()
+  
     return array
 
 
