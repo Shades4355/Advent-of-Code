@@ -1,6 +1,6 @@
 import unittest
-from advent_2023.day_3.advent3pt1 import get_input, two_d_ify
-from advent_2023.day_3.advent3pt2 import two_d_ify, find_gear
+from advent3pt1 import get_input, two_d_ify, test_num
+from advent3pt2 import two_d_ify, find_gear
 
 
 class TestAdvent3pt2(unittest.TestCase):
@@ -20,6 +20,10 @@ class TestAdvent3pt2(unittest.TestCase):
         engine_list = two_d_ify(get_input("day3pt2testInput.txt"))
 
         self.assertEqual(find_gear(engine_list), solution)
+    
+    def test_test_num(self):
+        self.assertTrue(test_num("5"))
+        self.assertFalse(test_num("*"))
 
 
 #########
