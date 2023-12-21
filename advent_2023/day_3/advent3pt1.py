@@ -7,7 +7,7 @@ def get_input(location:str):
         array.append(line.strip())
     
     file.close()
-
+  
     return array
 
 

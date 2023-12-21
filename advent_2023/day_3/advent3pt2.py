@@ -19,6 +19,7 @@ def find_gear(two_d_list:list):
     return gear_ratios
 
 
+
 def find_gear_ratio(two_d_list:list, row:int, col:int):
     total = 1    
     r = -1
