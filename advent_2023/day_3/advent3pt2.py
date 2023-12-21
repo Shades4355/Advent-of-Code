@@ -62,8 +62,8 @@ def test_gear(two_d_list:list, row:int, col:int):
         c = -1
         while c < 2:
             if 0 <= row + r < len(two_d_list) and 0 <= col + c < max_col:
-                if test_num(two_d_list[row+r][col+c]):
-                    num_start, num_length = find_num(two_d_list, row+r, col+c)
+                if test_num(two_d_list[row + r][col + c]):
+                    num_start, num_length = find_num(two_d_list, row + r, col + c)
                     check += 1
                     c = num_start + num_length
             else:
