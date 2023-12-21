@@ -1,6 +1,6 @@
 import unittest
 from advent3pt1 import get_input, two_d_ify, test_num
-from advent3pt2 import two_d_ify, find_gear, test_gear
+from advent3pt2 import two_d_ify, find_gear, test_gear, find_gear_ratio
 
 
 class TestAdvent3pt2(unittest.TestCase):
@@ -31,6 +31,13 @@ class TestAdvent3pt2(unittest.TestCase):
     def test_test_num(self):
         self.assertTrue(test_num("5"))
         self.assertFalse(test_num("*"))
+
+    def test_find_gear_ratio(self):
+        answer = 467 * 35
+        engine_list = two_d_ify(get_input("day3pt2testInput.txt"))
+        valid_gear = [1, 3]
+
+        self.assertEqual(find_gear_ratio(engine_list, valid_gear[0], valid_gear[1]), answer)
 
 
 #########
