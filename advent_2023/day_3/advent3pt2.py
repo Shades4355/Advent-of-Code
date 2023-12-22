@@ -27,28 +27,30 @@ def find_gear_ratio(two_d_list:list, row:int, col:int):
     r = -1
 
     # TODO: fix - gets stuck in infinite loop when encountering a 1 digit number
+    # (ex: two_d_list[44][45] = "9" in ".9.")
     while r < 2: # Unit Test fails when these While loops is replaced with For loops
         c = -1
+
+        # TODO: find_num is getting repeatedly called on the same coordinates (row: 44, col: 45)
         while c < 2:
-            if 0 <= row + r < max_row and 0 <= col + c < max_col:
-                # Test if two_d_list[row + r][col + c] is a number; returns True or False
-                if test_num(two_d_list[row + r][col + c]):
-                    # If the above is a number, iterate through it to find where it starts and how long it is
-                    start_offset, num_length = find_num(two_d_list, row + r, col + c)
-                    # set 'c' to the cha after the number, so we don't accidentally read the same number multiple times
+            if 0 <= row + r < max_row and 0 <= col + c < max_col and test_num(two_d_list[row + r][col + c]):
+                # If the above is a number, iterate through it to find where it starts and how long it is
+                start_offset, num_length = find_num(two_d_list, row + r, col + c)
 
-                    str_num = ""
-                    for i in range(0, num_length):
-                        # create a str of the number
-                        str_num += str(two_d_list[row + r][col + c + start_offset + i])
+                str_num = ""
+                for i in range(0, num_length):
+                    # create a str of the number
+                    str_num += str(two_d_list[row + r][col + c + start_offset + i])
 
-                    if test_num(str_num): # test that the str was created correctly
-                        total *= int(str_num) # multiply both gear ratios for this one gear together
-                    else:
-                        raise Exception("test_num failed unexpectedly\nERROR:", str_num)
+                if test_num(str_num): # test that the str was created correctly
+                    total *= int(str_num) # multiply both gear ratios for this one gear together
+                else:
+                    raise Exception("test_num failed unexpectedly\nERROR:", str_num)
 
-                    c += start_offset + num_length - 1
-            c += 1
+                # set 'c' to the cha after the number, so we don't accidentally read the same number multiple times
+                c += start_offset + num_length
+            else:
+                c += 1
         r += 1
 
     # return total gear ratio for this one gear
