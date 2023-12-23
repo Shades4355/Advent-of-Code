@@ -83,16 +83,6 @@ def find_num(two_d_list:list, row:int, col:int):
 
     num_length = end_offset - begin_offset
 
-    # TODO: delete
-    print("row:", row, "| col:", col)
-    print("triggering cha:", two_d_list[row][col])
-    print("start:", begin_offset,"| start cha:", two_d_list[row][col + begin_offset])
-    print("end:", end_offset)
-    print("num length:", num_length)
-    for i in range(0, num_length):
-        print(two_d_list[row][col + begin_offset + i], end="")
-    print("\n~~~~~~~~~~~~")
-
     # return the position of the beginning of the number and the number's length
     return [begin_offset, num_length]
 
@@ -111,7 +101,10 @@ def test_gear(two_d_list:list, row:int, col:int):
             if 0 <= row + r < len(two_d_list) and 0 <= col + c < max_col and test_num(two_d_list[row + r][col + c]):
                 start_offset, num_length = find_num(two_d_list, row + r, col + c)
                 check += 1
-                c = start_offset + num_length
+                if start_offset + num_length <= 0:
+                    c += 1
+                else:
+                    c += start_offset + num_length
             else:
                 c += 1
         r += 1
