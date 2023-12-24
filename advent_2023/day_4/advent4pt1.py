@@ -26,7 +26,7 @@ def parse_card(one_d_list:list):
         all_nums = []
         all_nums = numbers.split()
         
-        scratchcard[key] = [winning_numbers, all_nums]
+        scratchcard[" ".join(key.split())] = [winning_numbers, all_nums]
 
     return scratchcard
 
