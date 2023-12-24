@@ -13,34 +13,41 @@ def total_scratchcards(scratchcard_stack:dict):
     stack_of_cards['Card 1'] = 1
 
     # add cards to stack of cards (dict = str: int)
-    for key in scratchcard_stack:
-        num_wins = read_scratchcard(scratchcard_stack[key])
+    for card_num in range(1, len(scratchcard_stack) + 1):
+        current_card = f"Card {card_num}"
+        num_wins = read_scratchcard(scratchcard_stack[current_card])
         if num_wins > 0:
-            if card_num > len(scratchcard_stack):
-                raise Exception(f"Card_num too high: {card_num}")
             for i in range(1, num_wins + 1):
-                new_card = card_num + i
-                if new_card <= len(scratchcard_stack):
-                    add_cards = stack_of_cards[f"Card {card_num}"]
-                    if f"Card {new_card}" in stack_of_cards:
-                        stack_of_cards[f"Card {new_card}"] += add_cards
+                new_card_id = card_num + i
+                new_card = f"Card {new_card_id}"
+                if new_card_id <= len(scratchcard_stack):
+                    add_cards = stack_of_cards[current_card]
+                    if new_card in stack_of_cards:
+                        stack_of_cards[new_card] += add_cards
                     else:
-                        stack_of_cards[f"Card {new_card}"] = 1 + add_cards
+                        stack_of_cards[new_card] = 1 + add_cards
         else:
-            # If num of wins is 0, add original to stack; then continue
-            new_card = card_num + 1
-            if not new_card > len(scratchcard_stack):
-                stack_of_cards[f"Card {new_card}"] = 1
-        card_num += 1
+            # If num of wins is 0, 
+            new_card_id = card_num + 1
+            # ...and new card is within the range of the data set,
+            if new_card_id <= len(scratchcard_stack):
+                # ...add original to stack; then continue
+                if new_card in stack_of_cards:
+                    stack_of_cards[new_card] += 1
+                else:
+                    stack_of_cards[new_card] = 1
+            # ...if new card is outside data set; terminate loop
+            else:
+                break
 
     # finds the num of cards in the stack of cards
     num_cards = 0
     for i in stack_of_cards:
         # num_cards = only the copies in the stack_of_cards
-        num_cards += stack_of_cards[i] - 1
+        num_cards += stack_of_cards[i]
     
     # returns copies + originals
-    return num_cards + len(scratchcard_stack)
+    return num_cards
 
 
 def read_scratchcard(card:list):
@@ -49,11 +56,13 @@ def read_scratchcard(card:list):
     increments points by 1 if num is in the list of winning numbers'''
     total = 0
     num_wins = 0
+    numbers = card[1]
+    winning_num = card[0]
 
     # compare num in numbers section to list of 'Winning Numbers'
-    # If num is in 'winning numbers', increment total by 1
-    for num in card[1]:
-        if num in card[0]:
+    # If num is in 'winning numbers', increment 'total' by 1
+    for num in numbers:
+        if num in winning_num:
             num_wins += 1
     if num_wins > 0:
         total += num_wins
