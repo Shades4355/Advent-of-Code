@@ -32,9 +32,8 @@ def total_scratchcards(scratchcard_stack:dict):
             # ...and new card is within the range of the data set,
             if new_card_id <= len(scratchcard_stack):
                 # ...add original to stack; then continue
-                if new_card in stack_of_cards:
-                    stack_of_cards[new_card] += 1
-                else:
+                # if original already added to stack, do nothing
+                if not new_card in stack_of_cards:
                     stack_of_cards[new_card] = 1
             # ...if new card is outside data set; terminate loop
             else:
@@ -44,10 +43,10 @@ def total_scratchcards(scratchcard_stack:dict):
     num_cards = 0
     for i in stack_of_cards:
         # num_cards = only the copies in the stack_of_cards
-        num_cards += stack_of_cards[i]
+        num_cards += stack_of_cards[i] - 1
     
     # returns copies + originals
-    return num_cards
+    return num_cards + len(scratchcard_stack)
 
 
 def read_scratchcard(card:list):
