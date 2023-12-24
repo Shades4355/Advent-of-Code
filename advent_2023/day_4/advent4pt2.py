@@ -1,40 +1,59 @@
 from advent4pt1 import get_input, parse_card
 
-def total_scratchcards(scratchcard:dict):
+
+def total_scratchcards(scratchcard_stack:dict):
     '''Takes in a scratchcard dictionary; 
     outputs the total number of cards'''
-    stack_of_cards = []
+    # stack_of_cards - key = Card #
+    # value = the number of that card in the stack
+    stack_of_cards = {} 
     card_num = 1
 
-    # read one card at a time
-    for card_stack in scratchcard:
-        for card in card_stack:
-            for key in card:
-                num_wins = read_scratchcard(scratchcard, key)
-                if num_wins > 0:
-                    card_num += 1
-                    for i in range(num_wins):
-                        new_card = card_num + i
-                        if new_card <= len(scratchcard):
-                            stack_of_cards.append(scratchcard[f"Card {new_card}"])    
-                else:
-                    card_key = f"Card {new_card}"
-                    if scratchcard[card_key] == stack_of_cards[-1].keys():
-                        break
+    # prime the stack with first card:
+    stack_of_cards['Card 1'] = 1
 
-    # returns the stack of cards + the original cards
-    return len(stack_of_cards) + len(scratchcard)
+    # add cards to stack of cards (dict = str: int)
+    for key in scratchcard_stack:
+        num_wins = read_scratchcard(scratchcard_stack[key])
+        if num_wins > 0:
+            if card_num > len(scratchcard_stack):
+                raise Exception(f"Card_num too high: {card_num}")
+            for i in range(1, num_wins + 1):
+                new_card = card_num + i
+                if new_card <= len(scratchcard_stack):
+                    add_cards = stack_of_cards[f"Card {card_num}"]
+                    if f"Card {new_card}" in stack_of_cards:
+                        stack_of_cards[f"Card {new_card}"] += add_cards
+                    else:
+                        stack_of_cards[f"Card {new_card}"] = 1 + add_cards
+        else:
+            # If num of wins is 0, add original to stack; then continue
+            new_card = card_num + 1
+            stack_of_cards[f"Card {new_card}"] = 1
+
+        card_num += 1
+
+    # finds the num of cards in the stack of cards
+    num_cards = 0
+    for i in stack_of_cards:
+        # num_cards = the copies in the stack_of_cards
+        num_cards += stack_of_cards[i] - 1
+    
+    # returns copies + originals
+    return num_cards + len(scratchcard_stack)
 
 
-def read_scratchcard(scratchcard:dict, key:str):
-    '''Takes in a dictionary; 
-    compares each num to the list of winning numbers; 
+def read_scratchcard(card:list):
+    '''Takes in a list of two lists; 
+    compares each number to the list of winning numbers; 
     increments points by 1 if num is in the list of winning numbers'''
     total = 0
     num_wins = 0
 
-    for num in scratchcard[key][1]:
-        if num in scratchcard[key][0]:
+    # compare num in numbers section to list of 'Winning Numbers'
+    # If num is in 'winning numbers', increment total by 1
+    for num in card[1]:
+        if num in card[0]:
             num_wins += 1
     if num_wins > 0:
         total += num_wins
@@ -43,9 +62,9 @@ def read_scratchcard(scratchcard:dict, key:str):
 
 
 def start(file:str):
-    scratchcard = parse_card(get_input(file))
+    scratchcard_stack = parse_card(get_input(file))
     
-    return total_scratchcards(scratchcard)
+    return total_scratchcards(scratchcard_stack)
 
 
 #########
