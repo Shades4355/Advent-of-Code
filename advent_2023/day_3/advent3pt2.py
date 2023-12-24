@@ -7,7 +7,7 @@ def find_gear(two_d_list:list):
     max_cols = len(two_d_list[0])
     gear_ratios = 0
 
-    # check each cha to see if it's an *
+    # check each cha to see if it's an '*'
     for row in range(0, max_rows):
         for col in range(0, max_cols):
             if two_d_list[row][col] == "*":
@@ -26,12 +26,9 @@ def find_gear_ratio(two_d_list:list, row:int, col:int):
     max_col = len(two_d_list[0])
     r = -1
 
-    # TODO: fix - gets stuck in infinite loop when encountering a 1 digit number
-    # (ex: two_d_list[44][45] = "9" in ".9.")
-    while r < 2: # Unit Test fails when these While loops is replaced with For loops
+    while r < 2:
         c = -1
 
-        # TODO: find_num is getting repeatedly called on the same coordinates (row: 44, col: 45)
         while c < 2:
             if 0 <= row + r < max_row and 0 <= col + c < max_col and test_num(two_d_list[row + r][col + c]):
                 # If the above is a number, iterate through it to find where it starts and how long it is
