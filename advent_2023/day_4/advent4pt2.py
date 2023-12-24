@@ -4,7 +4,7 @@ from advent4pt1 import get_input, parse_card
 def total_scratchcards(scratchcard_stack:dict):
     '''Takes in a scratchcard dictionary; 
     outputs the total number of cards'''
-    # stack_of_cards | key = Card #
+    # stack_of_cards = dict | key = Card #
     # value = the number of that card in the stack
     stack_of_cards = {} 
     card_num = 1
@@ -15,6 +15,7 @@ def total_scratchcards(scratchcard_stack:dict):
     # add cards to stack of cards (dict = str: int)
     for card_num in range(1, len(scratchcard_stack) + 1):
         current_card = f"Card {card_num}"
+        
         num_wins = read_scratchcard(scratchcard_stack[current_card])
         if num_wins > 0:
             for i in range(1, num_wins + 1):
@@ -29,6 +30,7 @@ def total_scratchcards(scratchcard_stack:dict):
         else:
             # If num of wins is 0, 
             new_card_id = card_num + 1
+            new_card = f"Card {new_card_id}"
             # ...and new card is within the range of the data set,
             if new_card_id <= len(scratchcard_stack):
                 # ...add original to stack; then continue
