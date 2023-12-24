@@ -145,4 +145,3 @@ cython_debug/
 ignore.*
 ignore/
 *.txt
-*_test.py
