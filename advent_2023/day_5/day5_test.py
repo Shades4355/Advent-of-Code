@@ -47,14 +47,21 @@ class TestAdventDay5pt1(unittest.TestCase):
         self.assertEqual(create_blank_maps(parsed_input_2, length_2), answer_2)
 
     def test_fill_map(self):
-        source = [1, 2, 3, 4, 5, 6]
-        par_fill_map = [2, "", 7, 8, 9, ""]
-        answer = [2, 2, 7, 8, 9, 6]
+        source = [0, 1, 2, 3, 4, 5, 6]
+        par_fill_map = [["", 2, "", 7, 8, 9, ""]]
+        answer = [[0, 2, 2, 7, 8, 9, 6]]
 
         self.assertEqual(fill_map(source, par_fill_map), answer)
 
     def test_fill_in_maps(self): # TODO: write
-        self.assertTrue(False)
+        parsed_input = {"seeds": [0, 1, 2, 3, 4, 5, 6],
+                        "seed-to-soil": {"0": [2, 1, 1],
+                                         "1": [7, 3, 3]}}
+        blank_map = {"blank_soil_map": ["", "", "", "", "", "", ""]}
+        answer = {"soil": [[0, 2, 2, 7, 8, 9, 6]]}
+        seed_list = [0, 1, 2, 3, 4, 5, 6]
+        
+        self.assertEqual(fill_in_maps(parsed_input, seed_list, blank_map), answer)
 
     def test_find_last_seed(self): # TODO: re-write to use only handwritten inputs
         answer = 100
@@ -119,7 +126,7 @@ class TestAdventDay5pt1(unittest.TestCase):
     def test_par_fill_map(self):
         source = [1, 2, 3, 4, 5, 6]
         dest = ["", "", "", "", "", ""]
-        rules = [[2, 1, 1], [7, 3, 3]]
+        rules = {"0": [2, 1, 1], "1": [7, 3, 3]}
         answer = [2, "", 7, 8, 9, ""]
 
         self.assertEqual(par_fill_map(source, dest, rules), answer)
