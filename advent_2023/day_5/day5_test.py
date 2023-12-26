@@ -1,5 +1,5 @@
 import unittest
-from advent5pt1 import get_input, parse_input, start, get_seed_list, find_last_seed, get_blank_map_list, par_fill_map, fill_map, create_blank_maps
+from advent5pt1 import get_input, parse_input, start, get_seed_list, find_last_seed, get_blank_map_list, par_fill_map, fill_map, create_blank_maps, fill_in_maps
 
 
 class TestAdventDay5pt1(unittest.TestCase):
@@ -52,6 +52,9 @@ class TestAdventDay5pt1(unittest.TestCase):
         answer = [2, 2, 7, 8, 9, 6]
 
         self.assertEqual(fill_map(source, par_fill_map), answer)
+
+    def test_fill_in_maps(self): # TODO: write
+        self.assertTrue(False)
 
     def test_find_last_seed(self): # TODO: re-write to use only handwritten inputs
         answer = 100

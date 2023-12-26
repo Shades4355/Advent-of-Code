@@ -102,6 +102,42 @@ def fill_map(source:list, par_fill_map:list):
     return filled_map
 
 
+def fill_in_maps(parsed_input:list, seed_list:list, blank_maps:list):
+    maps = {}
+    par_filled_maps = {}
+    
+    for key in parsed_input:
+        if key == "seeds":
+            continue
+        else:
+            source, dest = key.split("-to-")
+            if source == "seeds":
+                source_list = seed_list
+                dest_name = f"blank_{dest}_map"
+                dest_list = blank_maps[dest_name]
+            else:
+                source_name = f"par_{source}_map"
+                source_list = par_filled_maps[source_name]
+                dest_name = f"blank_{dest}_map"
+                dest_list = blank_maps[dest_name]
+            for i in parsed_input[key]:
+                rules = parsed_input[key][i]
+                par_filled_maps[dest_name] = par_fill_map(source_list, dest_list, rules)
+    
+    for key in parsed_input:
+        if key == "seeds":
+            continue
+        else:
+            source, dest = key.split("-to-")
+            if source == "seed":
+                source_list = seed_list
+            else:
+                source_name = f"par_{source}_map"
+                source_list = par_filled_maps[source_name]
+            maps[dest] = fill_map(source_list, par_filled_maps)
+
+    return maps
+
 def create_blank_maps(parsed_input:list, length:int):
     maps_dict = {}
 
@@ -132,8 +168,9 @@ def start(location:str):
     last_seed = find_last_seed(parsed_input)
     seed_list = get_seed_list(last_seed)
     
-    # TODO: programmatically do the below
     blank_maps = create_blank_maps(parsed_input, len(seed_list))
+    
+    par_filled_maps = fill_in_maps(parsed_input, seed_list, blank_maps)
 
     # propagate soil_list
     # propagate fert_list
