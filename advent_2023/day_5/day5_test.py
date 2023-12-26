@@ -1,5 +1,5 @@
 import unittest
-from advent5pt1 import get_input, parse_input, start, get_seed_list, find_last_seed
+from advent5pt1 import get_input, parse_input, start, get_seed_list, find_last_seed, get_blank_map_list
 
 
 class TestAdventDay5pt1(unittest.TestCase):
@@ -45,7 +45,6 @@ class TestAdventDay5pt1(unittest.TestCase):
         self.assertEqual(get_input(self.testInput), file)
 
     def test_parse_input(self):
-        self.maxDiff = 50
         file = {
             "seeds": [79, 14, 55, 13],
             "seed-to-soil map:": {"0": [50, 98, 2],
@@ -72,10 +71,18 @@ class TestAdventDay5pt1(unittest.TestCase):
 
     def test_get_seed_list(self):
         answer = [i for i in range(0, 100)]
-        parsedInput = parse_input(get_input(self.testInput))
         seed_list = get_seed_list(99)
 
         self.assertEqual(seed_list, answer)
+
+    def test_get_blank_map_list(self):
+        answer = ["", "", "", "", ""]
+        seed_len = 5
+        answer_2 = [""]
+        seed_len_2 = 1
+
+        self.assertEqual(get_blank_map_list(seed_len), answer)
+        self.assertEqual(get_blank_map_list(seed_len_2), answer_2)
 
     def test_find_last_seed(self):
         answer = 100

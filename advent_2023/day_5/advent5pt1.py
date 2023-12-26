@@ -76,12 +76,42 @@ def find_last_seed(map:dict):
     return last_seed
 
 
+def get_blank_map_list(seed_len:int):
+    soil_list = []
+
+    for i in range(0, seed_len):
+        soil_list.append("")
+    
+    return soil_list
+
+
 def start(location:str):
     answer = 0
     parsed_input = parse_input(get_input(location))
     last_seed = find_last_seed(parsed_input)
     seed_list = get_seed_list(last_seed)
+    
+    blank_soil_list = get_blank_map_list(len(seed_list))
+    blank_fert_list = get_blank_map_list(len(seed_list))
+    blank_water_list = get_blank_map_list(len(seed_list))
+    blank_light_list = get_blank_map_list(len(seed_list))
+    blank_temp_list = get_blank_map_list(len(seed_list))
+    blank_humidity_list = get_blank_map_list(len(seed_list))
+    blank_location_list = get_blank_map_list(len(seed_list))
 
+    # propagate soil_list
+    # propagate fert_list
+    # propagate water_list
+    # propagate light_list
+    # propagate temp_list
+    # propagate humidity_list
+    # propagate location_list
+
+    # find index for (seed list in parsed_input) in (seed_list) 
+        # compare index in seed_list to same index in location_list
+    # compare found location_list[index] values to find lowest
+        # compare back to seed_list
+        # return seed_list[index]
 
     return answer
 
