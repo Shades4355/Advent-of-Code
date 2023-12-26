@@ -20,9 +20,9 @@ class TestAdventDay5pt1(unittest.TestCase):
                                     "3": [57, 7, 4]}
                                     }
         answer = {
-            "blank_soil_list": ["", "", "", "", ""],
-            "blank_fertilizer_list": ["", "", "", "", ""],
-            "blank_water_list": ["", "", "", "", ""]
+            "blank_soil_map": ["", "", "", "", ""],
+            "blank_fertilizer_map": ["", "", "", "", ""],
+            "blank_water_map": ["", "", "", "", ""]
                   }
         length_2 = 10
         parsed_input_2 = {
@@ -38,9 +38,9 @@ class TestAdventDay5pt1(unittest.TestCase):
                                     "3": [57, 7, 4]}
                                     }
         answer_2 = {
-            "blank_soil_list": ["", "", "", "", "", "", "", "", "", ""],
-            "blank_fertilizer_list": ["", "", "", "", "", "", "", "", "", ""],
-            "blank_water_list": ["", "", "", "", "", "", "", "", "", ""]
+            "blank_soil_map": ["", "", "", "", "", "", "", "", "", ""],
+            "blank_fertilizer_map": ["", "", "", "", "", "", "", "", "", ""],
+            "blank_water_map": ["", "", "", "", "", "", "", "", "", ""]
                   }
 
         self.assertEqual(create_blank_maps(parsed_input, length), answer)
@@ -53,15 +53,16 @@ class TestAdventDay5pt1(unittest.TestCase):
 
         self.assertEqual(fill_map(source, par_fill_map), answer)
 
-    def test_fill_in_maps(self): # TODO: write
+    def test_fill_in_maps(self):
         parsed_input = {"seeds": [0, 1, 2, 3, 4, 5, 6],
                         "seed-to-soil": {"0": [2, 1, 1],
                                          "1": [7, 3, 3]}}
         blank_map = {"blank_soil_map": ["", "", "", "", "", "", ""]}
-        answer = {"soil": [[0, 2, 2, 7, 8, 9, 6]]}
+        answer = {"soil": [0, 2, 2, 7, 8, 9, 6]}
         seed_list = [0, 1, 2, 3, 4, 5, 6]
+        order = ["seed-to-soil"]
         
-        self.assertEqual(fill_in_maps(parsed_input, seed_list, blank_map), answer)
+        self.assertEqual(fill_in_maps(parsed_input, seed_list, blank_map, order), answer)
 
     def test_find_last_seed(self): # TODO: re-write to use only handwritten inputs
         answer = 100

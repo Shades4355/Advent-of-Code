@@ -8,7 +8,7 @@ def create_blank_maps(parsed_input:list, length:int):
             continue
         elif key.find("-to-") > -1:
             source, dest = key.split("-to-")
-            maps_dict[f"blank_{dest}_list"] = get_blank_map_list(length)
+            maps_dict[f"blank_{dest}_map"] = get_blank_map_list(length)
         else:
             raise Exception("\nUnexpected key in parsed_input:", key)
     
@@ -31,32 +31,34 @@ def fill_map(source:list, par_fill_map:list):
     return filled_map
 
 
-def fill_in_maps(parsed_input:list, seed_list:list, blank_maps:list):
+def fill_in_maps(parsed_input:list, seed_list:list, blank_maps:list, order:list):
     maps = {}
-    par_filled_maps = []
+    par_filled_maps = {}
     
-    for key in parsed_input:
-        if key == "seeds":
-            continue
+    for key in order:
+        source, dest = key.split("-to-")
+        if source == "seed":
+            source_list = seed_list
         else:
-            source, dest = key.split("-to-")
-            if source == "seed":
-                source_list = seed_list
-            else:
-                source_name = f"par_{source}_map"
-                source_list = par_filled_maps[source_name]
-            dest_name = f"blank_{dest}_map"
-            dest_list = blank_maps[dest_name]
+            source_name = f"par_{source}_map"
 
-            rules = parsed_input[key]
-            par_filled_maps.append(par_fill_map(source_list, dest_list, rules))
+            # TODO: delete
+            print("\npartially filled maps:\n", par_filled_maps)
+            print("source name:\n", source_name)
 
-            if source == "seed":
-                source_list = seed_list
-            else:
-                source_name = f"par_{source}_map"
-                source_list = par_filled_maps[source_name]
-            maps[dest] = fill_map(source_list, par_filled_maps)
+            source_list = par_filled_maps[source_name]
+        dest_name = f"blank_{dest}_map"
+        dest_list = blank_maps[dest_name]
+
+        rules = parsed_input[key]
+        par_filled_maps[dest_name] = par_fill_map(source_list, dest_list, rules)
+
+        if source == "seed":
+            source_list = seed_list
+        else:
+            source_name = f"par_{source}_map"
+            source_list = par_filled_maps[source_name]
+        maps[dest] = fill_map(source_list, par_filled_maps)[f"blank_{dest}_map"]
 
     return maps
 
@@ -164,9 +166,18 @@ def start(location:str):
     last_seed = find_last_seed(parsed_input)
     seed_list = get_seed_list(last_seed)
     
+    order = [
+        "seed-to-soil",
+        "soil-to-fertilizer",
+        "fertilizer-to-water",
+        "water-to-light",
+        "light-to-temperature",
+        "temperature-to-humidity",
+        "humidity-to-location"]
+
     blank_maps = create_blank_maps(parsed_input, len(seed_list))
     
-    filled_maps = fill_in_maps(parsed_input, seed_list, blank_maps)
+    filled_maps = fill_in_maps(parsed_input, seed_list, blank_maps, order)
 
     lowest = None
     for seed in parsed_input["seeds"]:
