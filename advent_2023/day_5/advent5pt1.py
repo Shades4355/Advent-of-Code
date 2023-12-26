@@ -30,7 +30,7 @@ def parse_input(file:list):
                 dictionary[key].append(int(num))
         # for 'map' lines, use line as new key
         elif line.find("map") > -1:
-            key = line
+            key = line.strip(" map:")
             iteration = 0
             dictionary[key] = {}
         # ignore empty lines
@@ -66,7 +66,6 @@ def find_last_seed(map:dict):
                     last_seed = num
         else:
             for map_list in map[key]:
-                # [88, 18, 7]
                 nums = map[key][map_list]
                 if nums[0] + nums[2] > last_seed:
                     last_seed = nums[0] + nums[2]
@@ -74,6 +73,48 @@ def find_last_seed(map:dict):
                     last_seed = nums[1] + nums[2]
     
     return last_seed
+
+
+def par_fill_map(source:list, destination:list, rules:list):
+    '''takes in a filled source list and a blank destination list; outputs a partially filled list'''
+    par_filled_map = destination
+
+    for r_dest, r_source, r_len in rules:
+        index = source.index(r_source)
+        for i in range(0, r_len):
+            par_filled_map[index + i] = r_dest + i
+
+    return par_filled_map
+
+
+def fill_map(source:list, par_fill_map:list):
+    '''Takes in a source list and a partially filled list; outputs a filled in list'''
+    filled_map = par_fill_map
+    loop = True
+
+    while loop:
+        try:
+            index = par_fill_map.index("")
+            filled_map[index] = source[index]
+        except ValueError:
+            loop = False
+
+    return filled_map
+
+
+def create_blank_maps(parsed_input:list, length:int):
+    maps_dict = {}
+
+    for key in parsed_input:
+        if key == "seeds":
+            continue
+        elif key.find("-to-") > -1:
+            source, dest = key.split("-to-")
+            maps_dict[f"blank_{dest}_list"] = get_blank_map_list(length)
+        else:
+            raise Exception("\nUnexpected key in parsed_input:", key)
+    
+    return maps_dict
 
 
 def get_blank_map_list(seed_len:int):
@@ -91,13 +132,8 @@ def start(location:str):
     last_seed = find_last_seed(parsed_input)
     seed_list = get_seed_list(last_seed)
     
-    blank_soil_list = get_blank_map_list(len(seed_list))
-    blank_fert_list = get_blank_map_list(len(seed_list))
-    blank_water_list = get_blank_map_list(len(seed_list))
-    blank_light_list = get_blank_map_list(len(seed_list))
-    blank_temp_list = get_blank_map_list(len(seed_list))
-    blank_humidity_list = get_blank_map_list(len(seed_list))
-    blank_location_list = get_blank_map_list(len(seed_list))
+    # TODO: programmatically do the below
+    blank_maps = create_blank_maps(parsed_input, len(seed_list))
 
     # propagate soil_list
     # propagate fert_list
