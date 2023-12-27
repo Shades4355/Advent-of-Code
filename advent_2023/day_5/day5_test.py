@@ -48,8 +48,8 @@ class TestAdventDay5pt1(unittest.TestCase):
 
     def test_fill_map(self):
         source = [0, 1, 2, 3, 4, 5, 6]
-        par_fill_map = [["", 2, "", 7, 8, 9, ""]]
-        answer = [[0, 2, 2, 7, 8, 9, 6]]
+        par_fill_map = ["", 2, "", 7, 8, 9, ""]
+        answer = [0, 2, 2, 7, 8, 9, 6]
 
         self.assertEqual(fill_map(source, par_fill_map), answer)
 
@@ -64,9 +64,11 @@ class TestAdventDay5pt1(unittest.TestCase):
         
         self.assertEqual(fill_in_maps(parsed_input, seed_list, blank_map, order), answer)
 
-    def test_find_last_seed(self): # TODO: re-write to use only handwritten inputs
-        answer = 100
-        parsedInput = parse_input(get_input(self.testInput))
+    def test_find_last_seed(self):
+        answer = 99
+        parsedInput = {"seeds": [79, 14, 55, 13],
+                       "seed-to-soil": {"0": [50, 98, 2],
+                                        "1": [52, 50, 48]}}
 
         self.assertEqual(find_last_seed(parsedInput), answer)
 
@@ -138,21 +140,21 @@ class TestAdventDay5pt1(unittest.TestCase):
             "seed-to-soil": {"0": [50, 98, 2],
                                   "1": [52, 50, 48]},
             "soil-to-fertilizer": {"0": [0, 15, 37],
-                                        "1": [37, 52, 2],
-                                        "2": [39, 0, 15]},
+                                    "1": [37, 52, 2],
+                                    "2": [39, 0, 15]},
             "fertilizer-to-water": {"0": [49, 53, 8],
-                                        "1": [0, 11, 42],
-                                        "2": [42, 0, 7],
-                                        "3": [57, 7, 4]},
+                                    "1": [0, 11, 42],
+                                    "2": [42, 0, 7],
+                                    "3": [57, 7, 4]},
             "water-to-light": {"0": [88, 18, 7],
-                                   "1": [18, 25, 70]},
+                                "1": [18, 25, 70]},
             "light-to-temperature": {"0": [45, 77, 23],
-                                        "1": [81, 45, 19],
-                                        "2": [68, 64, 13]},
+                                    "1": [81, 45, 19],
+                                    "2": [68, 64, 13]},
             "temperature-to-humidity": {"0": [0, 69, 1],
-                                            "1": [1, 0, 69]},
+                                        "1": [1, 0, 69]},
             "humidity-to-location":  {"0": [60, 56, 37],
-                                          "1": [56, 93, 4]}
+                                        "1": [56, 93, 4]}
         }
         
         self.assertEqual(parse_input(get_input(self.testInput)), file)

@@ -18,15 +18,10 @@ def create_blank_maps(parsed_input:list, length:int):
 def fill_map(source:list, par_fill_map:list):
     '''Takes in a source list and a partially filled list; outputs a filled in list'''
     filled_map = par_fill_map
-    loop = True
 
-    while loop:
-        for i in range(0, len(filled_map)):
-            try:
-                index = filled_map[i].index("")
-                filled_map[i][index] = source[index]
-            except ValueError:
-                loop = False
+    for i in range(0, len(filled_map)):
+            if filled_map[i] == "":
+                filled_map[i] = source[i]
 
     return filled_map
 
@@ -41,31 +36,23 @@ def fill_in_maps(parsed_input:list, seed_list:list, blank_maps:list, order:list)
             source_list = seed_list
         else:
             source_name = f"par_{source}_map"
-
-            # TODO: delete
-            print("\npartially filled maps:\n", par_filled_maps)
-            print("source name:\n", source_name)
-
             source_list = par_filled_maps[source_name]
-        dest_name = f"blank_{dest}_map"
-        dest_list = blank_maps[dest_name]
+        dest_list = blank_maps[f"blank_{dest}_map"]
 
         rules = parsed_input[key]
-        par_filled_maps[dest_name] = par_fill_map(source_list, dest_list, rules)
-
+        par_filled_maps[f"par_{dest}_map"] = par_fill_map(source_list, dest_list, rules)
         if source == "seed":
             source_list = seed_list
         else:
             source_name = f"par_{source}_map"
             source_list = par_filled_maps[source_name]
-        maps[dest] = fill_map(source_list, par_filled_maps)[f"blank_{dest}_map"]
+        maps[dest] = fill_map(source_list, par_filled_maps[f"par_{dest}_map"])
 
     return maps
 
 
 def find_last_seed(map:dict):
     last_seed = 0
-
 
     for key in map:
         if key == "seeds":
@@ -74,13 +61,13 @@ def find_last_seed(map:dict):
                     last_seed = num
         else:
             for map_list in map[key]:
-                nums = map[key][map_list]
-                if nums[0] + nums[2] > last_seed:
-                    last_seed = nums[0] + nums[2]
-                if nums[1] + nums[2] > last_seed:
-                    last_seed = nums[1] + nums[2]
+                dest, source, length = map[key][map_list]
+                if dest + length > last_seed:
+                    last_seed = dest + length
+                if source + length > last_seed:
+                    last_seed = source + length
     
-    return last_seed
+    return last_seed - 1
 
 
 def get_blank_map_list(seed_len:int):
@@ -122,8 +109,8 @@ def par_fill_map(source:list, destination:list, rules:list):
     for i in range(0, len(rules)):
         r_dest, r_source, r_len = rules[str(i)]
         index = source.index(r_source)
-        for i in range(0, r_len):
-            par_filled_map[index + i] = r_dest + i
+        for j in range(0, r_len):
+            par_filled_map[index + j] = r_dest + j
 
     return par_filled_map
 
