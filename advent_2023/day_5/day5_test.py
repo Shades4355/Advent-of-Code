@@ -54,15 +54,36 @@ class TestAdventDay5pt1(unittest.TestCase):
         self.assertEqual(fill_map(source, par_fill_map), answer)
 
     def test_fill_in_maps(self):
-        parsed_input = {"seeds": [0, 1, 2, 3, 4, 5, 6],
-                        "seed-to-soil": {"0": [2, 1, 1],
-                                         "1": [7, 3, 3]}}
-        blank_map = {"blank_soil_map": ["", "", "", "", "", "", ""]}
-        answer = {"soil": [0, 2, 2, 7, 8, 9, 6]}
-        seed_list = [0, 1, 2, 3, 4, 5, 6]
-        order = ["seed-to-soil"]
+        def test_1(self):
+            '''tests seeds to soil, no edge cases'''
+            parsed_input = {"seeds": [0, 1, 2, 3, 4, 5, 6],
+                            "seed-to-soil": {"0": [2, 1, 1],
+                                            "1": [7, 3, 3]}}
+            blank_map = {"blank_soil_map": ["", "", "", "", "", "", ""]}
+            answer = {"soil": [0, 2, 2, 7, 8, 9, 6]}
+            seed_list = [0, 1, 2, 3, 4, 5, 6]
+            order = ["seed-to-soil"]
+            
+            return self.assertEqual(fill_in_maps(parsed_input, seed_list, blank_map, order), answer)
+
+        def test_2(self):
+            '''tests edge case - adding numbers beyond the original length of the filled map'''
+            parsed_input = {"seeds": [0, 1, 2, 3, 4, 5, 6],
+                            "seed-to-soil": {"0": [2, 1, 2],
+                                            "1": [7, 3, 3]},
+                            "soil-to-fertilizer": {"0": [10, 0, 3],
+                                                   "1": [1, 6, 4]}}
+            blank_map = {"blank_soil_map": ["", "", "", "", "", "", ""],
+                         "blank_fertilizer_map": ["", "", "", "", "", "", ""]}
+            answer = {"soil": [0, 2, 3, 7, 8, 9, 6],
+                      "fertilizer": [10, 11, 12, 7, 8, 9, 1, 2, 3, 4]}
+            seed_list = [0, 1, 2, 3, 4, 5, 6]
+            order = ["seed-to-soil", "soil-to-fertilizer"]
+            
+            return self.assertEqual(fill_in_maps(parsed_input, seed_list, blank_map, order), answer)
         
-        self.assertEqual(fill_in_maps(parsed_input, seed_list, blank_map, order), answer)
+        test_1(self)
+        test_2(self)
 
     def test_find_last_seed(self):
         answer = 99
@@ -127,12 +148,24 @@ class TestAdventDay5pt1(unittest.TestCase):
         self.assertEqual(seed_list, answer)
 
     def test_par_fill_map(self):
-        source = [1, 2, 3, 4, 5, 6]
-        dest = ["", "", "", "", "", ""]
-        rules = {"0": [2, 1, 1], "1": [7, 3, 3]}
-        answer = [2, "", 7, 8, 9, ""]
+        def test_1(self):
+            source = [1, 2, 3, 4, 5, 6]
+            dest = ["", "", "", "", "", ""]
+            rules = {"0": [2, 1, 1], "1": [7, 3, 3]}
+            answer = [2, "", 7, 8, 9, ""]
 
-        self.assertEqual(par_fill_map(source, dest, rules), answer)
+            return self.assertEqual(par_fill_map(source, dest, rules), answer)
+        
+        def test_2(self):
+            source = [1, 2, 3, 4, 5, 6]
+            dest = ["", "", "", "", "", ""]
+            rules = {"0": [2, 1, 1], "1": [7, 5, 3]}
+            answer = [2, "", "", "", 7, 8, 9]
+
+            return self.assertEqual(par_fill_map(source, dest, rules), answer)
+
+        test_1(self)
+        test_2(self)
 
     def test_parse_input(self):
         file = {

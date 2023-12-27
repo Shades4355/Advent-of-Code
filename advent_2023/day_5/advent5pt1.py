@@ -1,6 +1,7 @@
 
 
 def create_blank_maps(parsed_input:list, length:int):
+    '''creates blank maps, based on a given int. Ex: 100 would yield a list 100 characters long'''
     maps_dict = {}
 
     for key in parsed_input:
@@ -27,6 +28,7 @@ def fill_map(source:list, par_fill_map:list):
 
 
 def fill_in_maps(parsed_input:list, seed_list:list, blank_maps:list, order:list):
+    '''Takes in the parsed input, a completed seed list, a dictionary of blank maps, and a list to control iteration order; outputs a dictionary of completed maps'''
     maps = {}
     par_filled_maps = {}
     
@@ -35,17 +37,20 @@ def fill_in_maps(parsed_input:list, seed_list:list, blank_maps:list, order:list)
         if source == "seed":
             source_list = seed_list
         else:
-            source_name = f"par_{source}_map"
-            source_list = par_filled_maps[source_name]
+            source_list = maps[source]
         dest_list = blank_maps[f"blank_{dest}_map"]
 
         rules = parsed_input[key]
+
+        # TODO: delete
+        print(f"\nsource map: {source}")
+        print(f"blank_{dest}_map:")
+
         par_filled_maps[f"par_{dest}_map"] = par_fill_map(source_list, dest_list, rules)
         if source == "seed":
             source_list = seed_list
         else:
-            source_name = f"par_{source}_map"
-            source_list = par_filled_maps[source_name]
+            source_list = maps[source]
         maps[dest] = fill_map(source_list, par_filled_maps[f"par_{dest}_map"])
 
     return maps
@@ -106,11 +111,44 @@ def par_fill_map(source:list, destination:list, rules:list):
     '''takes in a filled source list and a blank destination list; outputs a partially filled list'''
     par_filled_map = destination
 
-    for i in range(0, len(rules)):
-        r_dest, r_source, r_len = rules[str(i)]
-        index = source.index(r_source)
-        for j in range(0, r_len):
-            par_filled_map[index + j] = r_dest + j
+    for key in rules:
+        index = -1
+        additions = 0
+        r_dest, r_source, r_len = rules[key]
+        # index = source.index(r_source)
+
+        # Test:
+        indices = []
+        for i in range(len(source)):
+            if source[i] == r_source:
+                indices.append(i)
+        if not len(indices) == 1:
+            raise Exception(f"Wrong number of indices found: {indices} | r_source: {r_source}")
+        else:
+            index = indices[0]
+
+        if index > -1:
+            for i in range(0, r_len):
+                try:
+                    par_filled_map[index + i] = r_dest + i
+                except IndexError:
+                    len_to_add = (index + i) - len(par_filled_map)
+                    for j in range(0, len_to_add):
+                        par_filled_map.append("")
+                    len_to_add = (index + i) - len(par_filled_map)
+                    additions += 1
+
+                #TODO: delete
+                print("r_source", r_source,
+                    "| Index:", index,
+                    "| r_len:", r_len,
+                    "| Index + r_len - 1:", index + r_len - 1,
+                    "| i:", i,
+                    "| index + i:", index + i)
+                print("par_map:\n", par_filled_map)
+        else:
+            raise Exception("No Index found")
+        print("additions added to list:", additions) # TODO: delete
 
     return par_filled_map
 
@@ -163,7 +201,7 @@ def start(location:str):
         "humidity-to-location"]
 
     blank_maps = create_blank_maps(parsed_input, len(seed_list))
-    
+
     filled_maps = fill_in_maps(parsed_input, seed_list, blank_maps, order)
 
     lowest = None
