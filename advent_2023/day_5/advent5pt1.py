@@ -41,11 +41,6 @@ def fill_in_maps(parsed_input:list, seed_list:list, blank_maps:list, order:list)
         dest_list = blank_maps[f"blank_{dest}_map"]
 
         rules = parsed_input[key]
-
-        # TODO: delete
-        print(f"\nsource map: {source}")
-        print(f"blank_{dest}_map:")
-
         par_filled_maps[f"par_{dest}_map"] = par_fill_map(source_list, dest_list, rules)
         if source == "seed":
             source_list = seed_list
@@ -132,26 +127,31 @@ def par_fill_map(source:list, destination:list, rules:list):
                 try:
                     par_filled_map[index + i] = r_dest + i
                 except IndexError:
-                    len_to_add = (index + i) - len(par_filled_map)
-                    for j in range(0, len_to_add):
-                        par_filled_map.append("")
-                    len_to_add = (index + i) - len(par_filled_map)
-                    additions += 1
+                    add_to_list(par_filled_map, index, i, r_dest)
 
-                #TODO: delete
-                print("r_source", r_source,
-                    "| Index:", index,
-                    "| r_len:", r_len,
-                    "| Index + r_len - 1:", index + r_len - 1,
-                    "| i:", i,
-                    "| index + i:", index + i)
-                print("par_map:\n", par_filled_map)
+            print("par_map:\n", par_filled_map) # TODO: delete
         else:
             raise Exception("No Index found")
         print("additions added to list:", additions) # TODO: delete
 
     return par_filled_map
 
+
+def add_to_list(map:list, index:int, i:int, dest:int):
+    '''takes in a partially filled list, an index, a number to be added to the index, and a destination number; tries to add enough blank spaces to make index + i valid; returns the manipulated list'''
+    map_to_manipulate = map
+
+    len_to_add = (index + i) - len(map) + 1
+    for j in range(0, len_to_add):
+        map_to_manipulate.append("")
+    
+    try:
+        map_to_manipulate[index + i] = dest + i
+    except IndexError:
+        add_to_list(map_to_manipulate, index, i, dest)
+
+    return map_to_manipulate    
+    
 
 def parse_input(file:list):
     '''Takes in a 1D list; outputs a dictionary'''

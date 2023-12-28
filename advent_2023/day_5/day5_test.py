@@ -1,10 +1,32 @@
 import unittest
-from advent5pt1 import get_input, parse_input, start, get_seed_list, find_last_seed, get_blank_map_list, par_fill_map, fill_map, create_blank_maps, fill_in_maps
+from advent5pt1 import get_input, parse_input, start, get_seed_list, find_last_seed, get_blank_map_list, par_fill_map, fill_map, create_blank_maps, fill_in_maps, add_to_list
 
 
 class TestAdventDay5pt1(unittest.TestCase):
     testInput = "day5input_test.txt"
 
+    def test_add_to_list(self):
+        def test_1(self):
+            index = 2
+            i = 5
+            dest = 2
+            map = ["", "", 2, 3, 4, 5, 6]
+            answer = ["", "", 2, 3, 4, 5, 6, 7]
+
+            return self.assertEqual(add_to_list(map, index, i, dest), answer)
+
+        def test_2(self):
+            index = 6
+            i = 0
+            dest = 10
+            map = ["", "", 2, 3]
+            answer = ["", "", 2, 3, "", "", 10]
+
+            return self.assertEqual(add_to_list(map, index, i, dest), answer)
+
+        test_1(self)
+        test_2(self)
+        
     def test_create_blank_maps(self):
         length = 5
         parsed_input = {
