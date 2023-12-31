@@ -20,7 +20,7 @@ def fill_map(source:list, par_fill_map:list):
     '''Takes in a source list and a partially filled list; outputs a filled in list'''
     filled_map = par_fill_map
 
-    for i in range(0, len(filled_map)):
+    for i in range(0, len(source)):
             if filled_map[i] == "":
                 filled_map[i] = source[i]
 
@@ -41,6 +41,11 @@ def fill_in_maps(parsed_input:list, seed_list:list, blank_maps:list, order:list)
         dest_list = blank_maps[f"blank_{dest}_map"]
 
         rules = parsed_input[key]
+
+        # TODO: delete
+        print("\nsource:", source + ":")
+        print(source_list)
+
         par_filled_maps[f"par_{dest}_map"] = par_fill_map(source_list, dest_list, rules)
         if source == "seed":
             source_list = seed_list
@@ -108,13 +113,10 @@ def par_fill_map(source:list, destination:list, rules:list):
 
     for key in rules:
         index = -1
-        additions = 0
         r_dest, r_source, r_len = rules[key]
-        # index = source.index(r_source)
 
-        # Test:
         indices = []
-        for i in range(len(source)):
+        for i in range(0, len(source)):
             if source[i] == r_source:
                 indices.append(i)
         if not len(indices) == 1:
@@ -127,24 +129,23 @@ def par_fill_map(source:list, destination:list, rules:list):
                 try:
                     par_filled_map[index + i] = r_dest + i
                 except IndexError:
-                    add_to_list(par_filled_map, index, i, r_dest)
-
-            print("par_map:\n", par_filled_map) # TODO: delete
+                    par_filled_map = add_to_list(par_filled_map, index, i, r_dest)
         else:
             raise Exception("No Index found")
-        print("additions added to list:", additions) # TODO: delete
 
     return par_filled_map
 
 
 def add_to_list(map:list, index:int, i:int, dest:int):
     '''takes in a partially filled list, an index, a number to be added to the index, and a destination number; tries to add enough blank spaces to make index + i valid; returns the manipulated list'''
-    map_to_manipulate = map
+    map_to_manipulate =[]
+    for i in map:
+        map_to_manipulate.append(i)
 
     len_to_add = (index + i) - len(map) + 1
     for j in range(0, len_to_add):
         map_to_manipulate.append("")
-    
+
     try:
         map_to_manipulate[index + i] = dest + i
     except IndexError:
@@ -210,11 +211,6 @@ def start(location:str):
         if lowest < filled_maps[-1][index]:
             lowest = filled_maps[-1][index]
             answer = seed_list[index]
-    # find index for (seed list in parsed_input) in (seed_list) 
-        # compare index in seed_list to same index in location_list
-    # compare found location_list[index] values to find lowest
-        # compare back to seed_list
-        # return seed_list[index]
 
     return answer
 
