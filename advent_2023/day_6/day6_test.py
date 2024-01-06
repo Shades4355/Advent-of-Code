@@ -1,5 +1,5 @@
 import unittest
-from advent6pt1 import get_input, start as start_pt1
+from advent6pt1 import get_input, start as start_pt1, run_race
 
 class TestAdventDay6(unittest.TestCase):
     test_data = "day6input_test.txt"
@@ -12,6 +12,33 @@ class TestAdventDay6(unittest.TestCase):
         }
 
         self.assertEqual(file, answer)
+
+    def test_run_race(self):
+        def test_1(self):
+            time = 7
+            distance = 9
+            answer = 4
+
+            return self.assertEqual(run_race(time, distance), answer)
+        
+        def test_2(self):
+            time = 15
+            distance = 40
+            answer = 8
+
+            return self.assertEqual(run_race(time, distance), answer)
+
+        def test_3(self):
+            time = 30
+            distance = 200
+            answer = 9
+
+            return self.assertEqual(run_race(time, distance), answer)
+
+        test_1(self)
+        test_2(self)
+        test_3(self)
+
 
     def test_start_pt1(self):
         answer = 288
