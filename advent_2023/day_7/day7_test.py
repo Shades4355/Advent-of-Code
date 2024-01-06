@@ -173,6 +173,56 @@ class TestAdventDay7(unittest.TestCase):
 
         self.assertEqual(order_hands(hand), answer)
 
+    def test_sorted_list(self):
+        hand = {
+            "hand 1": {
+                "hand": "32T3K",
+                "hand type": "One Pair",
+                "ranking": 0
+            },
+            "hand 2": {
+                "hand": "T55J5",
+                "hand type": "Three of a Kind",
+                "ranking": 0
+            },
+            "hand 3": {
+                "hand": "KK677",
+                "hand type": "Two Pair",
+                "ranking": 0
+            },
+            "hand 4": {
+                "hand": "KTJJT",
+                "hand type": "Two Pair",
+                "ranking": 0
+            },
+            "hand 5": {
+                "hand": "QQQJA",
+                "hand type": "Three of a Kind",
+                "ranking": 0
+            }
+        }
+        unsorted_list = {"hand 2": "T55J5", "hand 5": "QQQJA"}
+        sorted_list = {"hand 5": "QQQJA", "hand 2": "T55J5"}
+        
+        dic = {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6,
+        "7": 7,
+        "8": 8,
+        "9": 9,
+        "T": 10,
+        "J": 11,
+        "Q": 12,
+        "K": 13,
+        "A": 14
+    }
+
+        self.assertEqual(dict(sorted(unsorted_list.items(), key=lambda item: item[1])), sorted_list)
+
     def test_start(self):
         def test_pt1(self):
             answer = 6440
