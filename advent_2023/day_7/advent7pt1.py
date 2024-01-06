@@ -21,12 +21,29 @@ def get_input(location:str):
 
 
 def find_hand_type(hand_dic:dict):
+    '''Takes in a hand dictionary (ex: "hand 1"); outputs the type of hand it is (ex: "Full House) as a string'''
     def x_of_a_kind(hand:list, num:int):
-        for cha in hand:
+        '''determines if there is x of a kind, where x is an integer (ex: 4 of a kind); outputs True or False'''
+        for cha in hand.unique():
             if hand.count(cha) == num:
                 return True
         return False    
     
+    def find_two_pair(hand:list):
+        '''Determines if there are exactly 2 sets of paired cards (plus a 5th unpaired card)'''
+        count = 0
+
+        if not hand.unique() == 3:
+            return False
+        
+        for cha in hand.unique():
+            if hand.count(cha) == 2:
+                count += 1
+        if not count == 2:
+            return False
+    
+        return True
+
     hand = []
 
     for cha in hand_dic["hand"]:
@@ -41,8 +58,8 @@ def find_hand_type(hand_dic:dict):
         return "Full House"
     elif x_of_a_kind(hand, 3):
         return "Three of a kind"
-    # elif ?????:
-        # return "Two Pair"
+    elif find_two_pair(hand):
+        return "Two Pair"
     elif x_of_a_kind(hand, 1):
         return "One Pair"
     else:
@@ -51,7 +68,10 @@ def find_hand_type(hand_dic:dict):
 
 def start(location:str):
     parsed_file = get_input(location)
-
+    
+    for hand in parsed_file:
+        parsed_file[hand]["hand type"] = find_hand_type(parsed_file[hand])
+    
     return "Hi"
 
 #########
