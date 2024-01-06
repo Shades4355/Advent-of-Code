@@ -3,14 +3,14 @@
 def find_longest_press(time:int, distance:int):
         '''finds the longest valid time to hold the button'''
         for i in range(time, -1, -1):
-            if (i * (time - i)) >= (distance):
+            if (i * (time - i)) > (distance):
                 return i
 
 
 def find_shortest_press(time:int, distance:int):
         '''finds the shortest valid time to hold the button'''
         for i in range(0, time):
-            if (i * (time - i)) >= (distance):
+            if (i * (time - i)) > (distance):
                 return i
 
 
