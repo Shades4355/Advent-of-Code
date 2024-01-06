@@ -1,3 +1,4 @@
+import numpy as np
 
 def get_input(location:str):
     dic = {}
@@ -24,7 +25,7 @@ def find_hand_type(hand_dic:dict):
     '''Takes in a hand dictionary (ex: "hand 1"); outputs the type of hand it is (ex: "Full House) as a string'''
     def x_of_a_kind(hand:list, num:int):
         '''determines if there is x of a kind, where x is an integer (ex: 4 of a kind); outputs True or False'''
-        for cha in hand.unique():
+        for cha in np.unique(hand):
             if hand.count(cha) == num:
                 return True
         return False    
@@ -33,10 +34,10 @@ def find_hand_type(hand_dic:dict):
         '''Determines if there are exactly 2 sets of paired cards (plus a 5th unpaired card)'''
         count = 0
 
-        if not hand.unique() == 3:
+        if not len(np.unique(hand)) == 3:
             return False
         
-        for cha in hand.unique():
+        for cha in np.unique(hand):
             if hand.count(cha) == 2:
                 count += 1
         if not count == 2:
@@ -49,29 +50,38 @@ def find_hand_type(hand_dic:dict):
     for cha in hand_dic["hand"]:
         hand.append(cha)
 
-    if len(hand.unique()) == 1:
+    if len(np.unique(hand)) == 1:
         return "Five of a Kind"
-    
-    if x_of_a_kind(hand, 4):
-            return "Four of a kind"
-    elif x_of_a_kind(hand, 3) and hand.unique() == 2:
+    elif x_of_a_kind(hand, 4):
+            return "Four of a Kind"
+    elif x_of_a_kind(hand, 3) and len(np.unique(hand)) == 2:
         return "Full House"
     elif x_of_a_kind(hand, 3):
-        return "Three of a kind"
+        return "Three of a Kind"
     elif find_two_pair(hand):
         return "Two Pair"
-    elif x_of_a_kind(hand, 1):
+    elif x_of_a_kind(hand, 2):
         return "One Pair"
     else:
         return "High Card"
 
 
+def order_hands(hands_dic:dict):
+    ordered_dic = {}
+
+    for key in hands_dic:
+        ordered_dic[key] = hands_dic[key]
+    
+    
+
+    return ordered_dic
+
 def start(location:str):
     parsed_file = get_input(location)
     
-    for hand in parsed_file:
-        parsed_file[hand]["hand type"] = find_hand_type(parsed_file[hand])
-    
+    for hand_key in parsed_file:
+        parsed_file[hand_key]["hand type"] = find_hand_type(parsed_file[hand_key])
+
     return "Hi"
 
 #########
