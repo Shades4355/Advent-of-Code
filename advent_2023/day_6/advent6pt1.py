@@ -1,4 +1,19 @@
 
+
+def find_longest_press(time:int, distance:int):
+        '''finds the longest valid time to hold the button'''
+        for i in range(time, -1, -1):
+            if (i * (time - i)) >= (distance):
+                return i
+
+
+def find_shortest_press(time:int, distance:int):
+        '''finds the shortest valid time to hold the button'''
+        for i in range(0, time):
+            if (i * (time - i)) >= (distance):
+                return i
+
+
 def get_input(location:str):
     '''Takes in a txt file; outputs a dictionary'''
     file = open(location, "r")
@@ -17,29 +32,24 @@ def get_input(location:str):
 
     return dictionary
 
+
 def run_race(time:int, distance:int):
     '''takes in a time and distance integer; outputs the number of possible answers'''
-    # Rules:
-        # starting speed = 0 mm/s
-        # for each whole ms held, speed increases by 1 mm/s
-        # while held, make no forward movement
-    answer = 0
 
-    for i in range(1, time):
-        if (i * (time - i)) >= (distance):
-            answer += 1
-        
-    return answer
+    shortest_press = find_shortest_press(time, distance)
+    longest_press = find_longest_press(time, distance)
+    
+    return longest_press - shortest_press + 1
+
 
 def start(file:str):
     parsed_info = get_input(file)
 
-    # determine number of ways to win
-    # record number of ways to win each race
-    # multiply number of ways together
-    # Return solution
+    answer = 1
+    for i in range(0, len(parsed_info["Time"])):
+         answer *= run_race(parsed_info["Time"][i], parsed_info["Distance"][i])
 
-    return "hi"
+    return answer
 
 
 #########
