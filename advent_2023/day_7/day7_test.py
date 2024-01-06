@@ -1,5 +1,5 @@
 import unittest
-from advent7pt1 import start as start_pt1, get_input, find_hand_type
+from advent7pt1 import start as start_pt1, get_input, find_hand_type, order_hands
 
 class TestAdventDay7(unittest.TestCase):
     test_input = "day7input_test.txt"
@@ -78,9 +78,6 @@ class TestAdventDay7(unittest.TestCase):
         test_one_pair(self)
         test_high_card(self)
         
-        
-
-
     def test_get_input(self):
         answer = {
             "hand 1": {
@@ -117,6 +114,64 @@ class TestAdventDay7(unittest.TestCase):
         file = get_input(self.test_input)
 
         self.assertEqual(file, answer)
+
+    def test_order_hands(self):
+        hand = {
+            "hand 1": {
+                "hand": "32T3K",
+                "hand type": "One Pair",
+                "ranking": 0
+            },
+            "hand 2": {
+                "hand": "T55J5",
+                "hand type": "Three of a Kind",
+                "ranking": 0
+            },
+            "hand 3": {
+                "hand": "KK677",
+                "hand type": "Two Pair",
+                "ranking": 0
+            },
+            "hand 4": {
+                "hand": "KTJJT",
+                "hand type": "Two Pair",
+                "ranking": 0
+            },
+            "hand 5": {
+                "hand": "QQQJA",
+                "hand type": "Three of a Kind",
+                "ranking": 0
+            }
+        }
+        answer = {
+            "hand 1": {
+                "hand": "32T3K",
+                "hand type": "One Pair",
+                "ranking": 1
+            },
+            "hand 2": {
+                "hand": "T55J5",
+                "hand type": "Three of a Kind",
+                "ranking": 4
+            },
+            "hand 3": {
+                "hand": "KK677",
+                "hand type": "Two Pair",
+                "ranking": 3
+            },
+            "hand 4": {
+                "hand": "KTJJT",
+                "hand type": "Two Pair",
+                "ranking": 2
+            },
+            "hand 5": {
+                "hand": "QQQJA",
+                "hand type": "Three of a Kind",
+                "ranking": 5
+            }
+        }
+
+        self.assertEqual(order_hands(hand), answer)
 
     def test_start(self):
         def test_pt1(self):
