@@ -20,6 +20,10 @@ def get_input(location):
 def start(file):
     parsed_info = get_input(file)
 
+    # Rules:
+        # starting speed = 0 mm/s
+        # for each whole ms held, speed increases by 1 mm/s
+        # while held, make no forward movement
     # determine number of ways to win
     # record number of ways to win each race
     # multiply number of ways together
