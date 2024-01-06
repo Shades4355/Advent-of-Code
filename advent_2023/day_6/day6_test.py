@@ -1,5 +1,6 @@
 import unittest
-from advent6pt1 import get_input, start as start_pt1, run_race, find_shortest_press, find_longest_press
+from advent6pt1 import get_input as get_input_pt1, start as start_pt1, run_race, find_shortest_press, find_longest_press
+from advent6pt2 import get_input as get_input_pt2, start as start_pt2
 
 class TestAdventDay6(unittest.TestCase):
     test_data = "day6input_test.txt"
@@ -57,13 +58,26 @@ class TestAdventDay6(unittest.TestCase):
         test_3(self)
 
     def test_get_input(self):
-        file = get_input(self.test_data)
-        answer = {
-            "Time": [7, 15, 30],
-            "Distance": [9, 40, 200]
-        }
+        def test_pt1(self):
+            file = get_input_pt1(self.test_data)
+            answer = {
+                "Time": [7, 15, 30],
+                "Distance": [9, 40, 200]
+            }
 
-        self.assertEqual(file, answer)
+            return self.assertEqual(file, answer)
+
+        def test_pt2(self):
+            file = get_input_pt2(self.test_data)
+            answer = {
+                "Time": 71530,
+                "Distance": 940200
+            }
+
+            return self.assertEqual(file, answer)
+
+        test_pt1(self)
+        test_pt2(self)
 
     def test_run_race(self):
         def test_1(self):
@@ -91,11 +105,19 @@ class TestAdventDay6(unittest.TestCase):
         test_2(self)
         test_3(self)
 
+    def test_start(self):
+        def test_pt1(self):
+            answer = 288
 
-    def test_start_pt1(self):
-        answer = 288
+            return self.assertEqual(start_pt1(self.test_data), answer)
+        
+        def test_pt2(self):
+            answer = 71503
 
-        self.assertEqual(start_pt1(self.test_data), answer)
+            return self.assertEqual(start_pt2(self.test_data), answer)
+
+        test_pt1(self)
+        test_pt2(self)
 
 
 #########
