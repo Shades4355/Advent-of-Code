@@ -1,5 +1,5 @@
 import unittest
-from advent6pt1 import get_input
+from advent6pt1 import get_input, start as start_pt1
 
 class TestAdventDay6(unittest.TestCase):
     test_data = "day6input_test.txt"
@@ -12,6 +12,12 @@ class TestAdventDay6(unittest.TestCase):
         }
 
         self.assertEqual(file, answer)
+
+    def test_start_pt1(self):
+        answer = 288
+
+        self.assertEqual(start_pt1(self.test_data), answer)
+
 
 #########
 # start #
