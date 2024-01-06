@@ -203,7 +203,7 @@ class TestAdventDay7(unittest.TestCase):
         }
         unsorted_list = {"hand 2": "T55J5", "hand 5": "QQQJA"}
         sorted_list = {"hand 5": "QQQJA", "hand 2": "T55J5"}
-        
+
         dic = {
         "1": 1,
         "2": 2,
@@ -221,6 +221,7 @@ class TestAdventDay7(unittest.TestCase):
         "A": 14
     }
 
+        # TODO: adjust sorted() key
         self.assertEqual(dict(sorted(unsorted_list.items(), key=lambda item: item[1])), sorted_list)
 
     def test_start(self):
