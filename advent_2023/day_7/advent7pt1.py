@@ -30,6 +30,7 @@ def get_wagers(hand_dic:dict):
 
     return answer
 
+
 def find_hand_type(hand_dic:dict):
     '''Takes in a hand dictionary (ex: "hand 1"); outputs the type of hand it is (ex: "Full House) as a string'''
     def x_of_a_kind(hand:list, num:int):
@@ -240,6 +241,7 @@ def start(location:str):
     ordered_dic = order_hands(parsed_file)
 
     return get_wagers(ordered_dic)
+
 
 #########
 # start #
