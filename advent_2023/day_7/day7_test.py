@@ -184,7 +184,6 @@ class TestAdventDay7(unittest.TestCase):
 
             return self.assertEqual(get_wagers(hand), answer)
 
-
         test_1(self)
         test_2(self)
         test_3(self)
