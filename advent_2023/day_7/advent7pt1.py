@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def get_input(location:str):
     dic = {}
     hand_num = 1
@@ -20,6 +21,14 @@ def get_input(location:str):
 
     return dic
 
+
+def get_wagers(hand_dic:dict):
+    answer = 0
+
+    for key in hand_dic:
+        answer += hand_dic[key]["wager"] * hand_dic[key]["ranking"]
+
+    return answer
 
 def find_hand_type(hand_dic:dict):
     '''Takes in a hand dictionary (ex: "hand 1"); outputs the type of hand it is (ex: "Full House) as a string'''
@@ -117,78 +126,110 @@ def order_hands(hands_dic:dict):
 
     # for 1+ 'high card' hands...
     if len(hc_list) > 0:
-        # TODO: re-work to include card_dic
         # sort list based on card_dic; lowest to highest
-        sorted_hc_list = dict(sorted(hc_list.items(), key=lambda item: item[1]))
-        for hand in sorted_hc_list:
+        presorted_list = {}
+        for key in hc_list:
+            presorted_list[key] = []
+            for cha in hc_list[key]["hand"]:
+                presorted_list[key].append(card_dic[cha])
+
+        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+        for hand in sorted_list:
             ordered_dic[hand]["ranking"] = hand_ranking
             hand_ranking += 1
     
     # for 1+ 'One Pair' hands...
     if len(one_pair_list) > 0:
         # sort list based on card_dic; lowest to highest
-        sorted_op_list = dict(sorted(one_pair_list.items(), key=lambda item: item[1]))
-        for hand in sorted_op_list:
+        presorted_list = {}
+        for key in one_pair_list:
+            presorted_list[key] = []
+            for cha in one_pair_list[key]["hand"]:
+                presorted_list[key].append(card_dic[cha])
+
+        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+
+        for hand in sorted_list:
             ordered_dic[hand]["ranking"] = hand_ranking
             hand_ranking += 1
 
     # for 1+ 'Two Pair' hands...
     if len(two_pair_list) > 1:
         # sort list based on card_dic; lowest to highest
-        sorted_tp_list = dict(sorted(two_pair_list.items(), key=lambda item: item[1]))
-        for hand in sorted_tp_list:
+        presorted_list = {}
+        for key in two_pair_list:
+            presorted_list[key] = []
+            for cha in two_pair_list[key]["hand"]:
+                presorted_list[key].append(card_dic[cha])
+
+        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+
+        for hand in sorted_list:
             ordered_dic[hand]["ranking"] = hand_ranking
             hand_ranking += 1
     
-    # if only one 'Three of a Kind' hand, rank it lowest
-    if len(three_kind_list) == 1:
-        ordered_dic[three_kind_list[0]]["ranking"] = hand_ranking
-        hand_ranking += 1
-    # if multiple 'Three of a Kind' hands...
-    elif len(three_kind_list) > 1:
+    # for 1+ 'Three of a Kind' hand...
+    if len(three_kind_list) > 0:
         # sort list based on card_dic; lowest to highest
-        sorted_3k_list = dict(sorted(three_kind_list.items(), key=lambda item: item[1]))
-        for hand in sorted_3k_list:
+        presorted_list = {}
+        for key in three_kind_list:
+            presorted_list[key] = []
+            for cha in three_kind_list[key]["hand"]:
+                presorted_list[key].append(card_dic[cha])
+
+        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+
+        for hand in sorted_list:
             ordered_dic[hand]["ranking"] = hand_ranking
             hand_ranking += 1
 
-    # if only one 'Full House' hand, rank it lowest
-    if len(fh_list) == 1:
-        ordered_dic[fh_list[0]]["ranking"] = hand_ranking
-        hand_ranking += 1
-    # if multiple 'Full House' hands...
-    elif len(fh_list) > 1:
+    # for 1+ 'Full House' hands...
+    if len(fh_list) > 1:
         # sort list based on card_dic; lowest to highest
-        sorted_fh_list = dict(sorted(fh_list.items(), key=lambda item: item[1]))
-        for hand in sorted_fh_list:
+        presorted_list = {}
+        for key in fh_list:
+            presorted_list[key] = []
+            for cha in fh_list[key]["hand"]:
+                presorted_list[key].append(card_dic[cha])
+
+        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+
+        for hand in sorted_list:
             ordered_dic[hand]["ranking"] = hand_ranking
             hand_ranking += 1
 
-    # if only one 'Four of a Kind' hand, rank it lowest
-    if len(four_kind_list) == 1:
-        ordered_dic[four_kind_list[0]]["ranking"] = hand_ranking
-        hand_ranking += 1
-    # if multiple 'Four of a Kind' hands...
-    elif len(four_kind_list) > 1:
+    # for 1+ 'Four of a Kind' hand...
+    if len(four_kind_list) > 1:
         # sort list based on card_dic; lowest to highest
-        sorted_4k_list = dict(sorted(four_kind_list.items(), key=lambda item: item[1]))
-        for hand in sorted_4k_list:
+        presorted_list = {}
+        for key in four_kind_list:
+            presorted_list[key] = []
+            for cha in four_kind_list[key]["hand"]:
+                presorted_list[key].append(card_dic[cha])
+
+        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+
+        for hand in sorted_list:
             ordered_dic[hand]["ranking"] = hand_ranking
             hand_ranking += 1
 
-    # if only one 'Five of a Kind' hand, rank it lowest
-    if len(five_kind_list) == 1:
-        ordered_dic[five_kind_list[0]]["ranking"] = hand_ranking
-        hand_ranking += 1
-    # if multiple 'Five of a Kind' hands...
-    elif len(five_kind_list) > 1:
+    # for 1+ 'Five of a Kind' hands...
+    if len(five_kind_list) > 1:
         # sort list based on card_dic; lowest to highest
-        sorted_5k_list = dict(sorted(five_kind_list.items(), key=lambda item: item[1]))
-        for hand in sorted_5k_list:
+        presorted_list = {}
+        for key in five_kind_list:
+            presorted_list[key] = []
+            for cha in five_kind_list[key]["hand"]:
+                presorted_list[key].append(card_dic[cha])
+
+        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+
+        for hand in sorted_list:
             ordered_dic[hand]["ranking"] = hand_ranking
             hand_ranking += 1
 
     return ordered_dic
+
 
 def start(location:str):
     parsed_file = get_input(location)
@@ -196,7 +237,9 @@ def start(location:str):
     for hand_key in parsed_file:
         parsed_file[hand_key]["hand type"] = find_hand_type(parsed_file[hand_key])
 
-    return "Hi"
+    ordered_dic = order_hands(parsed_file)
+
+    return get_wagers(ordered_dic)
 
 #########
 # start #

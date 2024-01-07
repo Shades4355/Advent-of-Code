@@ -1,5 +1,5 @@
 import unittest
-from advent7pt1 import start as start_pt1, get_input, find_hand_type, order_hands
+from advent7pt1 import start as start_pt1, get_input, find_hand_type, order_hands, get_wagers
 
 class TestAdventDay7(unittest.TestCase):
     test_input = "day7input_test.txt"
@@ -115,6 +115,36 @@ class TestAdventDay7(unittest.TestCase):
 
         self.assertEqual(file, answer)
 
+    def test_get_wagers(self):
+        def test_1(self):
+            answer = 765
+            hand = {
+                "hand 1": {
+                    "wager": 765,
+                    "ranking": 1
+                }
+            }
+            
+            return self.assertEqual(get_wagers(hand), answer)
+
+        def test_2(self):
+            answer = (765 * 1) + (220 * 2)
+            hand = {
+                "hand 1": {
+                    "wager": 765,
+                    "ranking": 1
+                },
+                "hand 2": {
+                    "wager": 220,
+                    "ranking": 2
+                }
+            }
+
+            return self.assertEqual(get_wagers(hand), answer)
+
+        test_1(self)
+        test_2(self)
+        
     def test_order_hands(self):
         hand = {
             "hand 1": {
