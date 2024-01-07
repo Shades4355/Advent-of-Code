@@ -141,10 +141,55 @@ class TestAdventDay7(unittest.TestCase):
             }
 
             return self.assertEqual(get_wagers(hand), answer)
+        
+        def test_3(self):
+            answer = (765 * 1) + (220 * 2) + (190 * 5)
+            hand = {
+                "hand 1": {
+                    "wager": 765,
+                    "ranking": 1
+                },
+                "hand 2": {
+                    "wager": 220,
+                    "ranking": 2
+                },
+                "hand 3": {
+                    "wager": 190,
+                    "ranking": 5
+                }
+            }
+
+            return self.assertEqual(get_wagers(hand), answer)
+        
+        def test_4(self):
+            answer = (765 * 1) + (220 * 2) + (190 * 5) + (59 * 4)
+            hand = {
+                "hand 1": {
+                    "wager": 765,
+                    "ranking": 1
+                },
+                "hand 2": {
+                    "wager": 220,
+                    "ranking": 2
+                },
+                "hand 3": {
+                    "wager": 190,
+                    "ranking": 5
+                },
+                "hand 4": {
+                    "wager": 59,
+                    "ranking": 4
+                }
+            }
+
+            return self.assertEqual(get_wagers(hand), answer)
+
 
         test_1(self)
         test_2(self)
-        
+        test_3(self)
+        test_4(self)
+
     def test_order_hands(self):
         hand = {
             "hand 1": {
