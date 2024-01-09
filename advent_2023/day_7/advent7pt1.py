@@ -107,6 +107,7 @@ def order_hands(hands_dic:dict):
     for key in hands_dic:
         ordered_dic[key] = hands_dic[key]
 
+    # sort hands into separate dictionaries based on hand type
     for key in ordered_dic:
         if ordered_dic[key]["hand type"] == "High Card":
             hc_list[key] = ordered_dic[key]
