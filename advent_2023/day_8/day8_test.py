@@ -1,5 +1,5 @@
 import unittest
-from advent8pt1 import start as start_pt1, get_input
+from advent8pt1 import start as start_pt1, get_input, parse_input
 
 
 class TestDay8(unittest.TestCase):
@@ -21,6 +21,16 @@ class TestDay8(unittest.TestCase):
 
         test_1(self)
         test_2(self)
+
+    def test_parse_input(self):
+        file = ["LLR\n", "\n", "AAA = (BBB, BBB)\n", "BBB = (AAA, ZZZ)\n", "ZZZ = (ZZZ, ZZZ)"]
+        answer = {"directions": ["L", "L", "R"],
+                  "AAA": ["BBB", "BBB"],
+                  "BBB": ["AAA", "ZZZ"],
+                  "ZZZ": ["ZZZ", "ZZZ"]}
+
+        self.assertEqual(parse_input(file), answer)
+        
 
     def test_start_pt1(self):
         def test_1(self):
