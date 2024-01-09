@@ -190,62 +190,127 @@ class TestAdventDay7(unittest.TestCase):
         test_4(self)
 
     def test_order_hands(self):
-        hand = {
-            "hand 1": {
-                "hand": "32T3K",
-                "hand type": "One Pair",
-                "ranking": 0
-            },
-            "hand 2": {
-                "hand": "T55J5",
-                "hand type": "Three of a Kind",
-                "ranking": 0
-            },
-            "hand 3": {
-                "hand": "KK677",
-                "hand type": "Two Pair",
-                "ranking": 0
-            },
-            "hand 4": {
-                "hand": "KTJJT",
-                "hand type": "Two Pair",
-                "ranking": 0
-            },
-            "hand 5": {
-                "hand": "QQQJA",
-                "hand type": "Three of a Kind",
-                "ranking": 0
+        def test_1(self):
+            '''Test a mixed group of hands'''
+            hand = {
+                "hand 1": {
+                    "hand": "32T3K",
+                    "hand type": "One Pair",
+                    "ranking": 0
+                },
+                "hand 2": {
+                    "hand": "T55J5",
+                    "hand type": "Three of a Kind",
+                    "ranking": 0
+                },
+                "hand 3": {
+                    "hand": "KK677",
+                    "hand type": "Two Pair",
+                    "ranking": 0
+                },
+                "hand 4": {
+                    "hand": "KTJJT",
+                    "hand type": "Two Pair",
+                    "ranking": 0
+                },
+                "hand 5": {
+                    "hand": "QQQJA",
+                    "hand type": "Three of a Kind",
+                    "ranking": 0
+                }
             }
-        }
-        answer = {
-            "hand 1": {
-                "hand": "32T3K",
-                "hand type": "One Pair",
-                "ranking": 1
-            },
-            "hand 2": {
-                "hand": "T55J5",
-                "hand type": "Three of a Kind",
-                "ranking": 4
-            },
-            "hand 3": {
-                "hand": "KK677",
-                "hand type": "Two Pair",
-                "ranking": 3
-            },
-            "hand 4": {
-                "hand": "KTJJT",
-                "hand type": "Two Pair",
-                "ranking": 2
-            },
-            "hand 5": {
-                "hand": "QQQJA",
-                "hand type": "Three of a Kind",
-                "ranking": 5
+            answer = {
+                "hand 1": {
+                    "hand": "32T3K",
+                    "hand type": "One Pair",
+                    "ranking": 1
+                },
+                "hand 2": {
+                    "hand": "T55J5",
+                    "hand type": "Three of a Kind",
+                    "ranking": 4
+                },
+                "hand 3": {
+                    "hand": "KK677",
+                    "hand type": "Two Pair",
+                    "ranking": 3
+                },
+                "hand 4": {
+                    "hand": "KTJJT",
+                    "hand type": "Two Pair",
+                    "ranking": 2
+                },
+                "hand 5": {
+                    "hand": "QQQJA",
+                    "hand type": "Three of a Kind",
+                    "ranking": 5
+                }
             }
-        }
 
-        self.assertEqual(order_hands(hand), answer)
+            return self.assertEqual(order_hands(hand), answer)
+        
+        def test_2(self):
+            '''tests 5 hands, all the same type'''
+            self.maxDiff = None
+            hand = {
+                "hand 1": {
+                    "hand": "32Q3K",
+                    "hand type": "One Pair",
+                    "ranking": 0
+                },
+                "hand 2": {
+                    "hand": "32T3K",
+                    "hand type": "One Pair",
+                    "ranking": 0
+                },
+                "hand 3": {
+                    "hand": "55QKT",
+                    "hand type": "One Pair",
+                    "ranking": 0
+                },
+                "hand 4": {
+                    "hand": "K8JJT",
+                    "hand type": "One Pair",
+                    "ranking": 0
+                },
+                "hand 5": {
+                    "hand": "QQ3JA",
+                    "hand type": "One Pair",
+                    "ranking": 0
+                }
+            }
+            answer = {
+                "hand 1": {
+                    "hand": "32Q3K",
+                    "hand type": "One Pair",
+                    "ranking": 2
+                },
+                "hand 2": {
+                    "hand": "32T3K",
+                    "hand type": "One Pair",
+                    "ranking": 1
+                },
+                "hand 3": {
+                    "hand": "55QKT",
+                    "hand type": "One Pair",
+                    "ranking": 3
+                },
+                "hand 4": {
+                    "hand": "K8JJT",
+                    "hand type": "One Pair",
+                    "ranking": 5
+                },
+                "hand 5": {
+                    "hand": "QQ3JA",
+                    "hand type": "One Pair",
+                    "ranking": 4
+                }
+            }
+
+            return self.assertEqual(order_hands(hand), answer)
+        
+        test_1(self)
+        test_2(self)
 
     def test_sorted_list(self):
         hand = {
