@@ -135,9 +135,11 @@ def order_hands(hands_dic:dict):
             for cha in hc_list[key]["hand"]:
                 presorted_list[key].append(card_dic[cha])
 
-        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
-        for hand in sorted_list:
-            ordered_dic[hand]["ranking"] = hand_ranking
+        sorted_list = sorted(presorted_list.items(), key=lambda item: item[1])
+
+        for i in range (0, len(sorted_list)):
+            key = sorted_list[i][0]
+            ordered_dic[key]["ranking"] = hand_ranking
             hand_ranking += 1
     
     # for 1+ 'One Pair' hands...
@@ -149,10 +151,11 @@ def order_hands(hands_dic:dict):
             for cha in one_pair_list[key]["hand"]:
                 presorted_list[key].append(card_dic[cha])
 
-        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+        sorted_list = sorted(presorted_list.items(), key=lambda item: item[1])
 
-        for hand in sorted_list:
-            ordered_dic[hand]["ranking"] = hand_ranking
+        for i in range (0, len(sorted_list)):
+            key = sorted_list[i][0]
+            ordered_dic[key]["ranking"] = hand_ranking
             hand_ranking += 1
 
     # for 1+ 'Two Pair' hands...
@@ -164,10 +167,11 @@ def order_hands(hands_dic:dict):
             for cha in two_pair_list[key]["hand"]:
                 presorted_list[key].append(card_dic[cha])
 
-        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+        sorted_list = sorted(presorted_list.items(), key=lambda item: item[1])
 
-        for hand in sorted_list:
-            ordered_dic[hand]["ranking"] = hand_ranking
+        for i in range (0, len(sorted_list)):
+            key = sorted_list[i][0]
+            ordered_dic[key]["ranking"] = hand_ranking
             hand_ranking += 1
     
     # for 1+ 'Three of a Kind' hand...
@@ -179,10 +183,11 @@ def order_hands(hands_dic:dict):
             for cha in three_kind_list[key]["hand"]:
                 presorted_list[key].append(card_dic[cha])
 
-        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+        sorted_list = sorted(presorted_list.items(), key=lambda item: item[1])
 
-        for hand in sorted_list:
-            ordered_dic[hand]["ranking"] = hand_ranking
+        for i in range (0, len(sorted_list)):
+            key = sorted_list[i][0]
+            ordered_dic[key]["ranking"] = hand_ranking
             hand_ranking += 1
 
     # for 1+ 'Full House' hands...
@@ -194,10 +199,11 @@ def order_hands(hands_dic:dict):
             for cha in fh_list[key]["hand"]:
                 presorted_list[key].append(card_dic[cha])
 
-        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+        sorted_list = sorted(presorted_list.items(), key=lambda item: item[1])
 
-        for hand in sorted_list:
-            ordered_dic[hand]["ranking"] = hand_ranking
+        for i in range (0, len(sorted_list)):
+            key = sorted_list[i][0]
+            ordered_dic[key]["ranking"] = hand_ranking
             hand_ranking += 1
 
     # for 1+ 'Four of a Kind' hand...
@@ -209,10 +215,11 @@ def order_hands(hands_dic:dict):
             for cha in four_kind_list[key]["hand"]:
                 presorted_list[key].append(card_dic[cha])
 
-        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+        sorted_list = sorted(presorted_list.items(), key=lambda item: item[1])
 
-        for hand in sorted_list:
-            ordered_dic[hand]["ranking"] = hand_ranking
+        for i in range (0, len(sorted_list)):
+            key = sorted_list[i][0]
+            ordered_dic[key]["ranking"] = hand_ranking
             hand_ranking += 1
 
     # for 1+ 'Five of a Kind' hands...
@@ -224,10 +231,11 @@ def order_hands(hands_dic:dict):
             for cha in five_kind_list[key]["hand"]:
                 presorted_list[key].append(card_dic[cha])
 
-        sorted_list = dict(sorted(presorted_list.items(), key=lambda item: item[1]))
+        sorted_list = sorted(presorted_list.items(), key=lambda item: item[1])
 
-        for hand in sorted_list:
-            ordered_dic[hand]["ranking"] = hand_ranking
+        for i in range (0, len(sorted_list)):
+            key = sorted_list[i][0]
+            ordered_dic[key]["ranking"] = hand_ranking
             hand_ranking += 1
 
     return ordered_dic
