@@ -1,36 +1,6 @@
 import numpy as np
 
 
-def get_input(location:str):
-    dic = {}
-    hand_num = 1
-
-    file = open(location, 'r')
-
-    for line in file:
-        hand, wager =  line.split()
-        dic[f"hand {hand_num}"] = {}
-        dic[f"hand {hand_num}"]["hand"] = hand
-        dic[f"hand {hand_num}"]["wager"] = int(wager)
-        dic[f"hand {hand_num}"]["hand type"] = ""
-        dic[f"hand {hand_num}"]["ranking"] = 0
-
-        hand_num += 1
-
-    file.close()
-
-    return dic
-
-
-def get_wagers(hand_dic:dict):
-    answer = 0
-
-    for key in hand_dic:
-        answer += hand_dic[key]["wager"] * hand_dic[key]["ranking"]
-
-    return answer
-
-
 def find_hand_type(hand_dic:dict):
     '''Takes in a hand dictionary (ex: "hand 1"); outputs the type of hand it is (ex: "Full House) as a string'''
     def x_of_a_kind(hand:list, num:int):
@@ -74,6 +44,36 @@ def find_hand_type(hand_dic:dict):
         return "One Pair"
     else:
         return "High Card"
+
+
+def get_input(location:str):
+    dic = {}
+    hand_num = 1
+
+    file = open(location, 'r')
+
+    for line in file:
+        hand, wager =  line.split()
+        dic[f"hand {hand_num}"] = {}
+        dic[f"hand {hand_num}"]["hand"] = hand
+        dic[f"hand {hand_num}"]["wager"] = int(wager)
+        dic[f"hand {hand_num}"]["hand type"] = ""
+        dic[f"hand {hand_num}"]["ranking"] = 0
+
+        hand_num += 1
+
+    file.close()
+
+    return dic
+
+
+def get_wagers(hand_dic:dict):
+    answer = 0
+
+    for key in hand_dic:
+        answer += hand_dic[key]["wager"] * hand_dic[key]["ranking"]
+
+    return answer
 
 
 def order_hands(hands_dic:dict):
