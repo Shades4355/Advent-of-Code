@@ -22,7 +22,7 @@ def follow_directions(file:dict):
                 if direction == "L":
                     placement[i] = file[placement[i]][0]
                 elif direction == "R":
-                    placement[i] == file[placement[i]][1]
+                    placement[i] = file[placement[i]][1]
                 else:
                     raise Exception("Unexpected direction:", direction)
             steps += 1
