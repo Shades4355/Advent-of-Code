@@ -1,5 +1,28 @@
 
 
+def follow_directions(dictionary:dict):
+    steps = 0
+    placement = ""
+
+    placement = dictionary["start"]
+
+    while not placement == "ZZZ":
+        for direction in dictionary["directions"]:
+            if direction == "L":
+                placement = dictionary[placement][0]
+            elif direction == "R":
+                placement = dictionary[placement][1]
+            else:
+                raise Exception("Unexpected direction:", direction)
+            steps += 1
+
+            if placement == "ZZZ":
+                return steps
+            elif placement == dictionary[placement][0] and placement == dictionary[placement][1]:
+                raise Exception("Infinite Loop found at:", placement)
+    return steps
+
+
 def get_input(location):
     file_list = []
 
@@ -28,30 +51,6 @@ def parse_input(file:list):
         dictionary[key] = value.strip().strip("(").strip(")").split(", ")
 
     return dictionary
-
-
-def follow_directions(dictionary:dict):
-    steps = 0
-    placement = ""
-
-    placement = dictionary["start"]
-
-    while not placement == "ZZZ":
-        for direction in dictionary["directions"]:
-            if direction == "L":
-                placement = dictionary[placement][0]
-            elif direction == "R":
-                placement = dictionary[placement][1]
-            else:
-                raise Exception("Unexpected direction:", direction)
-            steps += 1
-
-            if placement == "ZZZ":
-                return steps
-            elif placement == dictionary[placement][0] and placement == dictionary[placement][1]:
-                raise Exception("Infinite Loop found at:", placement)
-    return steps
-
 
 
 def start(location:str):
