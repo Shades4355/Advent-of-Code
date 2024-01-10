@@ -33,8 +33,25 @@ class TestDay8(unittest.TestCase):
 
             return self.assertEqual(follow_directions(file), answer)
         
+        def test_3(self):
+            file = {
+                "directions": ["R", "L"],
+                "start": "AAA",
+                "AAA": ["BBB", "CCC"],
+                "BBB": ["DDD", "EEE"],
+                "CCC": ["ZZZ", "GGG"],
+                "DDD": ["DDD", "DDD"],
+                "EEE": ["EEE", "EEE"],
+                "GGG": ["GGG", "GGG"],
+                "ZZZ": ["AAA", "BBB"]
+            }
+            answer = 2
+
+            return self.assertEqual(follow_directions(file), answer)
+        
         test_1(self)
         test_2(self)
+        test_3(self)
 
     def test_get_input(self):
         def test_1(self):
