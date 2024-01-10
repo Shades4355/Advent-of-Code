@@ -21,7 +21,7 @@ def parse_input(file:list):
         directions.append(cha)
 
     dictionary["directions"] = directions
-    dictionary["start"] = file[2].split(" = ")[0]
+    dictionary["start"] = "AAA"
 
     for i in range(2, len(file)):
         key, value = file[i].split(" = ")
@@ -50,7 +50,6 @@ def follow_directions(dictionary:dict):
                 return steps
             elif placement == dictionary[placement][0] and placement == dictionary[placement][1]:
                 raise Exception("Infinite Loop found at:", placement)
-            print(steps) # TODO: delete
     return steps
 
 
