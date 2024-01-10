@@ -44,14 +44,13 @@ def follow_directions(dictionary:dict):
                 placement = dictionary[placement][1]
             else:
                 raise Exception("Unexpected direction:", direction)
-
             steps += 1
 
             if placement == "ZZZ":
-                break
+                return steps
             elif placement == dictionary[placement][0] and placement == dictionary[placement][1]:
                 raise Exception("Infinite Loop found at:", placement)
-    
+            print(steps) # TODO: delete
     return steps
 
 
