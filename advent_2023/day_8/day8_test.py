@@ -1,6 +1,6 @@
 import unittest
-from advent8pt1 import start as start_pt1, get_input, parse_input as parse_input_pt1, follow_directions
-from advent8pt2 import start as start_pt2, parse_input as parse_input_pt2
+from advent8pt1 import start as start_pt1, get_input, parse_input as parse_input_pt1, follow_directions as follow_directions_pt1
+from advent8pt2 import start as start_pt2, parse_input as parse_input_pt2, follow_directions as follow_directions_pt2
 
 
 class TestDay8(unittest.TestCase):
@@ -10,6 +10,7 @@ class TestDay8(unittest.TestCase):
 
     def test_follow_directions(self):
         def test_1(self):
+            '''Tests follow_directions_pt1'''
             file = {
                 "directions": ["R", "L"],
                 "start": "AAA",
@@ -23,9 +24,10 @@ class TestDay8(unittest.TestCase):
             }
             answer = 2
 
-            return self.assertEqual(follow_directions(file), answer)
+            return self.assertEqual(follow_directions_pt1(file), answer)
 
         def test_2(self):
+            '''Tests follow_directions_pt1'''
             file = {"directions": ["L", "L", "R"],
                     "start": "AAA",
                     "AAA": ["BBB", "BBB"],
@@ -33,9 +35,10 @@ class TestDay8(unittest.TestCase):
                     "ZZZ": ["ZZZ", "ZZZ"]}
             answer = 6
 
-            return self.assertEqual(follow_directions(file), answer)
+            return self.assertEqual(follow_directions_pt1(file), answer)
 
         def test_3(self):
+            '''Tests follow_directions_pt1'''
             file = {
                 "directions": ["R", "L"],
                 "start": "AAA",
@@ -49,11 +52,30 @@ class TestDay8(unittest.TestCase):
             }
             answer = 2
 
-            return self.assertEqual(follow_directions(file), answer)
+            return self.assertEqual(follow_directions_pt1(file), answer)
+
+        def test_4(self):
+            '''Tests follow_directions_pt2'''
+            file = {
+                "directions": ["L", "R"],
+                "start": ["11A", "22A"],
+                "11A": ["11B", "XXX"],
+                "11B": ["XXX", "11Z"],
+                "11Z": ["11B", "XXX"],
+                "22A": ["22B", "XXX"],
+                "22B": ["22C", "22C"],
+                "22C": ["22Z", "22Z"],
+                "22Z": ["22B", "22B"],
+                "XXX": ["XXX", "XXX"]
+            }
+            answer = 6
+
+            return self.assertEqual(follow_directions_pt2(file), answer)
 
         test_1(self)
         test_2(self)
         test_3(self)
+        test_4(self)
 
     def test_get_input(self):
         def test_1(self):
@@ -73,6 +95,7 @@ class TestDay8(unittest.TestCase):
 
     def test_parse_input(self):
         def test_1(self):
+            '''Tests parse_input_pt1'''
             file = ["LLR\n", "\n", "AAA = (BBB, BBB)\n", "BBB = (AAA, ZZZ)\n", "ZZZ = (ZZZ, ZZZ)"]
             answer = {"directions": ["L", "L", "R"],
                   "start": "AAA",
@@ -83,6 +106,7 @@ class TestDay8(unittest.TestCase):
             return self.assertEqual(parse_input_pt1(file), answer)
         
         def test_2(self):
+            '''Tests parse_input_pt2'''
             file = ["LR\n", "\n", "11A = (11B, XXX)\n", "11B = (XXX, 11Z)\n", "11Z = (11B, XXX)\n", "22A = (22B, XXX)\n", "22B = (22C, 22C\n", "22C = (22Z, 22Z)\n", "22Z = (22B, 22B)\n", "XXX = (XXX, XXX)"]
             answer = {
                 "directions": ["L", "R"],
