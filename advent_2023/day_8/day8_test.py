@@ -79,7 +79,6 @@ class TestDay8(unittest.TestCase):
             answer = 6
 
             return self.assertEqual(follow_directions_pt1(file), answer)
-
         def test_3(self):
             '''Tests follow_directions_pt1'''
             file = {
@@ -96,6 +95,7 @@ class TestDay8(unittest.TestCase):
             answer = 2
 
             return self.assertEqual(follow_directions_pt1(file), answer)
+        
         def test_4(self):
             '''Tests follow_directions_pt2'''
             file = {
@@ -114,9 +114,11 @@ class TestDay8(unittest.TestCase):
 
             return self.assertEqual(follow_directions_pt2(file), answer)
 
+        # follow_direction_pt1
         test_1(self)
         test_2(self)
         test_3(self)
+        # follow_directions_pt2
         test_4(self)
 
     def test_get_input(self):
