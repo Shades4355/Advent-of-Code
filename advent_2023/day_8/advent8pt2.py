@@ -38,9 +38,10 @@ def follow_directions(file:dict):
             if all_end_in_z(placement):
                 return steps
 
-            # tests for infinite loops; ex "ZZZ" = ("ZZZ", "ZZZ")
+            # tests for infinite loops; ex "BBB" = ("BBB", "BBB")
             for i in range(0, len(placement)):
-                if placement[i] == file[placement[i]][0] and placement[i] == file[placement[i]][1]:
+                if placement[i] == file[placement[i]][0] and placement[i] == file[placement[i]][1] and not placement[i][-1] == "Z":
+                    # If infinite loop found at "TSZ" = ("TSZ", "TSZ"), that's fine. Only infinite loops not ending in "Z" are a problem
                     raise Exception("Infinite Loop found at:", placement[i], placement)
 
 
