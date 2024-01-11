@@ -31,8 +31,10 @@ def follow_directions(file:dict):
                     placement[i] = new_placement[i]
                 else:
                     raise Exception("Unexpected direction:", direction)
+
             steps += 1
 
+            # tests to see if done
             if all_end_in_z(placement):
                 return steps
 
