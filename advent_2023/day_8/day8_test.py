@@ -38,13 +38,20 @@ class TestDay8(unittest.TestCase):
             placement = ["ZZZ", "WJU", "AAA"]
 
             return self.assertFalse(all_end_in_z(placement))
+        
+        def test_false_4(self):
+            '''Tests for a False outcome with no values ending in "Z"'''
+            placement = ["ZZA", "WJU", "AAA"]
+
+            return self.assertFalse(all_end_in_z(placement))
 
         test_true_1(self)
         test_true_2(self)
         test_false_1(self)
         test_false_2(self)
         test_false_3(self)
-    
+        test_false_4(self)
+
     def test_follow_directions(self):
         def test_1(self):
             '''Tests follow_directions_pt1'''
@@ -89,7 +96,6 @@ class TestDay8(unittest.TestCase):
             answer = 2
 
             return self.assertEqual(follow_directions_pt1(file), answer)
-
         def test_4(self):
             '''Tests follow_directions_pt2'''
             file = {
