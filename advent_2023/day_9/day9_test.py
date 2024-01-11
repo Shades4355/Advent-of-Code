@@ -1,7 +1,7 @@
 import unittest
 
 class TestDay9(unittest.TestCase):
-    test_data = "advent9input_test.txt"
+    test_data = "day9input_test.txt"
 
 
 
