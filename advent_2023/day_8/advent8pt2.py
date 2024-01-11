@@ -16,12 +16,17 @@ def follow_directions(file:dict):
     placement = []
     new_placement = []
 
+    # TODO: delete log creation
+    log = open("day8log.txt", "w")
+    log.close()
+
     for num in file["start"]:
         placement.append(num)
         new_placement.append(num)
 
     while True:
         for direction in file["directions"]:
+            log = open("day8log.txt", "a")
             for i in range(0, len(placement)):
                 if direction == "L":
                     new_placement[i] = file[placement[i]][0]
@@ -33,6 +38,16 @@ def follow_directions(file:dict):
                     raise Exception("Unexpected direction:", direction)
 
             steps += 1
+
+            # TODO: delete log printout
+            log.write("steps: ")
+            log.write(str(steps))
+            log.write("\nplacement: ")
+            log.write(str(placement))
+            log.write("\n\n")
+            log.close()
+            if steps >= 47570:
+                raise Exception("Too Many Steps! Aborting program...")
 
             # tests to see if done
             if all_end_in_z(placement):
