@@ -1,3 +1,4 @@
+import time
 from advent8pt1 import get_input
 
 
@@ -16,9 +17,7 @@ def follow_directions(file:dict):
     placement = []
     new_placement = []
 
-    # TODO: delete log creation
-    log = open("day8log.txt", "w")
-    log.close()
+    log_file = f"logs/day8log_{time.time()}.txt"
 
     for num in file["start"]:
         placement.append(num)
@@ -26,7 +25,10 @@ def follow_directions(file:dict):
 
     while True:
         for direction in file["directions"]:
-            log = open("day8log.txt", "a")
+            
+            # TODO: delete log creation
+            log = open(log_file, "a")
+            
             for i in range(0, len(placement)):
                 if direction == "L":
                     new_placement[i] = file[placement[i]][0]
