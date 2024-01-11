@@ -1,6 +1,6 @@
 import unittest
 from advent8pt1 import start as start_pt1, get_input, parse_input as parse_input_pt1, follow_directions as follow_directions_pt1
-from advent8pt2 import start as start_pt2, parse_input as parse_input_pt2, follow_directions as follow_directions_pt2
+from advent8pt2 import start as start_pt2, parse_input as parse_input_pt2, follow_directions as follow_directions_pt2, all_end_in_z
 
 
 class TestDay8(unittest.TestCase):
@@ -8,6 +8,43 @@ class TestDay8(unittest.TestCase):
     test_data2 = "day8input_test2.txt"
     test_data3 = "day8input_test3.txt"
 
+    def test_all_end_in_z(self):
+        def test_true_1(self):
+            '''test for True outcome with 3 placement values'''
+            placement = ["ZZZ", "WJZ", "HSZ"]
+
+            return self.assertTrue(all_end_in_z(placement))
+        
+        def test_true_2(self):
+            '''tests for True outcome with only 1 placement value1'''
+            placement = ["YPZ"]
+
+            return self.assertTrue(all_end_in_z(placement))
+        
+        def test_false_1(self):
+            '''Tests for a False outcome with 3rd value not ending in "Z"'''
+            placement = ["ZZZ", "WJZ", "AAA"]
+
+            return self.assertFalse(all_end_in_z(placement))
+        
+        def test_false_2(self):
+            '''Tests for a False outcome with 2nd value not ending in "Z"'''
+            placement = ["ZZZ", "WJY", "AAZ"]
+
+            return self.assertFalse(all_end_in_z(placement))
+        
+        def test_false_3(self):
+            '''Tests for a False outcome with 2nd & 3rd values not ending in "Z"'''
+            placement = ["ZZZ", "WJU", "AAA"]
+
+            return self.assertFalse(all_end_in_z(placement))
+
+        test_true_1(self)
+        test_true_2(self)
+        test_false_1(self)
+        test_false_2(self)
+        test_false_3(self)
+    
     def test_follow_directions(self):
         def test_1(self):
             '''Tests follow_directions_pt1'''
@@ -25,7 +62,6 @@ class TestDay8(unittest.TestCase):
             answer = 2
 
             return self.assertEqual(follow_directions_pt1(file), answer)
-
         def test_2(self):
             '''Tests follow_directions_pt1'''
             file = {"directions": ["L", "L", "R"],
@@ -141,7 +177,6 @@ class TestDay8(unittest.TestCase):
         
         test_1(self)
         test_2(self)
-
 
     def test_start_pt2(self):
         file = self.test_data3

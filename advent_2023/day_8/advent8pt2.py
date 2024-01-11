@@ -17,20 +17,25 @@ def follow_directions(file:dict):
 
     looping = True
     while looping:
+        new_placement = placement
         for direction in file["directions"]:
             for i in range(0, len(placement)):
                 if direction == "L":
-                    placement[i] = file[placement[i]][0]
+                    new_placement[i] = file[placement[i]][0]
+                    placement[i] = new_placement[i]
                 elif direction == "R":
-                    placement[i] = file[placement[i]][1]
+                    new_placement[i] = file[placement[i]][1]
+                    placement[i] = new_placement[i]
                 else:
                     raise Exception("Unexpected direction:", direction)
             steps += 1
-                
-            if all_end_in_z(placement):
-                looping = False
 
-    return steps
+            if all_end_in_z(placement):
+                return steps
+
+            for i in range(0, len(placement)):
+                if placement[i] == file[placement[i]][0] and placement[i] == file[placement[i]][1]:
+                    raise Exception("Infinite Loop found at:", placement[i], placement)
 
 
 def parse_input(file:list):
