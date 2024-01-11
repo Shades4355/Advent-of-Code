@@ -17,7 +17,7 @@ def follow_directions(file:dict):
     placement = []
     new_placement = []
 
-    log_file = f"logs/day8log_{time.time()}.txt"
+    log_file = f"logs/day8log_{time.time()}.txt" # TODO: delete
 
     for num in file["start"]:
         placement.append(num)
