@@ -48,7 +48,7 @@ def follow_directions(file:dict):
             log.write(str(placement))
             log.write("\n\n")
             log.close()
-            if steps >= 47570:
+            if steps >= 500000:
                 raise Exception("Too Many Steps! Aborting program...")
 
             # tests to see if done
