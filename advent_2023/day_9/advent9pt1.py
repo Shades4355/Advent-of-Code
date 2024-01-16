@@ -52,6 +52,20 @@ def start(location:str):
     answer = 0
     file = parse_input(get_input(location))
 
+    for line in file:
+        all_zeros = False
+        new_list = []
+
+        new_line = line
+
+        # find all new lines
+        while not all_zeros:
+            new_list.append(new_line)
+            all_zeros, new_line = find_next_line(new_line)
+
+        # find last number
+        # 
+
     return answer
 
 
