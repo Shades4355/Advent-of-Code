@@ -1,4 +1,24 @@
 
+def find_next_line(old_line:list):
+    '''Takes in a list; outputs a list of the difference between each item as well as whether or not the list was all 0s'''
+    answer = []
+    zeros = 0
+
+    for i in range(0, len(old_line)):
+        if not old_line[i] == 0 and not i == len(old_line) - 1:
+            new_num = old_line[i+1] - old_line[i]
+            answer.append(new_num)
+        elif old_line[i] == 0 and not i == len(old_line) - 1:
+            new_num = old_line[i+1] - old_line[i]
+            answer.append(new_num)
+            zeros += 1
+
+    if zeros == len(old_line) - 1:
+        return [True, answer]
+
+    return [False, answer]
+
+
 def get_input(location:str):
     '''parse txt file into a list'''
     output_file = []
