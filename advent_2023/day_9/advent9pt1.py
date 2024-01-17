@@ -87,4 +87,5 @@ def start(location:str):
 #########
 # Start #
 #########
-print(start("day9input.txt"))
+if __name__ == "__main__":
+    print(start("day9input.txt"))

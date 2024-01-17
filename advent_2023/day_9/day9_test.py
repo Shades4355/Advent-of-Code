@@ -95,7 +95,26 @@ class TestDay9(unittest.TestCase):
 
             return self.assertEqual(find_prev_number(file), answer)
         
+        def test_2(self):
+            file = [[1, 3, 6, 10, 15, 21],
+                    [2, 3, 4, 5, 6],
+                    [1, 1, 1, 1],
+                    [0, 0, 0]]
+            answer = 0
+
+            return self.assertEqual(find_prev_number(file), answer)
+
+        def test_3(self):
+            file = [[0, 3, 6, 9, 12, 15, 18],
+                    [3, 3, 3, 3, 3, 3],
+                    [0, 0, 0, 0, 0]]
+            answer = -3
+
+            return self.assertEqual(find_prev_number(file), answer)
+
         test_1(self)
+        test_2(self)
+        test_3(self)
 
     def test_get_input_pt1(self):
         location = self.test_data
@@ -120,6 +139,13 @@ class TestDay9(unittest.TestCase):
         answer = 114
 
         self.assertEqual(start_pt1(file), answer)
+
+    def test_start_pt2(self):
+        file = self.test_data
+        answer = 2
+
+        self.assertEqual(start_pt2(file), answer)
+
 
 #########
 # Start #
