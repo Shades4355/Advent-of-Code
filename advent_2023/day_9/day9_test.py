@@ -1,5 +1,5 @@
 import unittest
-from advent9pt1 import start as start_pt1, get_input as get_input_pt1, parse_input as parse_input_pt1, find_next_line
+from advent9pt1 import start as start_pt1, get_input as get_input_pt1, parse_input as parse_input_pt1, find_next_line, find_number
 
 class TestDay9(unittest.TestCase):
     test_data = "day9input_test.txt"
@@ -47,6 +47,15 @@ class TestDay9(unittest.TestCase):
         # Tests for True return, plus a list of 0s
         test_5(self)
         test_6(self)
+
+    def test_find_number(self):
+        file = [[1, 5, 9, 19],
+                [4, 7, 10],
+                [3, 3],
+                [0]]
+        answer = 32
+
+        self.assertEqual(find_number(file), answer)
 
     def test_get_input_pt1(self):
         location = self.test_data

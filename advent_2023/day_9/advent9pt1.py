@@ -4,11 +4,11 @@ def find_next_line(old_line:list):
     answer = []
     zeros = 0
 
-    for i in range(0, len(old_line)):
-        if not old_line[i] == 0 and not i == len(old_line) - 1:
+    for i in range(0, len(old_line) - 1):
+        if not old_line[i] == 0:
             new_num = old_line[i+1] - old_line[i]
             answer.append(new_num)
-        elif old_line[i] == 0 and not i == len(old_line) - 1:
+        elif old_line[i] == 0:
             new_num = old_line[i+1] - old_line[i]
             answer.append(new_num)
             zeros += 1
@@ -17,6 +17,22 @@ def find_next_line(old_line:list):
         return [True, answer]
 
     return [False, answer]
+
+
+def find_number(file:list):
+    answer = 0
+    temp_list = []
+
+    for line in file:
+        temp_list.append(line)
+
+    for i in range(len(temp_list) - 1, 0, -1):
+        new_num = temp_list[i][-1] + temp_list[i - 1][-1]
+        temp_list[i - 1].append(new_num)
+
+    answer = temp_list[0][-1]
+
+    return answer
 
 
 def get_input(location:str):
@@ -55,7 +71,6 @@ def start(location:str):
     for line in file:
         all_zeros = False
         new_list = []
-
         new_line = line
 
         # find all new lines
@@ -63,8 +78,8 @@ def start(location:str):
             new_list.append(new_line)
             all_zeros, new_line = find_next_line(new_line)
 
-        # find last number
-        # 
+        # find last numbers, add them together
+        answer += find_number(new_list)
 
     return answer
 
