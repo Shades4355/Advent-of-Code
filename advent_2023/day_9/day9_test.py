@@ -1,6 +1,8 @@
 import unittest
 from advent9pt1 import start as start_pt1, get_input as get_input_pt1, parse_input as parse_input_pt1, find_next_line, find_number
 
+from advent9pt2 import start as start_pt2, find_prev_number
+
 class TestDay9(unittest.TestCase):
     test_data = "day9input_test.txt"
 
@@ -81,6 +83,39 @@ class TestDay9(unittest.TestCase):
         test_2(self)
         test_3(self)
 
+    def test_find_prev_number(self):
+        def test_1(self):
+            file = [[10, 13, 16, 21, 30, 45],
+                    [3, 3, 5, 9, 15],
+                    [0, 2, 4, 6],
+                    [2, 2, 2],
+                    [0, 0]]
+            
+            answer = 5
+
+            return self.assertEqual(find_prev_number(file), answer)
+        
+        def test_2(self):
+            file = [[1, 3, 6, 10, 15, 21],
+                    [2, 3, 4, 5, 6],
+                    [1, 1, 1, 1],
+                    [0, 0, 0]]
+            answer = 0
+
+            return self.assertEqual(find_prev_number(file), answer)
+
+        def test_3(self):
+            file = [[0, 3, 6, 9, 12, 15, 18],
+                    [3, 3, 3, 3, 3, 3],
+                    [0, 0, 0, 0, 0]]
+            answer = -3
+
+            return self.assertEqual(find_prev_number(file), answer)
+
+        test_1(self)
+        test_2(self)
+        test_3(self)
+
     def test_get_input_pt1(self):
         location = self.test_data
         answer = ["0 3 6 9 12 15",
@@ -104,6 +139,13 @@ class TestDay9(unittest.TestCase):
         answer = 114
 
         self.assertEqual(start_pt1(file), answer)
+
+    def test_start_pt2(self):
+        file = self.test_data
+        answer = 2
+
+        self.assertEqual(start_pt2(file), answer)
+
 
 #########
 # Start #
