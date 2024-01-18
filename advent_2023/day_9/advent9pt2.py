@@ -32,7 +32,7 @@ def start(location:str):
             all_zeros, new_line = find_next_line(new_line)
 
         # find first numbers, add them together
-        answer += find_prev_number(file)
+        answer += find_prev_number(new_list)
 
     return answer
 
