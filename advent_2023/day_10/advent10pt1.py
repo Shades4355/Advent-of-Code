@@ -1,4 +1,4 @@
-
+# TODO: review need for both "in" and "out" directions. 
 
 def advance_pos(out_direction:str, pos:list):
     i, j = pos
@@ -41,7 +41,7 @@ def follow_pipes(file:list, start_point:list):
     if i - 1 >= 0 and not file[i - 1][j] == ".":
             direction["pos1"] = [i - 1, j]
             direction["in1"] = "s"
-    elif j + 1 > len(file[0]) and not file[i][j + 1] == ".":
+    elif j + 1 < len(file[0]) and not file[i][j + 1] == ".":
             direction["pos1"] = [i, j + 1]
             direction["in1"] = "w"
     elif i + 1 < len(file) and not file[i + 1][j] == ".":
@@ -71,10 +71,6 @@ def follow_pipes(file:list, start_point:list):
 
     answer += 1
 
-    # TODO: delete
-    print("Pos1:", direction["pos1"])
-    print("Pos2:", direction["pos2"])
-
     while True:
         if direction["pos1"] == direction["pos2"]:
             return answer
@@ -82,6 +78,12 @@ def follow_pipes(file:list, start_point:list):
         # if pos1 does not == pos2, have each take one step
         direction["out1"] = take_step(file, direction["in1"], direction["pos1"])
         direction["out2"] = take_step(file, direction["in2"], direction["pos2"])
+
+        # TODO: delete
+        print("\nPos1:", direction["pos1"])
+        print("out 1:", direction["out1"])
+        print("Pos2:", direction["pos2"])
+        print("out 2:", direction["out2"])
 
         # advance pos1 and pos2
         direction["pos1"] = advance_pos(direction["out1"], direction["pos1"])
@@ -111,41 +113,43 @@ def get_input(location:str):
 
 def take_step(file:list, in_direction:str, pos:list):
     i, j = pos
-    out_direction = ""
     position = file[i][j]
+
+
 
     if position == "|":
         if in_direction == "s":
-            out_direction = "n"
+            return "n"
         elif in_direction == "n":
-            out_direction = "s"
+            return "s"
     elif position == "-":
         if in_direction == "e":
-            out_direction = "w"
+            return "w"
         elif in_direction == "w":
-            out_direction = "e"
+            return "e"
     elif position == "L":
         if in_direction == "n":
-            out_direction = "e"
+            return "e"
         elif in_direction == "e":
-            out_direction = "n"
+            return "n"
     elif position == "J":
         if in_direction == "n":
-            out_direction = "w"
+            return "w"
         elif in_direction == "w":
-            out_direction ="n"
+            return "n"
     elif position == "7":
         if in_direction == "w":
-            out_direction = "s"
-        if in_direction == "s":
-            out_direction = "w"
+            return "s"
+        elif in_direction == "s":
+            return "w"
     elif position == "F":
         if in_direction == "e":
-            out_direction = "s"
+            return "s"
         elif in_direction == "s":
-            out_direction = "e"
+            return "e"
+ 
+    raise Exception("Loop broken! Position:", position, "| direction:", in_direction)
     
-    return out_direction
     
 
 def start(location:str):
@@ -163,10 +167,3 @@ def start(location:str):
 #########
 if __name__ == "__main__":
     print(start("day10input.txt"))
-
-
-'''
-Rules:
-. is ground; there is no pipe in this tile.
-S is the starting position of the animal; there is a pipe on this tile, but your sketch doesn't show what shape the pipe has.
-'''
