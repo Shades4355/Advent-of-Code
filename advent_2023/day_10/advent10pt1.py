@@ -79,15 +79,13 @@ def follow_pipes(file:list, start_point:list):
         direction["out1"] = take_step(file, direction["in1"], direction["pos1"])
         direction["out2"] = take_step(file, direction["in2"], direction["pos2"])
 
-        # TODO: delete
-        print("\nPos1:", direction["pos1"])
-        print("out 1:", direction["out1"])
-        print("Pos2:", direction["pos2"])
-        print("out 2:", direction["out2"])
-
         # advance pos1 and pos2
         direction["pos1"] = advance_pos(direction["out1"], direction["pos1"])
         direction["pos2"] = advance_pos(direction["out2"], direction["pos2"])
+
+        # update "in" position
+        direction["in1"] = update_direction(direction["out1"])
+        direction["in2"] = update_direction(direction["out2"])
 
         # advance answer 1 step
         answer += 1
@@ -148,9 +146,21 @@ def take_step(file:list, in_direction:str, pos:list):
         elif in_direction == "s":
             return "e"
  
-    raise Exception("Loop broken! Position:", position, "| direction:", in_direction)
+    raise Exception("Loop broken! Position:", position, "| in direction:", in_direction)
     
     
+def update_direction(out_direction:str):
+    '''takes in an old "out direction"; returns a new "in direction"'''
+    if out_direction == "n":
+        return "s"
+    elif out_direction == "s":
+        return "n"
+    elif out_direction == "e":
+        return "w"
+    elif out_direction == "w":
+        return "e"
+    else:
+        raise Exception("Incorrect direction:", out_direction)
 
 def start(location:str):
     answer = 0

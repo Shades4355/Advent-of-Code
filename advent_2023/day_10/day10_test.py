@@ -1,5 +1,5 @@
 import unittest
-from advent10pt1 import start as start_pt1, get_input, find_start, follow_pipes, take_step, advance_pos
+from advent10pt1 import start as start_pt1, get_input, find_start, follow_pipes, take_step, advance_pos, update_direction
 
 
 class TestDay10(unittest.TestCase):
@@ -106,7 +106,7 @@ class TestDay10(unittest.TestCase):
             [".", ".", ".", ".", "."]
             ]
             in_direction = "n"
-            position = [1, 3]
+            position = [2, 1]
             answer = "s"
 
             return self.assertEqual(take_step(file, in_direction, position), answer)
@@ -120,7 +120,7 @@ class TestDay10(unittest.TestCase):
             [".", ".", ".", ".", "."]
             ]
             in_direction = "s"
-            position = [2, 1]
+            position = [2, 3]
             answer = "n"
 
             return self.assertEqual(take_step(file, in_direction, position), answer)
@@ -157,6 +157,24 @@ class TestDay10(unittest.TestCase):
         test_S(self)
         test_W(self)
         test_E(self)
+
+    def test_update_direction(self):
+        def test_N(self):
+            return self.assertEqual(update_direction("n"), "s")
+        
+        def test_S(self):
+            return self.assertEqual(update_direction("s"), "n")
+        
+        def test_E(self):
+            return self.assertEqual(update_direction("e"), "w")
+        
+        def test_W(self):
+            return self.assertEqual(update_direction("w"), "e")
+        
+        test_N(self)
+        test_S(self)
+        test_E(self)
+        test_W(self)
 
     def test_start_pt1(self):
         def test_1(self):
