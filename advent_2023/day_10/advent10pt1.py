@@ -37,33 +37,39 @@ def follow_pipes(file:list, start_point:list):
     direction["in2"] = ""
     direction["out2"] = ""
 
+    # lists of shapes valid as starting steps
+    valid_north = ["|", "7", "F"]
+    valid_south = ["|", "L", "J"]
+    valid_east = ["-", "J", "7"]
+    valid_west = ["-", "L", "F"]
+
     # find starting direction 1
-    if i - 1 >= 0 and not file[i - 1][j] == ".":
+    if i - 1 >= 0 and file[i - 1][j] in valid_north:
             direction["pos1"] = [i - 1, j]
             direction["in1"] = "s"
-    elif j + 1 < len(file[0]) and not file[i][j + 1] == ".":
+    elif j + 1 < len(file[0]) and file[i][j + 1] in valid_east:
             direction["pos1"] = [i, j + 1]
             direction["in1"] = "w"
-    elif i + 1 < len(file) and not file[i + 1][j] == ".":
+    elif i + 1 < len(file) and file[i + 1][j] in valid_south:
             direction["pos1"] = [i + 1, j]
             direction["in1"] = "n"
-    elif j - 1 >= 0 and not file[i][j - 1] == ".":
+    elif j - 1 >= 0 and file[i][j - 1] in valid_west:
             direction["pos1"] = [i, j - 1]
             direction["in1"] = "e"
     else:
         raise Exception("No pipes found")
 
     # find starting direction 2
-    if j - 1 >= 0 and not file[i][j - 1] == ".":
+    if j - 1 >= 0 and file[i][j - 1] in valid_west:
             direction["pos2"] = [i, j - 1]
             direction["in2"] = "e"
-    elif i + 1 < len(file) and not file[i + 1][j] == ".":
+    elif i + 1 < len(file) and file[i + 1][j] in valid_south:
             direction["pos2"] = [i + 1, j]
             direction["in2"] = "n"
-    elif j + 1 > len(file[0]) and not file[i][j + 1] == ".":
+    elif j + 1 > len(file[0]) and file[i][j + 1] in valid_east:
             direction["pos2"] = [i, j + 1]
             direction["in2"] = "w"
-    elif i - 1 >= 0 and not file[i - 1][j] == ".":
+    elif i - 1 >= 0 and file[i - 1][j] in valid_north:
             direction["pos2"] = [i - 1, j]
             direction["in2"] = "s"
     else:
@@ -160,6 +166,7 @@ def update_direction(out_direction:str):
     else:
         raise Exception("Incorrect direction:", out_direction)
 
+
 def start(location:str):
     answer = 0
     start_point = []
@@ -169,6 +176,7 @@ def start(location:str):
     answer += follow_pipes(file, start_point)
 
     return answer
+
 
 #########
 # Start #
