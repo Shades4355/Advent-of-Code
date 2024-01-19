@@ -6,8 +6,39 @@ def find_start(file:list):
         for j in range(len(file[i])):
             if file[i][j] == "S":
                 return [i, j]
-    
+
     raise Exception("No start point found")
+
+
+def follow_pipes(file:list, start_point:list):
+    '''takes in a list of pipes and a start position; return how many steps away the farthest point is'''
+    i, j = start_point
+    answer = 0
+    pos1 = [-1, 0]
+
+    while True:
+        k, l = pos1
+        position = file[i + k][j + l]
+        if i + k < len(file):
+            if position == "|" and k == 1:
+                pos1 = [i + k - 1, j]
+                answer += 1
+            elif position == "|" and k == -1:
+                pos1 = [i + k + 1, j]
+                answer += 1
+            elif position == "-" and l == 1:
+                pos1 = [i, j + l + 1]
+                answer += 1
+            elif position == "-" and l == -1:
+                pos1 = [i, j + l - 1]
+                answer += 1
+            # TODO: add the rest of the rules
+            else: # if position == "."
+                continue
+        else:
+            pos1 = [0, -1]
+
+    return answer
 
 
 def get_input(location:str):
@@ -30,9 +61,11 @@ def get_input(location:str):
 
 def start(location:str):
     answer = 0
+    start_point = []
     file = get_input(location)
 
-    i, j = find_start(file)
+    start_point = find_start(file)
+
 
     return answer
 

@@ -1,5 +1,5 @@
 import unittest
-from advent10pt1 import start as start_pt1, get_input, find_start
+from advent10pt1 import start as start_pt1, get_input, find_start, follow_pipes
 
 
 class TestDay10(unittest.TestCase):
@@ -34,6 +34,21 @@ class TestDay10(unittest.TestCase):
         test_1(self)
         test_2(self)
 
+    def test_follow_pipes(self):
+        def test_1(self):
+            file = [
+                [".", ".", ".", ".", "."],
+                [".", "S", "-", "7", "."],
+                [".", "|", ".", "|", "."],
+                [".", "L", "-", "J", "."],
+                [".", ".", ".", ".", "."]
+                ]
+            start_point = [1, 1]
+            answer = 4
+
+            return self.assertEqual(follow_pipes(file, start_point), answer)
+        
+        test_1(self)
 
     def test_get_input(self):
         file = self.test_data_1
