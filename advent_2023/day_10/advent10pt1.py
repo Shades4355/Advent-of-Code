@@ -1,4 +1,15 @@
 
+
+def find_start(file:list):
+    '''take in a 2D file; outputs the location of "S"'''
+    for i in range(len(file)):
+        for j in range(len(file[i])):
+            if file[i][j] == "S":
+                return [i, j]
+    
+    raise Exception("No start point found")
+
+
 def get_input(location:str):
     '''Takes in a txt file; outputs a 2D list'''
     array = []
@@ -20,6 +31,8 @@ def get_input(location:str):
 def start(location:str):
     answer = 0
     file = get_input(location)
+
+    i, j = find_start(file)
 
     return answer
 
