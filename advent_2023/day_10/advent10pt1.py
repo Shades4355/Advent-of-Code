@@ -12,9 +12,13 @@ def find_start(file:list):
 
 def follow_pipes(file:list, start_point:list):
     '''takes in a list of pipes and a start position; return how many steps away the farthest point is'''
+
+    # TODO: need to figure out how to trace pos1 and pos2 at the same time
+
     i, j = start_point
     answer = 0
     pos1 = [-1, 0]
+    pos2 = [1, 0]
 
     while True:
         k, l = pos1
@@ -33,8 +37,8 @@ def follow_pipes(file:list, start_point:list):
                 pos1 = [i, j + l - 1]
                 answer += 1
             # TODO: add the rest of the rules
-            else: # if position == "."
-                continue
+            else: # if position == ".", then end of pipe has been reached
+                break
         else:
             pos1 = [0, -1]
 
