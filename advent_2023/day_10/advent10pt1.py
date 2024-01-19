@@ -1,5 +1,20 @@
 
 
+def advance_pos(out_direction:str, pos:list):
+    i, j = pos
+
+    if out_direction == "n":
+        return [i - 1, j]
+    elif out_direction == "s":
+        return [i + 1, j]
+    elif out_direction == "e":
+        return [i, j + 1]
+    elif out_direction == "w":
+        return [i, j - 1]
+    else:
+        raise Exception("invalid direction:", out_direction)
+
+
 def find_start(file:list):
     '''take in a 2D file; outputs the location of "S"'''
     for i in range(len(file)):
@@ -12,37 +27,68 @@ def find_start(file:list):
 
 def follow_pipes(file:list, start_point:list):
     '''takes in a list of pipes and a start position; return how many steps away the farthest point is'''
-
-    # TODO: need to figure out how to trace pos1 and pos2 at the same time
-
     i, j = start_point
     answer = 0
-    pos1 = [-1, 0]
-    pos2 = [1, 0]
+    direction = {}
+    direction["pos1"] = []
+    direction["in1"] = ""
+    direction["out1"] = ""
+    direction["pos2"] = []
+    direction["in2"] = ""
+    direction["out2"] = ""
+
+    # find starting direction 1
+    if i - 1 >= 0 and not file[i - 1][j] == ".":
+            direction["pos1"] = [i - 1, j]
+            direction["in1"] = "s"
+    elif j + 1 > len(file[0]) and not file[i][j + 1] == ".":
+            direction["pos1"] = [i, j + 1]
+            direction["in1"] = "w"
+    elif i + 1 < len(file) and not file[i + 1][j] == ".":
+            direction["pos1"] = [i + 1, j]
+            direction["in1"] = "n"
+    elif j - 1 >= 0 and not file[i][j - 1] == ".":
+            direction["pos1"] = [i, j - 1]
+            direction["in1"] = "e"
+    else:
+        raise Exception("No pipes found")
+
+    # find starting direction 2
+    if j - 1 >= 0 and not file[i][j - 1] == ".":
+            direction["pos2"] = [i, j - 1]
+            direction["in2"] = "e"
+    elif i + 1 < len(file) and not file[i + 1][j] == ".":
+            direction["pos2"] = [i + 1, j]
+            direction["in2"] = "n"
+    elif j + 1 > len(file[0]) and not file[i][j + 1] == ".":
+            direction["pos2"] = [i, j + 1]
+            direction["in2"] = "w"
+    elif i - 1 >= 0 and not file[i - 1][j] == ".":
+            direction["pos2"] = [i - 1, j]
+            direction["in2"] = "s"
+    else:
+        raise Exception("No pipes found")
+
+    answer += 1
+
+    # TODO: delete
+    print("Pos1:", direction["pos1"])
+    print("Pos2:", direction["pos2"])
 
     while True:
-        k, l = pos1
-        position = file[i + k][j + l]
-        if i + k < len(file):
-            if position == "|" and k == 1:
-                pos1 = [i + k - 1, j]
-                answer += 1
-            elif position == "|" and k == -1:
-                pos1 = [i + k + 1, j]
-                answer += 1
-            elif position == "-" and l == 1:
-                pos1 = [i, j + l + 1]
-                answer += 1
-            elif position == "-" and l == -1:
-                pos1 = [i, j + l - 1]
-                answer += 1
-            # TODO: add the rest of the rules
-            else: # if position == ".", then end of pipe has been reached
-                break
-        else:
-            pos1 = [0, -1]
+        if direction["pos1"] == direction["pos2"]:
+            return answer
 
-    return answer
+        # if pos1 does not == pos2, have each take one step
+        direction["out1"] = take_step(file, direction["in1"], direction["pos1"])
+        direction["out2"] = take_step(file, direction["in2"], direction["pos2"])
+
+        # advance pos1 and pos2
+        direction["pos1"] = advance_pos(direction["out1"], direction["pos1"])
+        direction["pos2"] = advance_pos(direction["out2"], direction["pos2"])
+
+        # advance answer 1 step
+        answer += 1
 
 
 def get_input(location:str):
@@ -63,6 +109,45 @@ def get_input(location:str):
     return array
 
 
+def take_step(file:list, in_direction:str, pos:list):
+    i, j = pos
+    out_direction = ""
+    position = file[i][j]
+
+    if position == "|":
+        if in_direction == "s":
+            out_direction = "n"
+        elif in_direction == "n":
+            out_direction = "s"
+    elif position == "-":
+        if in_direction == "e":
+            out_direction = "w"
+        elif in_direction == "w":
+            out_direction = "e"
+    elif position == "L":
+        if in_direction == "n":
+            out_direction = "e"
+        elif in_direction == "e":
+            out_direction = "n"
+    elif position == "J":
+        if in_direction == "n":
+            out_direction = "w"
+        elif in_direction == "w":
+            out_direction ="n"
+    elif position == "7":
+        if in_direction == "w":
+            out_direction = "s"
+        if in_direction == "s":
+            out_direction = "w"
+    elif position == "F":
+        if in_direction == "e":
+            out_direction = "s"
+        elif in_direction == "s":
+            out_direction = "e"
+    
+    return out_direction
+    
+
 def start(location:str):
     answer = 0
     start_point = []
@@ -82,12 +167,6 @@ if __name__ == "__main__":
 
 '''
 Rules:
-| is a vertical pipe connecting north and south.
-- is a horizontal pipe connecting east and west.
-L is a 90-degree bend connecting north and east.
-J is a 90-degree bend connecting north and west.
-7 is a 90-degree bend connecting south and west.
-F is a 90-degree bend connecting south and east.
 . is ground; there is no pipe in this tile.
 S is the starting position of the animal; there is a pipe on this tile, but your sketch doesn't show what shape the pipe has.
 '''
