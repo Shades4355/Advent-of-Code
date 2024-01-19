@@ -1,4 +1,4 @@
-# TODO: review need for both "in" and "out" directions. 
+
 
 def advance_pos(out_direction:str, pos:list):
     i, j = pos
@@ -112,8 +112,6 @@ def get_input(location:str):
 def take_step(file:list, in_direction:str, pos:list):
     i, j = pos
     position = file[i][j]
-
-
 
     if position == "|":
         if in_direction == "s":
