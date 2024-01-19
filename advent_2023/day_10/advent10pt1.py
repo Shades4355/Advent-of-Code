@@ -168,7 +168,7 @@ def start(location:str):
     file = get_input(location)
 
     start_point = find_start(file)
-
+    answer += follow_pipes(file, start_point)
 
     return answer
 
