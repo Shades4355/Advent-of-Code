@@ -1,10 +1,12 @@
 import unittest
 from advent10pt1 import start as start_pt1, get_input, find_start, follow_pipes, take_step, advance_pos, update_direction
+from advent10pt2 import start as start_pt2
 
 
 class TestDay10(unittest.TestCase):
     test_data_1 = "day10input_test1.txt"
     test_data_2 = "day10input_test2.txt"
+    test_data_3 = "day10input_test3.txt"
 
     def test_advance_pos(self):
         def test_N(self):
@@ -192,6 +194,11 @@ class TestDay10(unittest.TestCase):
         test_1(self)
         test_2(self)
 
+    def test_start_pt2(self):
+        file = self.test_data_3
+        answer = 8
+
+        self.assertEqual(start_pt2(file), answer)
 
 #########
 # Start #
